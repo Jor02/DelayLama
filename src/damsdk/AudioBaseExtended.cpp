@@ -104,7 +104,7 @@ namespace DamSDK {
                 break;
             case pluginSetKnobMode:
                 if (editor != nullptr) {
-                    return editor->setKnobMode(value);
+                    editor->setKnobMode(value);
                 }
                 break;
             case pluginGetMidiPresetName:
@@ -353,9 +353,9 @@ namespace DamSDK {
         if (strcmp(target, "sendDamEvents") == 0 || strcmp(target, "sendVstEvents") == 0) return 1;
         return 0;
     }
-    void AudioBaseExtended::setIsSynth(bool isSynth) {
-        if (isSynth) this->plugin.flags |= PluginFlags::IsSynthesizer;
-        else         this->plugin.flags &= ~PluginFlags::IsSynthesizer;
+    void AudioBaseExtended::setIsSynthesizer(bool isSynthesizer) {
+        if (isSynthesizer) this->plugin.flags |= PluginFlags::IsSynthesizer;
+        else               this->plugin.flags &= ~PluginFlags::IsSynthesizer;
     }
     void AudioBaseExtended::setCanProcessReplacing(bool canProcessReplacing) {
         if (canProcessReplacing) this->plugin.flags |= PluginFlags::IsNoRealTime;
