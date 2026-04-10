@@ -9,6 +9,9 @@ namespace Core {
         public:
             DelayLamaAudio(DamSDK::dispatchFunc hostCallback);
             ~DelayLamaAudio();
+
+            bool getPluginName(char *outText) override;
+            bool getCompanyName(char *outText) override;
     };
 }
 }
