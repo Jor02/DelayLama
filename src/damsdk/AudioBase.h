@@ -1,6 +1,5 @@
 #pragma once
 #include "DamPlugin.h"
-#include "gui/editor/DelayLamaEditor.h"
 #include "damsdk/DamPlugin.h"
 #include "damsdk/EditorBase.h"
 
@@ -64,7 +63,6 @@ namespace DamSDK {
         virtual void setPluginId(int32_t id);
         virtual void setReportsLoudnessToHost(bool reportsLoudness);
         virtual void setHasClip(bool hasClip);
-        virtual void setIsSynthesizer(bool isSynthesizer);
         virtual void setSupportsInPlaceProcessing(bool supportsInPlace);
         virtual void setHasEditor(bool hasEditor);
         virtual void setAudioBase(AudioBase* base);
