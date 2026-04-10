@@ -9,11 +9,37 @@ using namespace DelayLama::Utils;
 using namespace DamSDK;
 
 namespace DamSDK {
-    intptr_t _dispatcher(DamPlugin * plugin, int32_t targetOperation, int32_t index, int32_t value, void * data, float optional) { return NULL; }
-    float _getParameter(DamPlugin* plugin, int32_t parameterId) { return 0.f; }
-    void _setParameter(DamPlugin* plugin, int32_t parameterId, float value) {}
-    void _processFloat(DamPlugin* plugin, float** inputBuffer, float** outputBuffer, int32_t bufferSize) {}
-    void _processDouble(DamPlugin* plugin, double** inputBuffer, double** outputBuffer, int32_t bufferSize) {}
+    static intptr_t _dispatcher(DamPlugin * plugin, int32_t targetOperation, int32_t index, int32_t value, void * data, float optional) {
+        AudioBase* audioBase = (AudioBase*) plugin->object;
+        if (targetOperation == 1) {
+            audioBase->dispatchPluginCallback(1,index,value,data,optional);
+            if (audioBase != nullptr) {
+                delete audioBase;
+            }
+            return 1;
+        }
+        return audioBase->dispatchPluginCallback(targetOperation,index,value,data,optional);
+    }
+
+    static float _getParameter(DamPlugin* plugin, int32_t parameterId) {
+        AudioBase* audioBase = (AudioBase*) plugin->object;
+        return audioBase->getParameterValue(parameterId);
+    }
+
+    static void _setParameter(DamPlugin* plugin, int32_t parameterId, float value) {
+        AudioBase* audioBase = (AudioBase*) plugin->object;
+        audioBase->setParameterValue(parameterId, value);
+    }
+
+    static void _processFloat(DamPlugin* plugin, float** inputBuffer, float** outputBuffer, int32_t bufferSize) {
+        AudioBase* audioBase = (AudioBase*) plugin->object;
+        audioBase->invokeAudioProcess(inputBuffer, outputBuffer, bufferSize);
+    }
+
+    static void _processDouble(DamPlugin* plugin, double** inputBuffer, double** outputBuffer, int32_t bufferSize) {
+        AudioBase* audioBase = (AudioBase*) plugin->object;
+        audioBase->invokeAudioProcess((float**)inputBuffer, (float**)outputBuffer, bufferSize);
+    }
 
     AudioBase::AudioBase(dispatchFunc hostCallback, uint32_t presetCount, uint32_t parameterCount) {
         // Zero out the DamPlugin structure to ensure all reserved fields are 0
@@ -103,12 +129,12 @@ namespace DamSDK {
                 break;
             case pluginGetEditorRect:
                 if (editor != nullptr) {
-                    return editor->getRect((Rect**)data);
+                    editor->getRect((Rect**)data);
                 }
                 break;
             case pluginOpenEditor:
                 if (editor != nullptr) {
-                    return editor->open((HWND*) data);
+                    editor->open((HWND)data);
                 }
                 break;
             case pluginCloseEditor:
@@ -193,10 +219,6 @@ namespace DamSDK {
     void AudioBase::setHasClip(bool hasClip) {
         if (hasClip) this->plugin.flags |= PluginFlags::HasClip;
         else         this->plugin.flags &= ~PluginFlags::HasClip;
-    }
-    void AudioBase::setIsSynthesizer(bool isSynthesizer) {
-        if (isSynthesizer) this->plugin.flags |= PluginFlags::IsSynthesizer;
-        else               this->plugin.flags &= ~PluginFlags::IsSynthesizer;
     }
     void AudioBase::setSupportsInPlaceProcessing(bool supportsInPlace) {
         if (supportsInPlace) this->plugin.flags |= PluginFlags::SupportsInPlaceProcessing;
