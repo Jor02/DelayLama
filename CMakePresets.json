@@ -1,0 +1,23 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "win32",
+      "displayName": "Win32 Configuration",
+      "description": "Configure for 32-bit Windows (x86)",
+      "generator": "Visual Studio 18 2026",
+      "binaryDir": "${sourceDir}/build",
+      "architecture": {
+        "value": "Win32",
+        "strategy": "set"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "win32",
+      "configurePreset": "win32",
+      "displayName": "Build Win32"
+    }
+  ]
+}

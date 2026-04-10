@@ -1,0 +1,2 @@
+#define PRESET_COUNT 5
+#define PARAMETER_COUNT 4

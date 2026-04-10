@@ -1,0 +1,6 @@
+{
+    "search.useIgnoreFiles": false,
+    "dotrush.roslyn.projectOrSolutionFiles": [
+        "c:\\Users\\Jor02\\source\\cpp\\vsts\\DelayLama\\build\\DelayLama.slnx"
+    ]
+}
