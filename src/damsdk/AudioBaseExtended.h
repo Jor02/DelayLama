@@ -90,7 +90,7 @@ namespace DamSDK {
         virtual int32_t getCompanyVersion();
         virtual int32_t getDamVersion();
         virtual bool pluginSupports(char* target);
-        virtual void setIsSynth(bool isSynth);
+        virtual void setIsSynthesizer(bool isSynthesizer);
         virtual void setCanProcessReplacing(bool canProcessReplacing);
         virtual void setOverwritingCapability(bool canOverwrite);
         virtual bool setBypass(bool bypass);
