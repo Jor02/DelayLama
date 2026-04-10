@@ -1,0 +1,12 @@
+// resources.rc
+#include "platform/Resource.h"
+
+// BITMAP resources – images must be BMP format
+IDB_BACKGROUND     BITMAP "assets/background.bmp"
+IDB_MONK_SPRITES   BITMAP "assets/monk_sprites.bmp"
+IDB_HANDLE_Y       BITMAP "assets/handle_y.bmp"
+IDB_HANDLE_X       BITMAP "assets/handle_x.bmp"
+IDB_HANDLE_DELAY   BITMAP "assets/handle_delay.bmp"
+IDB_KNOB_GLIDE     BITMAP "assets/knob_glide.bmp"
+IDB_KNOB_VOICE     BITMAP "assets/knob_voice.bmp"
+IDB_SPLASH         BITMAP "assets/splash.bmp"

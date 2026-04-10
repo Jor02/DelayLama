@@ -17,6 +17,7 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_library(DelayLama SHARED
     ${SOURCES}
     exports.def
+    resources.rc
 )
 
 set_target_properties(DelayLama PROPERTIES
