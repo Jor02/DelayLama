@@ -278,76 +278,53 @@ namespace Gui{
         // this->window->registerControl(splashScreen);
     }
 
-    void DelayLamaEditor::dispatcher(int parameterId) {
-        // float10 value;
-        // KnobVTable *leftKnob;
-        // VerticalSliderVTable *verticalSlider;
-        // HorizontalSliderVTable *reverbSlider;
-        // KnobVTable *rightKnob;
-        // HorizontalSliderVTable *horizontalSlider;
-        // MonkVTable *monkDisplay;
-        
-        // if ((this->guiEditor).window != NULL) {
-        //     switch(parameterIndex) {
-        //     case 0:
-        //     if (this->leftKnob != NULL) {
-        //         leftKnob = this->leftKnob->vtable;
-        //         value = (float10)(*(((this->guiEditor).mainPlugin)->vtable->audioVtable).audioEffectX.
-        //                         audioEffect.getParameterValue)(0);
-        //         (*(leftKnob->rotaryControl).control.setValue)((float)value);
-        //         (*(this->vtable->editorBase).invalidate)();
-        //         return;
-        //     }
-        //     break;
-        //     case 1:
-        //     if (this->singingVerticalSlider != NULL) {
-        //         verticalSlider = this->singingVerticalSlider->vtable;
-        //         value = (float10)(*(((this->guiEditor).mainPlugin)->vtable->audioVtable).audioEffectX.
-        //                         audioEffect.getParameterValue)(1);
-        //         (*(verticalSlider->control).setValue)((float)value);
-        //         (*(this->vtable->editorBase).invalidate)();
-        //         return;
-        //     }
-        //     break;
-        //     case 2:
-        //     if (this->reverbSlider != NULL) {
-        //         reverbSlider = this->reverbSlider->vtable;
-        //         value = (float10)(*(((this->guiEditor).mainPlugin)->vtable->audioVtable).audioEffectX.
-        //                         audioEffect.getParameterValue)(2);
-        //         (*(reverbSlider->control).setValue)((float)value);
-        //         (*(this->vtable->editorBase).invalidate)();
-        //         return;
-        //     }
-        //     break;
-        //     case 3:
-        //     if (this->knob != NULL) {
-        //         rightKnob = this->knob->vtable;
-        //         value = (float10)(*(((this->guiEditor).mainPlugin)->vtable->audioVtable).audioEffectX.
-        //                         audioEffect.getParameterValue)(3);
-        //         (*(rightKnob->rotaryControl).control.setValue)((float)value);
-        //         (*(this->vtable->editorBase).invalidate)();
-        //         return;
-        //     }
-        //     break;
-        //     case 5:
-        //     if (this->singingHorizontalSlider != NULL) {
-        //         horizontalSlider = this->singingHorizontalSlider->vtable;
-        //         value = (float10)(*(((this->guiEditor).mainPlugin)->vtable->audioVtable).audioEffectX.
-        //                         audioEffect.getParameterValue)(5);
-        //         (*(horizontalSlider->control).setValue)((float)value);
-        //     }
-        //     break;
-        //     case 6:
-        //     if (this->monk != NULL) {
-        //         monkDisplay = this->monk->vtable;
-        //         value = (float10)(*(((this->guiEditor).mainPlugin)->vtable->audioVtable).audioEffectX.
-        //                         audioEffect.getParameterValue)(6);
-        //         (*(monkDisplay->tileGrid).control.setValue)((float)value);
-        //         (*(this->vtable->editorBase).invalidate)();
-        //         return;
-        //     }
-        //}
-        //(*(this->vtable->editorBase).invalidate)();
-    }
+        void DelayLamaEditor::dispatcher(int32_t parameterIndex)
+        {
+            if (this->window == nullptr)
+                return;
+
+            switch (parameterIndex)
+            {
+                case 0:
+                    if (this->leftKnob != nullptr) {
+                        this->leftKnob->setValue(this->mainPlugin->getParameterValue(0));
+                        invalidate();
+                    }
+                    break;
+                case 1:
+                    if (this->singingVerticalSlider != nullptr) {
+                        this->singingVerticalSlider->setValue(this->mainPlugin->getParameterValue(1));
+                        invalidate();
+                    }
+                    break;
+                case 2:
+                    if (this->reverbSlider != nullptr) {
+                        this->reverbSlider->setValue(this->mainPlugin->getParameterValue(2));
+                        invalidate();
+                    }
+                    break;
+                case 3:
+                    if (this->knob != nullptr) {
+                        this->knob->setValue(this->mainPlugin->getParameterValue(3));
+                        invalidate();
+                    }
+                    break;
+                case 5:
+                    if (this->singingHorizontalSlider != nullptr) {
+                        this->singingHorizontalSlider->setValue(this->mainPlugin->getParameterValue(5));
+                    }
+                    break;
+                case 6:
+                    if (this->monk != nullptr) {
+                        this->monk->setValue(this->mainPlugin->getParameterValue(6));
+                        invalidate();
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            invalidate();
+        }
 }
 }
