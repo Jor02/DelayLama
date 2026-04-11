@@ -36,6 +36,7 @@ namespace Gui{
         public:
             DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance);
             ~DelayLamaEditor();
+            void open(HWND hParent) override;
             void dispatcher(int parameterIndex) override;
     };   
 }
