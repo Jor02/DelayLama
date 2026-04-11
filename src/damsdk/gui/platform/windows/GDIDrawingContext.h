@@ -19,7 +19,7 @@ namespace Windows {
 
     extern HINSTANCE g_hInstance;
 
-    struct GDIDrawingContext {
+    class GDIDrawingContext {
         public:
             POINT screenPos;
             POINT drawOffset;
@@ -32,7 +32,7 @@ namespace Windows {
             LONG penWidth;
             COLORREF penColor;
             COLORREF backgroundColor;
-            COLORREF penDashColor;
+            bool penDashEnabled;
             char unused3[4];
             RECT rect;
             HGDIOBJ obj1;
@@ -44,8 +44,12 @@ namespace Windows {
             UINT penStyle;
 
         public:
-            GDIDrawingContext(Window *parentFramePtr,HDC hDC,HWND hWnd);
             static int32_t setModuleHandle(HINSTANCE hInstance);
+            GDIDrawingContext(Window *parentFramePtr,HDC hDC,HWND hWnd);
+            void setPenColor(COLORREF color);
+            void setPenDashMode(bool penDashEnabled);
+            void setBackgroundColorAndBrush(COLORREF color);
+            void setTextColor(COLORREF color);
     };
 }
 }
