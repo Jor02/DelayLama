@@ -36,8 +36,8 @@ struct Color;
 struct Rect;
 typedef void * HostCallback;
 
-// --- Struct Definitions ---
-struct AudioBase {
+// --- Class Definitions ---
+class AudioBase {
 public:
     uint32_t _dispatcher(DamPlugin* effect, int32_t opcode, int32_t index, int32_t value, void* ptr, float opt);
     float _getParameter(DamPlugin* effect, int32_t index);
@@ -85,7 +85,7 @@ public:
     int32_t automateHostParameter(int paramIndex, float value);
 };
 
-struct Bitmap {
+class Bitmap {
 public:
     Bitmap(Bitmap* pThis, uint32_t resId);
     void deleteBitmap();
@@ -95,7 +95,7 @@ public:
     HBITMAP createMaskBitmap(HDC hdcRef, HANDLE hBitmapSrc, COLORREF colorKey);
 };
 
-struct DropTarget {
+class DropTarget {
 public:
     DropTarget(DropTarget* pThis, Window* frame);
     DropTarget* destructor(bool deleteObject);
@@ -111,7 +111,7 @@ public:
     void __chkstk();
 };
 
-struct EditorBase {
+class EditorBase {
 public:
     void generic18();
     void invalidate();
@@ -130,7 +130,7 @@ public:
     void dispatcher();
 };
 
-struct GDIDrawingContext {
+class GDIDrawingContext {
 public:
     uint32_t setModuleHandle(uint32_t param_1);
     GDIDrawingContext(GDIDrawingContext* pThis, Window* parentFramePtr, HDC hDC, HWND hWnd);
@@ -152,7 +152,7 @@ public:
     HBRUSH pluginWndProc(HWND hWnd, uint32_t uMsg, HDC hdc, LPARAM lParam);
 };
 
-struct UnusedClass {
+class UnusedClass {
 public:
     UnusedClass(UnusedClass* pThis);
     uint32_t zeroParam(uint32_t* param_1);
@@ -160,7 +160,7 @@ public:
     void checkValue();
 };
 
-struct View {
+class View {
 public:
     void generic3();
     void setEnabled(bool enabled);
@@ -186,7 +186,7 @@ public:
     void useBitmap(Bitmap* bmp);
 };
 
-struct AudioBaseExtended : public AudioBase {
+class AudioBaseExtended : public AudioBase {
 public:
     AudioBaseExtended(AudioBaseExtended* pThis, HostCallback hostCallback, int presetCount, int parameterCount);
     AudioBaseExtended* destructAudioBase(bool destroyObject);
@@ -249,7 +249,7 @@ public:
     uint8_t generic16();
 };
 
-struct DelayLamaEditor : public EditorBase {
+class DelayLamaEditor : public EditorBase {
 public:
     DelayLamaEditor(DelayLamaEditor* pThis, DelayLamaPlugin* delayLama);
     DelayLamaEditor* destructor(bool deleteFlag);
@@ -259,7 +259,7 @@ public:
     void dispatcher(int parameterIndex);
 };
 
-struct Control : public View {
+class Control : public View {
 public:
     void onIdle();
     void setValue(float value);
@@ -284,7 +284,7 @@ public:
     bool onMouseWheel(GDIDrawingContext* drawingContext, POINT* mousePos, float wheelDelta);
 };
 
-struct Window : public View {
+class Window : public View {
 public:
     void resetVtable(Window* frame);
     Window(Window* pThis, RECT* pRect, HWND hParent, DelayLamaEditor* editor);
@@ -314,7 +314,7 @@ public:
     DropTarget* createDropTarget();
 };
 
-struct DelayLamaAudio : public AudioBaseExtended {
+class DelayLamaAudio : public AudioBaseExtended {
 public:
     bool sendEventsToHost(void* eventsPtr);
     DelayLamaAudio(DelayLamaAudio* pThis, HostCallback hostCallback);
@@ -359,7 +359,7 @@ public:
     void _forEachPresetBlockReverse(void* startPtr, int step, int count, void* callback);
 };
 
-struct HorizontalSlider : public Control {
+class HorizontalSlider : public Control {
 public:
     void setIsHandleTransparent(uint8_t transparent);
     void setSnapToMouse(bool snapToMouse);
@@ -376,7 +376,7 @@ public:
     void onMouseDown(GDIDrawingContext* drawingContext, POINT* mousePos);
 };
 
-struct RotaryControl : public Control {
+class RotaryControl : public Control {
 public:
     RotaryControl(RotaryControl* pThis, RECT* pRect, DrawControl* * drawControl, int controlId, Bitmap* bmp1, Bitmap* bmp2, POINT* srcPoint);
     RotaryControl* destructor(bool deleteObject);
@@ -399,7 +399,7 @@ public:
     long double getFineTuneDivider();
 };
 
-struct SplashScreen : public Control {
+class SplashScreen : public Control {
 public:
     SplashScreen(SplashScreen* pThis, RECT* pRect, DrawControl* * drawControl, int controlId, Bitmap* bmp, RECT* destRect, POINT* srcPoint);
     SplashScreen* destructor(bool deleteObject);
@@ -408,7 +408,7 @@ public:
     void onMouseDown(GDIDrawingContext* drawingContext);
 };
 
-struct TileGrid : public Control {
+class TileGrid : public Control {
 public:
     TileGrid(TileGrid* pThis, RECT* pRect, DrawControl* * drawControl, int controlId, int tileWidth, int tileHeight, Bitmap* bmp, POINT* srcOffset);
     TileGrid* destructor(bool deleteObject);
@@ -416,7 +416,7 @@ public:
     void onDraw(GDIDrawingContext* drawingContext);
 };
 
-struct VerticalSlider : public Control {
+class VerticalSlider : public Control {
 public:
     VerticalSlider(VerticalSlider* pThis, RECT* pRect, DrawControl* * drawControl, int controlId, int minValue, int maxValue, Bitmap* handleBmp, Bitmap* backgroundBmp, Range* range, int stepSize);
     VerticalSlider* destructor(bool deleteObject);
@@ -425,7 +425,7 @@ public:
     void onMouseDown(GDIDrawingContext* drawingContext, POINT* relativeMousePos);
 };
 
-struct DelayLamaPlugin : public DelayLamaAudio {
+class DelayLamaPlugin : public DelayLamaAudio {
 public:
     DelayLamaPlugin(DelayLamaPlugin* pThis, HostCallback hostCallback);
     DelayLamaPlugin* destructAudioBase(bool deleteObject);
@@ -433,14 +433,14 @@ public:
     void setParameterValue(int parameterIndex, float parameterValue);
 };
 
-struct TwoAxisSlider : public HorizontalSlider {
+class TwoAxisSlider : public HorizontalSlider {
 public:
     TwoAxisSlider(TwoAxisSlider* pThis, RECT* bounds, DrawControl* * drawControl, int controlId, int minValue, int maxValue, int trackLength, Bitmap* bitmap, Range* range, int stepSize);
     TwoAxisSlider* destructor(bool deleteObject);
     void onMouseDown(GDIDrawingContext* drawContext, POINT* mousePos);
 };
 
-struct Knob : public RotaryControl {
+class Knob : public RotaryControl {
 public:
     Knob(Knob* pThis, RECT* pRect, DrawControl* * drawControl, int parameterId, int totalFrames, int frameHeight, Bitmap* bmp, POINT* srcPoint);
     Knob* destructor(bool deleteObject);
@@ -448,14 +448,14 @@ public:
     void onDraw(GDIDrawingContext* drawingContext);
 };
 
-struct Monk : public TileGrid {
+class Monk : public TileGrid {
 public:
     Monk(Monk* pThis, RECT* pRect, DrawControl* * drawControl, int controlId, uint32_t tileWidth, int tileHeight, Bitmap* bmp, POINT* srcOffset);
     Monk* destructor(bool destroyObject);
     void onDraw(GDIDrawingContext* drawingContext);
 };
 
-struct OffscreenGDIDrawingContext {
+class OffscreenGDIDrawingContext {
 public:
     OffscreenGDIDrawingContext(Window* parentFramePtr, int width, int height, Color color);
     void* destructOffscreenGDIDrawingContext(bool deleteObject);

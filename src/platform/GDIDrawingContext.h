@@ -1,6 +1,14 @@
+#pragma once
 #include <Windows.h>
 #include <cstdint>
 #include <windef.h>
+
+// Forward declarations
+namespace DelayLama {
+    namespace Gui {
+        namespace Base { class Window; }
+    }
+}
 
 namespace DelayLama {
 namespace Platform{
@@ -31,6 +39,7 @@ namespace Platform{
             UINT penStyle;
 
         public:
+            GDIDrawingContext(Gui::Base::Window *parentFramePtr,HDC hDC,HWND hWnd);
             static int32_t setModuleHandle(HINSTANCE hInstance);
     };
 }

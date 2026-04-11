@@ -4,8 +4,14 @@
 #include "AudioBase.h"
 #include "damsdk/DamPlugin.h"
 
-namespace DamSDK {
+// Forward declarations
+namespace DelayLama {
+    namespace Gui {
+        namespace Base { class Window; }
+    }
+}
 
+namespace DamSDK {
     extern int GLOBAL_KNOB_MODE;
 
     class EditorBase {
@@ -14,7 +20,7 @@ namespace DamSDK {
             HWND hParent;
             bool needsRedraw;
             Rect rect;
-            void* window; //Window* window; // (not yet implemented)
+            DelayLama::Gui::Base::Window* window;
             DWORD lastIdleTick;
             bool isInIdleUpdate;
         public:
