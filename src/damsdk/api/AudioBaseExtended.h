@@ -1,4 +1,8 @@
 #pragma once
+#include <Windows.h>
+#include <windef.h>
+#include <cstdint>
+#include "AudioBase.h"
 
 namespace DamSDK {
 namespace Api {

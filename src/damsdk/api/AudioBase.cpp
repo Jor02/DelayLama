@@ -1,5 +1,9 @@
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include "AudioBase.h"
+#include "EditorBase.h"
 
-using namespace DelayLama::Utils;
 using namespace DamSDK;
 
 namespace DamSDK {

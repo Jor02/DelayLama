@@ -1,3 +1,9 @@
+#include <Windows.h>
+#include <windef.h>
+#include <wingdi.h>
+
+#include "Bitmap.h"
+#include "GDIDrawingContext.h"
 
 namespace DamSDK {
 namespace Gui {
@@ -33,7 +39,7 @@ namespace Windows {
         return;
     }
 
-    void Bitmap::blit(GDIDrawingContext *drawingContext, RECT *destRect,POINT *srcPoint) {
+    void Bitmap::blit(GDIDrawingContext *drawingContext, RECT *destRect, POINT *srcPoint) {
         if (this->bitmap != nullptr) {
             HDC hdc = CreateCompatibleDC(drawingContext->hDC);
             HGDIOBJ h = SelectObject(hdc,this->bitmap);

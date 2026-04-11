@@ -1,3 +1,6 @@
+#include "EditorBase.h"
+#include "AudioBase.h"
+#include "damsdk/gui/platform/windows/Window.h"
 
 namespace DamSDK {
 namespace Api {
@@ -42,16 +45,16 @@ namespace Api {
             }
 
             if (this->window != nullptr) {
-                //Window::refresh(frame);
+                this->window->refresh();
             }
         }
     }
 
-    int32_t EditorBase::keyDown(DamSDK::KeyCode* keycode) {
+    int32_t EditorBase::keyDown(KeyCode* keycode) {
         return -1;
     }
     
-    int32_t EditorBase::keyUp(DamSDK::KeyCode* keycode) {
+    int32_t EditorBase::keyUp(KeyCode* keycode) {
         return -1;
     }
 
@@ -64,9 +67,9 @@ namespace Api {
     }
 
     void EditorBase::draw() {
-        // if (this->window != nullptr) {
-        //     this->window->drawControlOrSelf(frame,NULL);
-        // }
+        if (this->window != nullptr) {
+            this->window->drawControlOrSelf(NULL);
+        }
     }
 
     void EditorBase::idleHandler() {
@@ -104,7 +107,7 @@ namespace Api {
     bool EditorBase::onMouseWheel(float wheelDelta) {
         if (this->window != nullptr) {
             POINT zeroPoint = {0, 0};
-            //this->window.onMouseWheel(0, zeroPoint, wheelDelta)
+            this->window->onMouseWheel(0, zeroPoint, wheelDelta);
             return true;
         }
         return false;

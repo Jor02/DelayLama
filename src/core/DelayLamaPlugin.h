@@ -1,4 +1,5 @@
 #pragma once
+#include "DelayLamaAudio.h"
 
 namespace DelayLama {
 namespace Core {
@@ -7,7 +8,7 @@ namespace Core {
 
     class DelayLamaPlugin : public DelayLamaAudio {
     public:
-        explicit DelayLamaPlugin(DamSDK::dispatchFunc hostCallback);
+        explicit DelayLamaPlugin(DamSDK::Api::dispatchFunc hostCallback);
         virtual ~DelayLamaPlugin();
     };
 }

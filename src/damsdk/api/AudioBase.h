@@ -1,20 +1,22 @@
 #pragma once
+#include <cstdint>
+#include "DamPlugin.h"
+#include "AudioBase.h"
 
 namespace DamSDK {
 namespace Api {
-
     class AudioBase {
     public:
         float sampleRate;
         struct EditorBase *editor;
-        DamSDK::dispatchFunc hostCallback;
+        Api::dispatchFunc hostCallback;
         int32_t presetCount;
         int32_t parameterCount;
         int32_t currentPreset;
         int32_t blockSize;
-        struct DamSDK::DamPlugin plugin;
+        struct Api::DamPlugin plugin;
     public:
-        AudioBase(DamSDK::dispatchFunc hostCallback, uint32_t presetCount, uint32_t parameterCount);
+        AudioBase(Api::dispatchFunc hostCallback, uint32_t presetCount, uint32_t parameterCount);
         ~AudioBase();
 
         // -- Core --

@@ -1,7 +1,20 @@
 #pragma once
+#include <Windows.h>
+#include <windef.h>
+#include "DamPlugin.h"
 
-namespace Api {
+// Forward declarations
 namespace DamSDK {
+    namespace Api { class AudioBase; }
+    namespace Gui {
+        namespace Platform {
+            namespace Windows { class Window; }
+        }
+    }
+}
+
+namespace DamSDK {
+namespace Api {
     extern int GLOBAL_KNOB_MODE;
 
     class EditorBase {
@@ -10,7 +23,7 @@ namespace DamSDK {
             HWND hParent;
             bool needsRedraw;
             Rect rect;
-            DelayLama::Gui::Base::Window* window;
+            Gui::Platform::Windows::Window* window;
             DWORD lastIdleTick;
             bool isInIdleUpdate;
         public:
@@ -19,8 +32,8 @@ namespace DamSDK {
             virtual void getRect(Rect** outRect);
             virtual void close();
             virtual void onIdle();
-            virtual int32_t keyDown(DamSDK::KeyCode* keycode);
-            virtual int32_t keyUp(DamSDK::KeyCode* keycode);
+            virtual int32_t keyDown(KeyCode* keycode);
+            virtual int32_t keyUp(KeyCode* keycode);
             virtual void setKnobMode(int32_t mode);
             
             virtual void dispatcher(int parameterIndex);

@@ -1,4 +1,14 @@
 #pragma once
+#include <Windows.h>
+#include <windef.h>
+
+namespace DamSDK {
+    namespace Gui {
+        namespace Platform {
+            namespace Windows { class GDIDrawingContext; }
+        }
+    }
+}
 
 namespace DamSDK {
 namespace Gui {
@@ -16,8 +26,8 @@ namespace Base {
             bool useAlphaBlending;
         public:
             View(RECT *pRect);
-            void onDraw(Platform::GDIDrawingContext* drawingContext);
-            void onMouseDown(Platform::GDIDrawingContext* drawingContext, POINT* point);
+            void onDraw(Platform::Windows::GDIDrawingContext* drawingContext);
+            void onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* point);
     };
 }
 }
