@@ -1,3 +1,4 @@
+#pragma once
 #include "damsdk/gui/base/View.h"
 
 namespace DamSDK {
@@ -26,6 +27,7 @@ namespace Controls {
             void *unknown;
         public:
             Control(RECT *pRect, void *unknown, int parameterId, Platform::Windows::Bitmap *bmp);
+            void setDefaultValue(float defaultValue = 0);
             void setValue(float newValue);
     };
 }

@@ -21,6 +21,10 @@ namespace Controls {
         }
     }
 
+    void Control::setDefaultValue(float defaultValue) {
+        this->defaultValue = defaultValue;
+    }
+
     void Control::setValue(float newValue) {
         this->value = newValue;
     }
