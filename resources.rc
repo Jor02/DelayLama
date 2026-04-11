@@ -1,5 +1,5 @@
 // resources.rc
-#include "platform/Resource.h"
+#include "gui/Resource.h"
 
 // BITMAP resources – images must be BMP format
 IDB_BACKGROUND     BITMAP "assets/background.bmp"
