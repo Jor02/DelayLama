@@ -53,7 +53,7 @@ namespace Api {
         this->sampleRate = 44100.0f;
         this->blockSize = 1024;
 
-        // Initialize the DamPlugin (VST-compatible) Interface
+        // Initialize the DamPlugin Interface
         this->plugin.magicNumber = 'VstP';  // "VstP" Magic Number
         this->plugin.id          = 'NoEf';  // "NoEf" Default ID
         this->plugin.version     = 1;
