@@ -1,10 +1,8 @@
-#include "AudioBaseExtended.h"
-#include "DamPlugin.h"
-#include <cstdint>
 
 using namespace DamSDK;
 
 namespace DamSDK {
+namespace Api {
     AudioBaseExtended::AudioBaseExtended(dispatchFunc hostCallback, int32_t presetCount, int32_t parameterCount) : AudioBase(hostCallback, presetCount, parameterCount) {}
     AudioBaseExtended::~AudioBaseExtended() {}
 
@@ -418,4 +416,5 @@ namespace DamSDK {
 
     // -- Empty/Unknown Functions --
     float AudioBaseExtended::returnZeroFloat() { return 0.f; }
+}
 }

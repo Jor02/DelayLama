@@ -1,17 +1,11 @@
 #pragma once
-#include <Windows.h>
-#include <cstdint>
-#include <windef.h>
 
-// Forward declarations
-namespace DelayLama {
-    namespace Gui {
-        namespace Base { class Window; }
-    }
-}
 
-namespace DelayLama {
-namespace Platform{
+namespace DamSDK {
+namespace Gui {
+namespace Platform {
+namespace Windows {
+
     extern HINSTANCE g_hInstance;
 
     struct GDIDrawingContext {
@@ -42,5 +36,7 @@ namespace Platform{
             GDIDrawingContext(Gui::Base::Window *parentFramePtr,HDC hDC,HWND hWnd);
             static int32_t setModuleHandle(HINSTANCE hInstance);
     };
+}
+}
 }
 }

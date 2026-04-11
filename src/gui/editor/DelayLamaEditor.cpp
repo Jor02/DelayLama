@@ -1,9 +1,3 @@
-#include "gui/editor/DelayLamaEditor.h"
-#include "DelayLamaEditor.h"
-#include "platform/Resource.h"
-#include "damsdk/EditorBase.h"
-#include "platform/Bitmap.h"
-#include "utils/Logger.h"
 
 namespace DelayLama {
 namespace Gui{

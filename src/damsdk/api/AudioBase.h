@@ -1,9 +1,7 @@
 #pragma once
-#include "DamPlugin.h"
-#include "damsdk/DamPlugin.h"
-#include "damsdk/EditorBase.h"
 
 namespace DamSDK {
+namespace Api {
 
     class AudioBase {
     public:
@@ -109,4 +107,5 @@ namespace DamSDK {
         // formatIntToString
         const int    INT_HUGE_LIMIT      = 100000000;     // 0x5F5E100
     }
+}
 }

@@ -1,16 +1,6 @@
 #pragma once
-#include <cstdint>
-#include <windows.h>
-#include "AudioBase.h"
-#include "damsdk/DamPlugin.h"
 
-// Forward declarations
-namespace DelayLama {
-    namespace Gui {
-        namespace Base { class Window; }
-    }
-}
-
+namespace Api {
 namespace DamSDK {
     extern int GLOBAL_KNOB_MODE;
 
@@ -40,4 +30,5 @@ namespace DamSDK {
             virtual bool onMouseWheel(float wheelDelta);
             virtual void sleep(DWORD milliseconds);
     };
+}
 }

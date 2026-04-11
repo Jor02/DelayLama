@@ -1,5 +1,3 @@
-#include "DelayLamaPlugin.h"
-#include "gui/editor/DelayLamaEditor.h"
 
 namespace DelayLama {
 namespace Core {

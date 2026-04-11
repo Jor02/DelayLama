@@ -1,6 +1,3 @@
-#include <Windows.h>
-#include <minwindef.h>
-#include "platform/GDIDrawingContext.h"
 
 namespace DelayLama {
 namespace Core {

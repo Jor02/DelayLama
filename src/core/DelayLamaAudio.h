@@ -1,7 +1,4 @@
 #pragma once
-#include <cstdint>
-#include <windows.h>
-#include "damsdk/AudioBaseExtended.h"
 
 namespace DelayLama {
 namespace Core {

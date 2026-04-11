@@ -1,14 +1,9 @@
-#include "AudioBase.h"
-#include <cstdio>
-#include <cstring>
-#include <cmath>
-#include "DamPlugin.h"
-#include "utils/Logger.h"
 
 using namespace DelayLama::Utils;
 using namespace DamSDK;
 
 namespace DamSDK {
+namespace Api {
     static intptr_t _dispatcher(DamPlugin * plugin, int32_t targetOperation, int32_t index, int32_t value, void * data, float optional) {
         AudioBase* audioBase = (AudioBase*) plugin->object;
         if (targetOperation == 1) {
@@ -344,4 +339,5 @@ namespace DamSDK {
     void AudioBase::setReservedValue(int32_t unusedValue) {
         this->plugin.zero = unusedValue;
     }
+}
 }

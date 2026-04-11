@@ -1,6 +1,4 @@
 #pragma once
-#include <windows.h>
-#include <windef.h>
 
 // Forward declarations
 namespace DelayLama {
@@ -9,8 +7,11 @@ namespace Platform {
 }
 }
 
-namespace DelayLama {
-namespace Platform{
+namespace DamSDK {
+namespace Gui {
+namespace Platform {
+namespace Windows {
+
     class Bitmap {
         public:
             int resourceId;
@@ -28,5 +29,7 @@ namespace Platform{
             void drawMasked(GDIDrawingContext *drawingContext, RECT *destRect,POINT *srcPoint);
             static void unregisterBitmap(Bitmap* bitmap);
     };
+}
+}
 }
 }

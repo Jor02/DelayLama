@@ -1,7 +1,9 @@
-#include "GDIDrawingContext.h"
 
-namespace DelayLama {
-namespace Platform{
+namespace DamSDK {
+namespace Gui {
+namespace Platform {
+namespace Windows {
+
     HINSTANCE g_hInstance = NULL;
     
     int32_t GDIDrawingContext::setModuleHandle(HINSTANCE hInstance)
@@ -9,5 +11,7 @@ namespace Platform{
         g_hInstance = hInstance;
         return 1;
     }
+}
+}
 }
 }

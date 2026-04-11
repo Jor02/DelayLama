@@ -1,7 +1,7 @@
 #pragma once
-#include <cstdint>
 
 namespace DamSDK {
+namespace Api {
     /**
      * @brief Used for dispatching requests between the plugin and the host.
      */
@@ -263,4 +263,5 @@ namespace DamSDK {
         pluginGetMidiOutputChannelCount = 79,
         pluginGetNumberOfOpcodes = 80,
     } PluginCallbackOpcodes;
+}
 }

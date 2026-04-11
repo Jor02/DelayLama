@@ -1,16 +1,6 @@
 #pragma once
-#include <Windows.h>
-#include <windef.h>
-#include "View.h"
 
-// Forward declarations
-namespace DelayLama {
-    namespace Gui {
-        class DelayLamaEditor;
-    }
-}
-
-namespace DelayLama {
+namespace DamSDK {
 namespace Gui {
 namespace Base {
     class Window : public View {

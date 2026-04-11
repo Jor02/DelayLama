@@ -1,4 +1,5 @@
-namespace DelayLama {
+namespace DamSDK {
+namespace Gui {
 namespace Controls {
     class Control {
         public:
@@ -6,5 +7,6 @@ namespace Controls {
         public:
             void setValue(float newValue);
     };
+}
 }
 }

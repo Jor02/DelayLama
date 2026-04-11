@@ -1,5 +1,3 @@
-#include "DelayLamaAudio.h"
-#include "PluginConfig.h"
 
 namespace DelayLama {
 namespace Core {

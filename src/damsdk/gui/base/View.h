@@ -1,9 +1,6 @@
 #pragma once
-#include <Windows.h>
-#include <windef.h>
-#include "platform/GDIDrawingContext.h"
 
-namespace DelayLama {
+namespace DamSDK {
 namespace Gui {
 namespace Base {
 
