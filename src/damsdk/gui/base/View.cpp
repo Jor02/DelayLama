@@ -1,6 +1,5 @@
-#include "View.h"
 
-namespace DelayLama {
+namespace DamSDK {
 namespace Gui {
 namespace Base {
     View::View(RECT * pRect) {

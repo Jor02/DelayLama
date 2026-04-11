@@ -1,6 +1,4 @@
 #pragma once
-#include <cstdint>
-#include "damsdk/EditorBase.h"
 
 // Forward declarations
 namespace DelayLama {

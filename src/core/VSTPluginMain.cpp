@@ -1,9 +1,3 @@
-#include <cstdint>
-#include <windows.h>
-#include <winnt.h>
-#include "damsdk/DamPlugin.h"
-#include "DelayLamaPlugin.h"
-#include "utils/Logger.h"
 
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 

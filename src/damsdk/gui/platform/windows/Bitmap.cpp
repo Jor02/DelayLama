@@ -1,12 +1,9 @@
-#include <cstddef>
-#include <windows.h>
-#include <wingdi.h>
-#include <winuser.h>
-#include "platform/bitmap.h"
-#include "utils/Logger.h"
 
-namespace DelayLama {
-namespace Platform{
+namespace DamSDK {
+namespace Gui {
+namespace Platform {
+namespace Windows {
+
     Bitmap::Bitmap(int resId) {        
         this->resourceId = resId;
         this->refCount = 1;
@@ -167,5 +164,7 @@ namespace Platform{
         if (bitmap->refCount > 0 && --bitmap->refCount == 0)
             delete bitmap;
     }
+}
+}
 }
 }

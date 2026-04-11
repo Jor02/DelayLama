@@ -1,10 +1,5 @@
-#include <windowsx.h>
-#include <cstdio>
-#include "Window.h"
-#include "gui/editor/DelayLamaEditor.h"
-#include "platform/GDIDrawingContext.h"
 
-namespace DelayLama {
+namespace DamSDK {
 namespace Gui {
 namespace Base {
 

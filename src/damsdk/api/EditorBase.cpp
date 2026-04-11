@@ -1,9 +1,6 @@
-#include "damsdk/EditorBase.h"
-#include "DamPlugin.h"
-#include "EditorBase.h"
 
 namespace DamSDK {
-
+namespace Api {
     int GLOBAL_KNOB_MODE = 0;
 
     EditorBase::EditorBase(AudioBase* mainPlugin) {
@@ -116,4 +113,5 @@ namespace DamSDK {
     void EditorBase::sleep(DWORD milliseconds) {
         Sleep(milliseconds);
     }
+}
 }

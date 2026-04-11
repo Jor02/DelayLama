@@ -1,9 +1,8 @@
 #pragma once
-#include "damsdk/DamPlugin.h"
-#include "damsdk/AudioBase.h"
-#include "damsdk/EditorBase.h"
 
 namespace DamSDK {
+namespace Api {
+
     class AudioBaseExtended : public AudioBase {
     public:
         AudioBaseExtended(dispatchFunc hostCallback, int32_t presetCount, int32_t parameterCount);
@@ -117,4 +116,5 @@ namespace DamSDK {
         // -- Empty/Unknown Functions --
         virtual float returnZeroFloat();
     };
+}
 }
