@@ -1,10 +1,13 @@
 #pragma once
 #include <cstdint>
-#include "core/DelayLamaPlugin.h"
-#include "damsdk/DamPlugin.h"
 #include "damsdk/EditorBase.h"
-#include "gui/controls/control.h"
-#include "platform/Bitmap.h"
+
+// Forward declarations
+namespace DelayLama {
+    namespace Platform { class Bitmap; }
+    namespace Controls { class Control; }
+    namespace Core { class DelayLamaPlugin; }
+}
 
 namespace DelayLama {
 namespace Gui{

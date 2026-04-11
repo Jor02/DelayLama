@@ -2,11 +2,12 @@
 #include "DelayLamaEditor.h"
 #include "platform/Resource.h"
 #include "damsdk/EditorBase.h"
+#include "platform/Bitmap.h"
 #include "utils/Logger.h"
 
 namespace DelayLama {
 namespace Gui{
-    DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::EditorBase(pluginInstance) {
+    DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::EditorBase((DamSDK::AudioBase*)pluginInstance) {
         this->reverbHandleBitmap = nullptr;
         this->monkSpriteSheetBitmap = nullptr;
         this->singingYHandleBitmap = nullptr;

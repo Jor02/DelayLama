@@ -1,6 +1,13 @@
+#pragma once
 #include <windows.h>
 #include <windef.h>
-#include "platform/GDIDrawingContext.h"
+
+// Forward declarations
+namespace DelayLama {
+namespace Platform {
+    struct GDIDrawingContext;
+}
+}
 
 namespace DelayLama {
 namespace Platform{
