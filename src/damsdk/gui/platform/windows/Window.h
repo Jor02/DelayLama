@@ -5,6 +5,9 @@
 
 namespace DamSDK {
     namespace Api { class EditorBase; }
+    namespace Gui {
+        namespace Controls { class Control; }
+    }
 }
 
 namespace DamSDK {
@@ -19,7 +22,7 @@ namespace Windows {
             struct Bitmap *backgroundBitmap;
             int numChildren;
             int maxChildren;
-            struct Control **children;
+            struct Controls::Control **children;
             struct View *modalView;
             COLORREF* colors;
             bool redrawPending;
@@ -31,12 +34,16 @@ namespace Windows {
             void *closeParameter;
         public:
             Window(RECT *pRect, HWND hParent, Api::EditorBase *editor);
+            void update(GDIDrawingContext *drawingContext) override;
+            void onDraw(GDIDrawingContext *drawingContext) override;
             bool openPluginWindow(HWND hParent);
-            bool registerControl(Control *control);
+            bool needsRedraw();
+            bool registerControl(Controls::Control *control);
             void onMouseWheel(int unused1, POINT unused2, int hoverState);
-            void drawControlOrSelf(Control *target);
+            void drawControlOrSelf(Controls::Control *target);
             void refresh();
             static bool registerWindowClass();
+            void setBackgroundBitmap(Bitmap *background);
     };
 }
 }

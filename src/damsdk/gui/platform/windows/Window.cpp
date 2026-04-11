@@ -1,7 +1,9 @@
 #include <cstdio>
 #include <windowsx.h>
 #include "Window.h"
+#include "damsdk/gui/controls/Control.h"
 #include "GDIDrawingContext.h"
+#include "Bitmap.h"
 
 namespace DamSDK {
 namespace Gui {
@@ -29,6 +31,69 @@ namespace Windows {
         this->closeParameter = nullptr;
         this->hWnd = nullptr;
         openPluginWindow(hParent);
+    }
+
+    void Window::onDraw(GDIDrawingContext *drawingContext) {
+        if (this->redrawPending != false) {
+            this->redrawPending = false;
+        }
+
+        Bitmap* background = this->backgroundBitmap;
+        if (background != NULL) {
+
+            RECT destRect;
+            destRect.bottom = background->height;
+            destRect.right = background->width;
+            destRect.left = 0;
+            destRect.top = 0;
+
+            POINT srcPoint;
+            srcPoint.x = 0;
+            srcPoint.y = 0;
+
+            background->blit(drawingContext,&destRect,&srcPoint);
+        }
+        int i = 0;
+        if (0 < (int)this->numChildren) {
+            do {
+                this->children[i]->isDirty();
+                this->children[i]->onDraw(drawingContext);
+                this->children[i]->setDirty(false);
+            i += 1;
+            } while (i < (int)this->numChildren);
+        }
+        if (this->modalView != NULL) {
+            this->modalView->onDraw(drawingContext);
+        }
+    }
+
+    void Window::update(GDIDrawingContext *drawingContext)
+    {
+        bool isActive;
+        int i;
+        
+        if (this->visible != false) {
+            if (this->modalView != nullptr) {
+                this->modalView->update(drawingContext);
+                return;
+            }
+
+            isActive = this->isDirty();
+
+            if (isActive != false) {
+                this->onDraw(drawingContext);
+                this->setDirty(false);
+                return;
+            }
+
+            i = 0;
+            if (0 < (int)this->numChildren) {
+            do {
+                this->children[i]->update(drawingContext);
+                i += 1;
+            } while (i < (int)this->numChildren);
+            }
+        }
     }
 
     bool Window::openPluginWindow(HWND hParent) {
@@ -61,6 +126,17 @@ namespace Windows {
         // setDragAndDropState(this,true);
         
         return true;
+    }
+
+    void Window::setBackgroundBitmap(Bitmap *background) {
+        if (this->backgroundBitmap != nullptr) {
+            Bitmap::unregisterBitmap(this->backgroundBitmap);
+        }
+        this->backgroundBitmap = background;
+        
+        if (background != nullptr) {
+            View::useBitmap(background);
+        }
     }
 
     bool Window::registerWindowClass()
@@ -166,6 +242,26 @@ namespace Windows {
 
         // LAB_100084e8: Default window procedure
         return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+    }
+
+    void Window::onMouseWheel(int unused1, POINT unused2, int hoverState) {}
+    void Window::drawControlOrSelf(Controls::Control *target) {}
+    void Window::refresh() {
+        if ((this->visible != false) && (this->redrawPending == false)) {
+            if (needsRedraw()) {
+                HDC hDC = GetDC(this->hWnd);
+                GDIDrawingContext* drawingContext = new GDIDrawingContext(this, hDC, this->hWnd);
+                if (drawingContext != NULL) {
+                    this->update(drawingContext);
+                    delete drawingContext;
+                }
+                ReleaseDC(this->hWnd,hDC);
+            }
+        }
+    }
+
+    bool Window::needsRedraw() {
+        return true; // TODO: Implement actual implementation.
     }
 }
 }
