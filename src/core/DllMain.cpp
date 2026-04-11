@@ -1,3 +1,8 @@
+#include <Windows.h>
+#include <minwindef.h>
+#include "damsdk/gui/platform/windows/GDIDrawingContext.h"
+
+using DamSDK::Gui::Platform::Windows::GDIDrawingContext;
 
 namespace DelayLama {
 namespace Core {
@@ -24,7 +29,7 @@ namespace Core {
         //     }
         // }
 
-        int bSetModuleResult = Platform::GDIDrawingContext::setModuleHandle(hinstDLL);
+        int bSetModuleResult = GDIDrawingContext::setModuleHandle(hinstDLL);
 
         // if (fdwReason == DLL_PROCESS_ATTACH) {
         //     if (bSetModuleResult != 0) {

@@ -1,3 +1,8 @@
+#include <Windows.h>
+#include <winnt.h>
+#include "DelayLamaPlugin.h"
+#include "utils/Logger.h"
+#include "damsdk/api/DamPlugin.h"
 
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 
@@ -9,14 +14,14 @@ namespace Core {
     bool g_bInitFailed = false;
 
     // This is what the host calls
-    extern "C" __declspec(dllexport) DamSDK::DamPlugin* __cdecl VSTPluginMain(DamSDK::dispatchFunc hostCallback)
+    extern "C" __declspec(dllexport) DamSDK::Api::DamPlugin* __cdecl VSTPluginMain(DamSDK::Api::dispatchFunc hostCallback)
     {
         attachConsole();
 
         log("VSTPluginMain called\n");
 
         // Check host version
-        intptr_t hostVersionSupport = hostCallback(nullptr, DamSDK::hostGetApiVersion, 0, 0, nullptr, 0.0f);
+        intptr_t hostVersionSupport = hostCallback(nullptr, DamSDK::Api::hostGetApiVersion, 0, 0, nullptr, 0.0f);
         if (hostVersionSupport == 0) {
             return nullptr;
         }
@@ -30,7 +35,7 @@ namespace Core {
         }
 
         // Return the DamPlugin
-        DamSDK::DamPlugin* plugin = &delayLama->plugin;
+        DamSDK::Api::DamPlugin* plugin = &delayLama->plugin;
 
         return plugin;
     }

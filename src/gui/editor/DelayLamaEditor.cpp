@@ -1,7 +1,10 @@
+#include "DelayLamaEditor.h"
+#include "gui/Resources.h"
+#include "damsdk/api/AudioBase.h"
 
 namespace DelayLama {
 namespace Gui{
-    DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::EditorBase((DamSDK::AudioBase*)pluginInstance) {
+    DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::Api::EditorBase((DamSDK::Api::AudioBase*)pluginInstance) {
         this->reverbHandleBitmap = nullptr;
         this->monkSpriteSheetBitmap = nullptr;
         this->singingYHandleBitmap = nullptr;
@@ -17,7 +20,7 @@ namespace Gui{
         this->monk = nullptr;
         this->splashScreen = nullptr;
 
-        Platform::Bitmap* background = new Platform::Bitmap(IDB_BACKGROUND);
+        Bitmap* background = new Bitmap(IDB_BACKGROUND);
         this->backgroundBitmap = background;
         this->rect.top = 0;
         this->rect.left = 0;
@@ -29,35 +32,35 @@ namespace Gui{
 
     DelayLamaEditor::~DelayLamaEditor() {
         if (this->backgroundBitmap != NULL) {
-            Platform::Bitmap::unregisterBitmap(this->backgroundBitmap);
+            Bitmap::unregisterBitmap(this->backgroundBitmap);
         }
         this->backgroundBitmap = NULL;
         if (this->reverbHandleBitmap != NULL) {
-            Platform::Bitmap::unregisterBitmap(this->reverbHandleBitmap);
+            Bitmap::unregisterBitmap(this->reverbHandleBitmap);
         }
         this->reverbHandleBitmap = NULL;
         if (this->singingYHandleBitmap != NULL) {
-            Platform::Bitmap::unregisterBitmap(this->singingYHandleBitmap);
+            Bitmap::unregisterBitmap(this->singingYHandleBitmap);
         }
         this->singingYHandleBitmap = NULL;
         if (this->singingXHandleBitmap != NULL) {
-            Platform::Bitmap::unregisterBitmap(this->singingXHandleBitmap);
+            Bitmap::unregisterBitmap(this->singingXHandleBitmap);
         }
         this->singingXHandleBitmap = NULL;
         if (this->monkSpriteSheetBitmap != NULL) {
-            Platform::Bitmap::unregisterBitmap(this->monkSpriteSheetBitmap);
+            Bitmap::unregisterBitmap(this->monkSpriteSheetBitmap);
         }
         this->monkSpriteSheetBitmap = NULL;
         if (this->aboutScreenBitmap != NULL) {
-            Platform::Bitmap::unregisterBitmap(this->aboutScreenBitmap);
+            Bitmap::unregisterBitmap(this->aboutScreenBitmap);
         }
         this->aboutScreenBitmap = NULL;
         if (this->leftKnobBitmap != NULL) {
-            Platform::Bitmap::unregisterBitmap(this->leftKnobBitmap);
+            Bitmap::unregisterBitmap(this->leftKnobBitmap);
         }
         this->leftKnobBitmap = NULL;
         if (this->rightKnobBitmap != NULL) {
-            Platform::Bitmap::unregisterBitmap(this->rightKnobBitmap);
+            Bitmap::unregisterBitmap(this->rightKnobBitmap);
         }
         this->rightKnobBitmap = NULL;
     }

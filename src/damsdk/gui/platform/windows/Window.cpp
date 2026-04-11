@@ -1,14 +1,19 @@
+#include <cstdio>
+#include <windowsx.h>
+#include "Window.h"
+#include "GDIDrawingContext.h"
 
 namespace DamSDK {
 namespace Gui {
-namespace Base {
+namespace Platform {
+namespace Windows {
 
     static LRESULT CALLBACK pluginWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
     static char g_szWindowClassName[64];
     static int g_RegistrationCount = 0;
 
-    Window::Window(RECT *pRect,HWND hParent, DelayLamaEditor *editor) : View(pRect) {
+    Window::Window(RECT *pRect,HWND hParent, Api::EditorBase *editor) : View(pRect) {
         this->editor = editor;
         this->handle = hParent;
         this->backgroundBitmap = NULL;
@@ -47,7 +52,7 @@ namespace Base {
             width, height,
             this->handle,
             nullptr,
-            Platform::g_hInstance,
+            Windows::g_hInstance,
             nullptr
         );
         this->hWnd = hChild;
@@ -64,12 +69,12 @@ namespace Base {
         if (g_RegistrationCount == 1)
         {
             // Generate unique class name: "Plugin" + hex instance handle
-            sprintf(g_szWindowClassName, "Plugin%08x", (unsigned int)Platform::g_hInstance);
+            sprintf(g_szWindowClassName, "Plugin%08x", (unsigned int)Windows::g_hInstance);
 
             WNDCLASSA wc = {};
             wc.style         = CS_GLOBALCLASS;
             wc.lpfnWndProc   = pluginWndProc;
-            wc.hInstance     = Platform::g_hInstance;
+            wc.hInstance     = Windows::g_hInstance;
             wc.hCursor       = LoadCursorA(nullptr, IDC_ARROW);
             wc.hbrBackground = GetSysColorBrush(COLOR_BTNFACE);
             wc.lpszClassName = g_szWindowClassName;
@@ -100,7 +105,7 @@ namespace Base {
                     PAINTSTRUCT ps;
                     HDC hdcPaint = BeginPaint(hWnd, &ps);
                     
-                    Platform::GDIDrawingContext* drawingContext = new Platform::GDIDrawingContext(parentFramePtr, hdcPaint, hWnd);
+                    GDIDrawingContext* drawingContext = new GDIDrawingContext(parentFramePtr, hdcPaint, hWnd);
                     parentFramePtr->modalView->onDraw(drawingContext);
                     
                     delete drawingContext;
@@ -142,7 +147,7 @@ namespace Base {
             {
                 if (parentFramePtr != nullptr) {
                     HDC hdcPaint = GetDC(hWnd);
-                    Platform::GDIDrawingContext* drawingContext = new Platform::GDIDrawingContext(parentFramePtr, hdcPaint, hWnd);
+                    GDIDrawingContext* drawingContext = new GDIDrawingContext(parentFramePtr, hdcPaint, hWnd);
 
                     // The decompiler was manually constructing a Point struct from lParam bytes
                     POINT pt;
@@ -165,4 +170,4 @@ namespace Base {
 }
 }
 }
-
+}

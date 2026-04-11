@@ -1,12 +1,20 @@
 #pragma once
+#include <Windows.h>
+#include <windef.h>
+#include "damsdk/gui/base/View.h"
+
+namespace DamSDK {
+    namespace Api { class EditorBase; }
+}
 
 namespace DamSDK {
 namespace Gui {
-namespace Base {
-    class Window : public View {
+namespace Platform {
+namespace Windows {
+    class Window : public Base::View {
         public:
             char unused1;
-            DelayLamaEditor *editor;
+            Api::EditorBase *editor;
             HWND handle;
             struct Bitmap *backgroundBitmap;
             int numChildren;
@@ -22,11 +30,15 @@ namespace Base {
             char unused4[3];
             void *closeParameter;
         public:
-            Window(RECT *pRect,HWND hParent,DelayLamaEditor *editor);
+            Window(RECT *pRect, HWND hParent, Api::EditorBase *editor);
             bool openPluginWindow(HWND hParent);
+            bool registerControl(Control *control);
+            void onMouseWheel(int unused1, POINT unused2, int hoverState);
+            void drawControlOrSelf(Control *target);
+            void refresh();
             static bool registerWindowClass();
     };
 }
 }
 }
-
+}

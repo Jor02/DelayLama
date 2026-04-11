@@ -1,3 +1,4 @@
+#include "GDIDrawingContext.h"
 
 namespace DamSDK {
 namespace Gui {

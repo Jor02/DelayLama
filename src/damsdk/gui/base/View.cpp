@@ -1,3 +1,5 @@
+#include "View.h"
+#include "damsdk/gui/platform/windows/GDIDrawingContext.h"
 
 namespace DamSDK {
 namespace Gui {
@@ -19,8 +21,8 @@ namespace Base {
         this->useAlphaBlending = false;
     }
 
-    void View::onDraw(Platform::GDIDrawingContext* drawingContext) {}
-    void View::onMouseDown(Platform::GDIDrawingContext* drawingContext, POINT* point) {}
+    void View::onDraw(Platform::Windows::GDIDrawingContext* drawingContext) {}
+    void View::onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* point) {}
 }
 }
 }

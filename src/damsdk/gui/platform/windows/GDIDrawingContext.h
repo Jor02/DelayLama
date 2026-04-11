@@ -1,5 +1,16 @@
 #pragma once
+#include <Windows.h>
+#include <minwindef.h>
+#include <windef.h>
+#include <cstdint>
 
+namespace DamSDK {
+    namespace Gui {
+        namespace Platform {
+            namespace Windows { class Window; }
+        }
+    }
+}
 
 namespace DamSDK {
 namespace Gui {
@@ -33,7 +44,7 @@ namespace Windows {
             UINT penStyle;
 
         public:
-            GDIDrawingContext(Gui::Base::Window *parentFramePtr,HDC hDC,HWND hWnd);
+            GDIDrawingContext(Window *parentFramePtr,HDC hDC,HWND hWnd);
             static int32_t setModuleHandle(HINSTANCE hInstance);
     };
 }

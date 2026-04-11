@@ -1,5 +1,5 @@
-
-using namespace DamSDK;
+#include "AudioBaseExtended.h"
+#include "EditorBase.h"
 
 namespace DamSDK {
 namespace Api {

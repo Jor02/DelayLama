@@ -1,10 +1,11 @@
 #pragma once
+#include "damsdk/api/AudioBaseExtended.h"
 
 namespace DelayLama {
 namespace Core {
-    class DelayLamaAudio : public DamSDK::AudioBaseExtended {
+    class DelayLamaAudio : public DamSDK::Api::AudioBaseExtended {
         public:
-            DelayLamaAudio(DamSDK::dispatchFunc hostCallback);
+            DelayLamaAudio(DamSDK::Api::dispatchFunc hostCallback);
             ~DelayLamaAudio();
 
             bool getPluginName(char *outText) override;
