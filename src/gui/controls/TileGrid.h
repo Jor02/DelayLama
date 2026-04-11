@@ -1,0 +1,18 @@
+#pragma once
+#include "damsdk/gui/controls/Control.h"
+
+namespace DelayLama {
+namespace Gui {
+namespace Controls {
+    class TileGrid : public DamSDK::Gui::Controls::Control {
+        public:
+            POINT srcOffset;
+            int tileWidth;
+            int tileHeight;
+        public:
+            TileGrid(RECT *pRect, void *unknown, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
+            virtual void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext);
+    };
+    }
+}
+}

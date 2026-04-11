@@ -263,6 +263,38 @@ namespace Windows {
     bool Window::needsRedraw() {
         return true; // TODO: Implement actual implementation.
     }
+
+    bool Window::registerControl(Controls::Control *control)
+    {
+        if (numChildren == maxChildren) {
+            int newCapacity = maxChildren + 10;
+            maxChildren = newCapacity;
+
+            Controls::Control** newChildren;
+            if (children == nullptr) {
+                newChildren = static_cast<Controls::Control**>(malloc(newCapacity * sizeof(Controls::Control*)));
+            } else {
+                newChildren = static_cast<Controls::Control**>(realloc(children, newCapacity * sizeof(Controls::Control*)));
+            }
+
+            if (newChildren == nullptr) {
+                maxChildren = 0;
+                return false;
+            }
+
+            children = newChildren;
+        }
+
+        children[numChildren++] = control;
+
+        // Set parent
+        control->parent = this;
+
+        // Call virtual function
+        // control->returnTrue(this);
+
+        return true;
+    }
 }
 }
 }

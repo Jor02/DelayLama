@@ -28,6 +28,7 @@ namespace Base {
     void View::update(Platform::Windows::GDIDrawingContext *drawingContext) { }
     void View::onDraw(Platform::Windows::GDIDrawingContext* drawingContext) { }
     void View::onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* point) { }
+    void View::setEnabled(bool enabled) { this->isEnabled = enabled; }
     void View::useBitmap(Platform::Windows::Bitmap *bmp) {
         bmp->refCount = bmp->refCount + 1;
     }

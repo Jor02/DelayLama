@@ -5,7 +5,7 @@
 namespace DamSDK {
     namespace Gui {
         namespace Platform {
-            namespace Windows { class GDIDrawingContext; class Bitmap; }
+            namespace Windows { class GDIDrawingContext; class Bitmap; class Window; }
         }
     }
 }
@@ -21,7 +21,7 @@ namespace Base {
             int referenceCount;
             RECT rect;
             RECT absRect;
-            struct Window *parent;
+            DamSDK::Gui::Platform::Windows::Window *parent;
             int unused;
             bool isEnabled;
             bool useAlphaBlending;
@@ -32,7 +32,9 @@ namespace Base {
             virtual void update(Platform::Windows::GDIDrawingContext *drawingContext);
             virtual void onDraw(Platform::Windows::GDIDrawingContext* drawingContext);
             virtual void onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* point);
+            virtual void setEnabled(bool enabled);
             static void useBitmap(Platform::Windows::Bitmap *bmp);
+
     };
 }
 }

@@ -4,12 +4,30 @@
 #include "damsdk/gui/platform/windows/Bitmap.h"
 
 // Forward declarations
-namespace DelayLama {
-    namespace Core { class DelayLamaPlugin; }
+namespace DamSDK {
+    namespace Gui {
+        namespace Controls {
+            class HorizontalSlider;
+            class VerticalSlider;
+            class TwoAxisSlider;
+            class Knob;
+        }
+    }
 }
 
-using DamSDK::Gui::Platform::Windows::Bitmap;
-using DamSDK::Gui::Controls::Control;
+namespace DelayLama {
+    namespace Core { class DelayLamaPlugin; }
+    namespace Gui {
+        namespace Controls {
+            class Monk;
+            class SplashScreen;
+        }
+    }
+}
+
+using namespace DamSDK::Gui::Platform::Windows;
+using namespace DamSDK::Gui::Controls;
+using namespace DelayLama::Gui::Controls;
 
 namespace DelayLama {
 namespace Gui{
@@ -17,14 +35,14 @@ namespace Gui{
         public:
             char unused[3];
             void* drawControl;
-            Control* monk;
-            Control* twoAxisSlider;
-            Control* singingVerticalSlider;
-            Control* singingHorizontalSlider;
-            Control* reverbSlider;
-            Control* leftKnob;
-            Control* knob;
-            Control* splashScreen;
+            Monk* monk;
+            TwoAxisSlider* singingController;
+            VerticalSlider* singingVerticalSlider;
+            HorizontalSlider* singingHorizontalSlider;
+            HorizontalSlider* reverbSlider;
+            Knob* leftKnob;
+            Knob* rightKnob;
+            SplashScreen* splashScreen;
             Bitmap* backgroundBitmap;
             Bitmap* monkSpriteSheetBitmap;
             Bitmap* singingYHandleBitmap;
