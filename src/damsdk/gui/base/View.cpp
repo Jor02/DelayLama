@@ -1,9 +1,11 @@
 #include "View.h"
 #include "damsdk/gui/platform/windows/GDIDrawingContext.h"
+#include "damsdk/gui/platform/windows/Bitmap.h"
 
 namespace DamSDK {
 namespace Gui {
 namespace Base {
+    
     View::View(RECT * pRect) {
         this->referenceCount = 1;
         this->rect.left = pRect->left;
@@ -16,13 +18,19 @@ namespace Base {
         this->absRect.bottom = pRect->bottom;
         this->parent = nullptr;
         this->unused = 0;
-        this->isDirty = true;
+        this->_isDirty = true;
         this->isEnabled = true;
         this->useAlphaBlending = false;
     }
 
-    void View::onDraw(Platform::Windows::GDIDrawingContext* drawingContext) {}
-    void View::onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* point) {}
+    bool View::isDirty() { return _isDirty; }
+    void View::setDirty(bool isDirty) { _isDirty = isDirty; }
+    void View::update(Platform::Windows::GDIDrawingContext *drawingContext) { }
+    void View::onDraw(Platform::Windows::GDIDrawingContext* drawingContext) { }
+    void View::onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* point) { }
+    void View::useBitmap(Platform::Windows::Bitmap *bmp) {
+        bmp->refCount = bmp->refCount + 1;
+    }
 }
 }
 }
