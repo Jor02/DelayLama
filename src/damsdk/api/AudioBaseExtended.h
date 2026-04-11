@@ -3,6 +3,7 @@
 #include <windef.h>
 #include <cstdint>
 #include "AudioBase.h"
+#include "EditorBase.h"
 
 namespace DamSDK {
 namespace Api {
