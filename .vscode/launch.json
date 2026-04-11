@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run DelayLama",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Debug/DelayLama.exe",
+      "cwd": "${workspaceFolder}/build/Debug",
+      "stopAtEntry": false,
+      "preLaunchTask": "build-delaylama"
+    }
+  ]
+}
