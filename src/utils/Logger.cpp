@@ -6,7 +6,6 @@
 // This stays static so it's only visible inside Logger.cpp
 static bool g_consoleAttached = false; 
 
-namespace DelayLama {
 namespace Utils {
 
     void attachConsole()
@@ -57,5 +56,4 @@ namespace Utils {
         }
     }
 
-}
 }

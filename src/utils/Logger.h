@@ -1,6 +1,5 @@
 #pragma once
 
-namespace DelayLama {
 namespace Utils {
 
     // Initializes the console. Call this once in VSTPluginMain.
@@ -12,5 +11,4 @@ namespace Utils {
     // Formatted logger
     void logf(const char* format, ...);
 
-}
 }

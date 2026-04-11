@@ -39,7 +39,7 @@ namespace Windows {
         }
 
         Bitmap* background = this->backgroundBitmap;
-        if (background != NULL) {
+        if (background != nullptr) {
 
             RECT destRect;
             destRect.bottom = background->height;
@@ -105,8 +105,8 @@ namespace Windows {
 
         Window::registerWindowClass();
 
-        int width  = this->modalView->rect.right - this->modalView->rect.left;
-        int height = this->modalView->rect.bottom - this->modalView->rect.top;
+        int width  = this->rect.right - this->rect.left;
+        int height = this->rect.bottom - this->rect.top;
 
         hChild = CreateWindowExA(
             0,
@@ -182,7 +182,7 @@ namespace Windows {
                     HDC hdcPaint = BeginPaint(hWnd, &ps);
                     
                     GDIDrawingContext* drawingContext = new GDIDrawingContext(parentFramePtr, hdcPaint, hWnd);
-                    parentFramePtr->modalView->onDraw(drawingContext);
+                    parentFramePtr->onDraw(drawingContext);
                     
                     delete drawingContext;
                     
@@ -230,7 +230,7 @@ namespace Windows {
                     pt.x = GET_X_LPARAM(lParam);
                     pt.y = GET_Y_LPARAM(lParam);
 
-                    parentFramePtr->modalView->onMouseDown(drawingContext, &pt);
+                    parentFramePtr->onMouseDown(drawingContext, &pt);
 
                     delete drawingContext;
                     ReleaseDC(hWnd, hdcPaint);

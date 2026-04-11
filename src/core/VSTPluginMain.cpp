@@ -6,7 +6,7 @@
 
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 
-using namespace DelayLama::Utils;
+using namespace Utils;
 
 namespace DelayLama {
 namespace Core {
