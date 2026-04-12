@@ -30,6 +30,7 @@ namespace Api {
             bool isInIdleUpdate;
         public:
             EditorBase(AudioBase* plugin);
+            ~EditorBase();
             virtual void open(HWND hParent);
             virtual void getRect(Rect** outRect);
             virtual void close();
