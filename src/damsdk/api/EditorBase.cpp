@@ -62,7 +62,7 @@ namespace Api {
         GLOBAL_KNOB_MODE = mode;
     }
 
-    void EditorBase::dispatcher(int parameterIndex) {
+    void EditorBase::dispatcher(int parameterIndex, float value) {
         this->invalidate();
     }
 

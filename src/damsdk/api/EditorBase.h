@@ -36,7 +36,7 @@ namespace Api {
             virtual int32_t keyUp(KeyCode* keycode);
             virtual void setKnobMode(int32_t mode);
             
-            virtual void dispatcher(int parameterIndex);
+            virtual void dispatcher(int parameterIndex, float value);
             virtual void draw();
             virtual void idleHandler();
             virtual void invalidate();
