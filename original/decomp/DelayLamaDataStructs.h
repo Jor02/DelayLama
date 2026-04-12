@@ -784,7 +784,7 @@ struct DelayLamaAudioMembers {
     float curVowelValue;
     float prevVowelValue;
     float delay;
-    float scaledVowel; /* Created by Rename Structure Field action */
+    float monkSprite; /* Created by Rename Structure Field action */
     float headSize; /* Created by Rename Structure Field action */
     float vibratoDepthCurrent; /* Created by Rename Structure Field action */
     float vibratoAmount; /* Created by Rename Structure Field action */
