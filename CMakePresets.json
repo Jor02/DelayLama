@@ -6,7 +6,7 @@
       "displayName": "Visual Studio 2026",
       "description": "Build with Visual Studio 2026 (modern MSVC)",
       "generator": "Visual Studio 18 2026",
-      "binaryDir": "${sourceDir}/build",
+      "binaryDir": "${sourceDir}/build/vs2026",
       "architecture": {
         "value": "Win32",
         "strategy": "set"
