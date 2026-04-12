@@ -1,5 +1,5 @@
 #pragma once
-#include <cstdint>
+#include <utils/portable_stdint.h>
 #include "DamPlugin.h"
 #include "AudioBase.h"
 

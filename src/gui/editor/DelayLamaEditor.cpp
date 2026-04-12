@@ -1,6 +1,7 @@
 #include "DelayLamaEditor.h"
 #include "gui/Resources.h"
 #include "damsdk/api/AudioBase.h"
+#include "core/PluginConfig.h"
 
 // Components
 #include "damsdk/gui/platform/windows/Window.h"
