@@ -49,7 +49,7 @@ namespace Api {
         virtual int32_t setPluginStateData(void* ptr, int32_t value, bool index);
         
         // -- IO --
-        virtual long double getSampleRate();
+        virtual double getSampleRate();
         virtual void setSampleRate(int32_t sampleRate);
         virtual int32_t getMaxFramesPerProcess();
         virtual void setMaxFramesPerProcess(int32_t blockSize);

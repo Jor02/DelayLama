@@ -189,7 +189,7 @@ namespace Api {
     int32_t AudioBase::setPluginStateData(void* ptr, int32_t value, bool index) { return 0; }
     
     // -- IO --
-    long double AudioBase::getSampleRate() { return this->sampleRate; }
+    double AudioBase::getSampleRate() { return this->sampleRate; }
     void AudioBase::setSampleRate(int32_t sampleRate) { this->sampleRate = sampleRate; }
     int32_t AudioBase::getMaxFramesPerProcess() { return this->blockSize; }
     void AudioBase::setMaxFramesPerProcess(int32_t blockSize) { this->blockSize = blockSize; }
