@@ -4,6 +4,8 @@
 namespace DamSDK {
 namespace Gui {
 namespace Controls {
+
+    // VTABLE: DELAYLAMA 0x1000be60
     class Knob : public Control {
         public:
             POINT origin;

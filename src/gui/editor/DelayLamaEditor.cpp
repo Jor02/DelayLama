@@ -17,6 +17,8 @@
 
 namespace DelayLama {
 namespace Gui{
+
+    // FUNCTION DELAYLAMA: 0x10003640
     DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::Api::EditorBase((DamSDK::Api::AudioBase*)pluginInstance) {
         this->reverbHandleBitmap = nullptr;
         this->monkSpriteSheetBitmap = nullptr;
@@ -43,6 +45,7 @@ namespace Gui{
         // Utils::logf("{%d, %d, %d, %d}", this->rect.left, this->rect.top, this->rect.right, this->rect.bottom);
     }
 
+    // FUNCTION DELAYLAMA: 0x10003820
     void DelayLamaEditor::open(HWND parentWnd)
     {
         EditorBase::open(parentWnd);
@@ -201,6 +204,7 @@ namespace Gui{
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->splashScreen);
     }
 
+    // FUNCTION DELAYLAMA: 0x100040c0
     void DelayLamaEditor::dispatcher(int32_t parameterIndex, float parameterValue)
     {
         if (this->window == nullptr)

@@ -12,6 +12,8 @@ namespace DamSDK {
 namespace DamSDK {
 namespace Gui {
 namespace Controls {
+
+    // VTABLE: DELAYLAMA 0x1000bcd4
     class Control : public Base::View {
         public:
             int parameterId;

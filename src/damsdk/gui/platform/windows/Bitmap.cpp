@@ -10,6 +10,7 @@ namespace Gui {
 namespace Platform {
 namespace Windows {
 
+    // FUNCTION: DELAYLAMA 0x10007e20
     Bitmap::Bitmap(int resId) {        
         this->resourceId = resId;
         this->refCount = 1;
@@ -29,6 +30,7 @@ namespace Windows {
         }
     }
 
+    // FUNCTION: DELAYLAMA 0x10007e90
     Bitmap::~Bitmap() {
         if (this->bitmap != nullptr) {
         DeleteObject(this->bitmap);
@@ -39,6 +41,7 @@ namespace Windows {
         return;
     }
 
+    // FUNCTION: DELAYLAMA 0x10007f00
     void Bitmap::blit(GDIDrawingContext *drawingContext, RECT *destRect, POINT *srcPoint) {
         if (this->bitmap != nullptr) {
             HDC hdc = CreateCompatibleDC(drawingContext->hDC);
@@ -59,6 +62,7 @@ namespace Windows {
         }
     }
 
+    // FUNCTION: DELAYLAMA 0x100085a0
     HBITMAP Bitmap::createMaskBitmap(HDC hdcRef,HANDLE hBitmapSrc,COLORREF colorKey) {
         HDC hdcSrc = CreateCompatibleDC(hdcRef);
         SelectObject(hdcSrc,hBitmapSrc);
@@ -88,6 +92,7 @@ namespace Windows {
         return hMaskBitmap;
     }
 
+    // FUNCTION: DELAYLAMA 0x10007f90
     void Bitmap::drawMasked(GDIDrawingContext* drawingContext, RECT* destRect, POINT* srcPoint)
     {
         if (this->maskBitmap == nullptr)
@@ -165,6 +170,7 @@ namespace Windows {
         DeleteDC(srcDC);
     }
 
+    // FUNCTION: DELAYLAMA 0x10007ed0
     void Bitmap::unregisterBitmap(Bitmap* bitmap)
     {
         if (bitmap->refCount > 0 && --bitmap->refCount == 0)

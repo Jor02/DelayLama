@@ -10,6 +10,7 @@ namespace Core {
         char name[24];
     };
 
+    // VTABLE: DELAYLAMA 0x1000b460
     class DelayLamaAudio : public DamSDK::Api::AudioBaseExtended {
         public:
             float portamentoTime;

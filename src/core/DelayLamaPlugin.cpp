@@ -3,7 +3,8 @@
 
 namespace DelayLama {
 namespace Core {
-    // Constructor
+
+    // FUNCTION DELAYLAMA: 0x10003470
     DelayLamaPlugin::DelayLamaPlugin(DamSDK::Api::dispatchFunc hostCallback) : DelayLamaAudio(hostCallback)  {
         this->plugin.id = 'AnDl';
         Gui::DelayLamaEditor* editor = new Gui::DelayLamaEditor(this);
@@ -12,10 +13,11 @@ namespace Core {
             g_bInitFailed = true;
     }
 
-    // Destructor
+    // FUNCTION DELAYLAMA: 0x10003500
     DelayLamaPlugin::~DelayLamaPlugin() {
     }
 
+    // FUNCTION DELAYLAMA: 0x10003530
     void DelayLamaPlugin::setParameterValue(int parameterIndex,float parameterValue) {
         DelayLamaAudio::setParameterValue(parameterIndex,parameterValue);
 

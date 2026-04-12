@@ -6,6 +6,7 @@
 namespace DelayLama {
 namespace Gui {
 namespace Controls {
+    // VTABLE: DELAYLAMA 0x1000c154
     class SplashScreen : public DamSDK::Gui::Controls::Control {
         public:
         public:

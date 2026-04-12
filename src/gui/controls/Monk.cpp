@@ -6,10 +6,13 @@
 namespace DelayLama {
 namespace Gui {
 namespace Controls {
+
+    // FUNCTION DELAYLAMA: 0x10004600
     Monk::Monk(RECT *pRect, void *unknown, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, unknown, parameterId, tileWidth, tileHeight, bmp, srcOffset)
     {
     }
 
+    // FUNCTION DELAYLAMA: 0x100046a0
     void Monk::onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext)
     {
         this->tileHeight = 311;

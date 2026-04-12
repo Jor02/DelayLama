@@ -14,6 +14,7 @@ namespace DamSDK {
 namespace Gui {
 namespace Base {
 
+    // VTABLE: DELAYLAMA 0x1000bbec
     class View {
         private:
             bool _isDirty;

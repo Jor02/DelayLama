@@ -5,6 +5,8 @@ using DamSDK::Gui::Platform::Windows::GDIDrawingContext;
 
 namespace DelayLama {
 namespace Core {
+
+    // FUNCTION DELAYLAMA: 0x1000a9a7
     extern "C" BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
     {
         DWORD dwOriginalReason = fdwReason;

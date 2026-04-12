@@ -4,6 +4,8 @@
 namespace DamSDK {
 namespace Gui {
 namespace Controls {
+
+    // VTABLE: DELAYLAMA 0x1000bfd4
     class VerticalSlider : public Control {
         public:
             void *range;

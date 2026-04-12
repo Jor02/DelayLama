@@ -5,6 +5,7 @@
 
 namespace DamSDK {
 namespace Api {
+    // VTABLE: DELAYLAMA 0x1000b148
     class AudioBase {
     public:
         float sampleRate;

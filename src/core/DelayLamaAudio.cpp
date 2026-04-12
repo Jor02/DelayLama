@@ -6,6 +6,8 @@
 
 namespace DelayLama {
 namespace Core {
+
+    // FUNCTION DELAYLAMA: 0x10002820
     DelayLamaAudio::DelayLamaAudio(DamSDK::Api::dispatchFunc hostCallback) : DamSDK::Api::AudioBaseExtended(hostCallback, PRESET_COUNT, PARAMETER_COUNT) {
         this->synthesisBuffer = nullptr;
         this->excitationBuffer = nullptr;
@@ -30,22 +32,26 @@ namespace Core {
         }
 
         if (this->hostCallback != nullptr) {
-        this->plugin.inputChannelCount = 0;
-        this->plugin.outputChannelCount = 2;
-        this->setSupportsInPlaceProcessing(true);
-        this->setReportsLoudnessToHost(false);
-        this->setHasClip(false);
-        this->setIsSynthesizer(true);
-        this->plugin.id = 'AnDl';
+            this->plugin.inputChannelCount = 0;
+            this->plugin.outputChannelCount = 2;
+            this->setSupportsInPlaceProcessing(true);
+            this->setReportsLoudnessToHost(false);
+            this->setHasClip(false);
+            this->setIsSynthesizer(true);
+            this->plugin.id = 'AnDl';
+        }
     }
 
+    // FUNCTION DELAYLAMA: 0x10002980
     DelayLamaAudio::~DelayLamaAudio() {}
 
+    // FUNCTION DELAYLAMA: 0x10003110
     bool DelayLamaAudio::getPluginName(char *outText) {
         strcpy(outText, "Delay Lama");
         return true;
     }
     
+    // FUNCTION DELAYLAMA: 0x10003140
     bool DelayLamaAudio::getCompanyName(char *outText) {
         strcpy(outText, "AudioNerdz");
         return true;
@@ -56,6 +62,7 @@ namespace Core {
     const double kPi2 = 6.283185307f;  // 2.0 * pi
     const double kPi50 = 157.0796327;  // 50.0 * pi
 
+    // FUNCTION: DELAYLAMA 0x100048d0
     void DelayLamaAudio::initialize() {
         int i; // For loop index
 
@@ -195,11 +202,13 @@ namespace Core {
         }
     }
 
+    // FUNCTION DELAYLAMA: 0x100054c0
     void DelayLamaAudio::processAudio(float** inputs, float** outputs, int32_t sampleFrames)
     {
         // int i;
     }
 
+    // FUNCTION DELAYLAMA: 0x10003530
     void DelayLamaAudio::setParameterValue(int parameterId, float value)
     {
         switch (parameterId)
@@ -319,6 +328,7 @@ namespace Core {
         }
     }
 
+    // FUNCTION DELAYLAMA: 0x100032c0
     void DelayLamaAudio::initPresets() {
         // Preset 0
         this->presets[0].portTime = 0.5f;

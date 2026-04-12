@@ -6,6 +6,7 @@ namespace Core {
 
     extern bool g_bInitFailed;
 
+    // VTABLE: DELAYLAMA 0x1000b694
     class DelayLamaPlugin : public DelayLamaAudio {
     public:
         explicit DelayLamaPlugin(DamSDK::Api::dispatchFunc hostCallback);

@@ -15,6 +15,7 @@ namespace Windows {
     static char g_szWindowClassName[64];
     static int g_RegistrationCount = 0;
 
+    // FUNCTION: DELAYLAMA 0x100072a0
     Window::Window(RECT *pRect,HWND hParent, Api::EditorBase *editor) : View(pRect) {
         this->editor = editor;
         this->handle = hParent;
@@ -33,6 +34,7 @@ namespace Windows {
         openPluginWindow(hParent);
     }
 
+    // FUNCTION: DELAYLAMA 0x10007520
     void Window::onDraw(GDIDrawingContext *drawingContext) {
         if (this->redrawPending != false) {
             this->redrawPending = false;
@@ -67,6 +69,7 @@ namespace Windows {
         }
     }
 
+    // FUNCTION: DELAYLAMA 0x100078b0
     void Window::update(GDIDrawingContext *drawingContext)
     {
         bool isActive;
@@ -96,6 +99,7 @@ namespace Windows {
         }
     }
 
+    // FUNCTION: DELAYLAMA 0x10007450
     bool Window::openPluginWindow(HWND hParent) {
         HWND hChild;
   
@@ -128,6 +132,7 @@ namespace Windows {
         return true;
     }
 
+    // FUNCTION: DELAYLAMA 0x10007a10
     void Window::setBackgroundBitmap(Bitmap *background) {
         if (this->backgroundBitmap != nullptr) {
             Bitmap::unregisterBitmap(this->backgroundBitmap);
@@ -139,6 +144,7 @@ namespace Windows {
         }
     }
 
+    // FUNCTION: DELAYLAMA 0x100082a0
     bool Window::registerWindowClass()
     {
         g_RegistrationCount++;
@@ -160,6 +166,7 @@ namespace Windows {
         return true;
     }
 
+    // FUNCTION: DELAYLAMA 0x10008360
     static LRESULT CALLBACK pluginWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         #ifdef GetWindowLongPtr
@@ -249,8 +256,13 @@ namespace Windows {
         return DefWindowProcA(hWnd, uMsg, wParam, lParam);
     }
 
+    // STUB: DELAYLAMA 0x100077e0
     void Window::onMouseWheel(GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta) {}
+
+    // STUB: DELAYLAMA 0x100075c0
     void Window::drawControlOrSelf(Controls::Control *target) {}
+
+    // FUNCTION: DELAYLAMA 0x10007960
     void Window::refresh() {
         if ((this->visible != false) && (this->redrawPending == false)) {
             if (needsRedraw()) {
@@ -265,10 +277,12 @@ namespace Windows {
         }
     }
 
+    // STUB: DELAYLAMA 0x10007920
     bool Window::needsRedraw() {
         return true; // TODO: Implement actual implementation.
     }
 
+    // FUNCTION: DELAYLAMA 0x10007a40
     bool Window::registerControl(Controls::Control *control)
     {
         if (numChildren == maxChildren) {
