@@ -10,6 +10,7 @@ namespace Core {
     public:
         explicit DelayLamaPlugin(DamSDK::Api::dispatchFunc hostCallback);
         virtual ~DelayLamaPlugin();
+        virtual void setParameterValue(int parameterIndex,float parameterValue) override;
     };
 }
 }
