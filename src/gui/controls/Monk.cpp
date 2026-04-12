@@ -1,6 +1,7 @@
 #pragma once
 #include "Monk.h"
 #include "damsdk/gui/platform/windows/Bitmap.h"
+#include "utils/portable_stdint.h"
 
 namespace DelayLama {
 namespace Gui {
@@ -18,7 +19,10 @@ namespace Controls {
             this->value = 1.0f;
         }
 
-        POINT srcPoint{};
+        POINT srcPoint;
+        srcPoint.x = 0;
+        srcPoint.y = 0;
+
         int xOffsetAccumulator = 0;
 
         if (this->value > 0.0f) {

@@ -32,6 +32,7 @@ namespace Base {
             virtual void update(Platform::Windows::GDIDrawingContext *drawingContext);
             virtual void onDraw(Platform::Windows::GDIDrawingContext* drawingContext);
             virtual void onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* point);
+            virtual void onMouseWheel(Platform::Windows::GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta);
             virtual void setEnabled(bool enabled);
             static void useBitmap(Platform::Windows::Bitmap *bmp);
 

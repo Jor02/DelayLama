@@ -18,15 +18,15 @@ namespace Api {
     typedef void (*FuncPtr)();
 
     namespace PluginFlags {
-        static constexpr uint32_t HasEditor                  = 1 << 0;  // 1
-        static constexpr uint32_t SupportsInPlaceProcessing  = 1 << 1;  // 2
-        static constexpr uint32_t HasClip                    = 1 << 2;  // 4
-        static constexpr uint32_t ReportsLoudnessToHost      = 1 << 3;  // 8
-        static constexpr uint32_t ProgramChunks              = 1 << 5;  // 32
-        static constexpr uint32_t IsSynthesizer              = 1 << 8;  // 256
-        static constexpr uint32_t IsNoRealTime               = 1 << 9;  // 512
-        static constexpr uint32_t CanOverwrite               = 1 << 10;  // 1024
-        static constexpr uint32_t SupportsOfflineProcessing  = 1 << 10;  // 2048
+        static const uint32_t HasEditor                  = 1 << 0;  // 1
+        static const uint32_t SupportsInPlaceProcessing  = 1 << 1;  // 2
+        static const uint32_t HasClip                    = 1 << 2;  // 4
+        static const uint32_t ReportsLoudnessToHost      = 1 << 3;  // 8
+        static const uint32_t ProgramChunks              = 1 << 5;  // 32
+        static const uint32_t IsSynthesizer              = 1 << 8;  // 256
+        static const uint32_t IsNoRealTime               = 1 << 9;  // 512
+        static const uint32_t CanOverwrite               = 1 << 10;  // 1024
+        static const uint32_t SupportsOfflineProcessing  = 1 << 11;  // 2048
     }
 
     /**
@@ -72,7 +72,7 @@ namespace Api {
         int32_t zero;
 
         /// Pointer to Audio base class.
-        struct AudioBase *audioBase;
+        class AudioBase *audioBase;
 
         /// Some kind of float value, I am unsure as to what it does. 
         float floatVal;

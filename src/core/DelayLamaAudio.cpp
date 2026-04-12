@@ -33,8 +33,10 @@ namespace Core {
     const double kPi50 = 157.0796327;  // 50.0 * pi
 
     void DelayLamaAudio::initialize() {
+        int i; // For loop index
+
         double currentSampleRate = this->getSampleRate();
-        this->pluginSampleRate = currentSampleRate;
+        this->pluginSampleRate = (float)currentSampleRate;
         if (currentSampleRate != this->prevSampleRate) {
             if (this->synthesisBuffer != nullptr) {
                 delete this->synthesisBuffer;
@@ -105,7 +107,7 @@ namespace Core {
         }
 
         // Clear excitation buffer
-        for (int i = 0; i < this->excitationBufferSize; ++i) {
+        for (i = 0; i < this->excitationBufferSize; ++i) {
             this->excitationBuffer[i] = 0.0f;
         }
 
@@ -119,8 +121,8 @@ namespace Core {
         int tableSize = this->formantTableSize;
 
         if (this->formantTable != nullptr) {
-            for (int i = 0; i < tableSize; ++i) {
-                this->formantTable[i] = std::exp(-i * decayFactor);
+            for (i = 0; i < tableSize; ++i) {
+                this->formantTable[i] = (float)::exp(-i * decayFactor);
             }
         }
 
@@ -130,9 +132,9 @@ namespace Core {
             this->glottalSource = new float[this->glottalTableSize];
         }
 
-        for (int i = 0; i < this->glottalTableSize; ++i) {
-            float value = sinf((i * kPi2) / this->glottalTableSize);
-            this->glottalSource[i] = value;
+        for (i = 0; i < this->glottalTableSize; ++i) {
+            double value = sin((i * kPi2) / (double)this->glottalTableSize);
+            this->glottalSource[i] = (float)value;
         }
 
         this->glottalPhaseInc = (float)this->glottalTableSize / (float)this->pluginSampleRate;
@@ -142,13 +144,13 @@ namespace Core {
             this->harmonicBuffer = new float[this->numSamples];
         }
 
-        for (int i = 0; i < this->numSamples; ++i) {
+        for (i = 0; i < this->numSamples; ++i) {
             // Frequency 1: 4950 Hz
-            float phase1 = (float)i * kPi2 * 4950.0f / (float)this->pluginSampleRate;
+            float phase1 = (float)(i * kPi2 * 4950.0 / (double)this->pluginSampleRate);
             float s1 = (float)sin(phase1);
             
             // Frequency 2: 3800 Hz
-            float phase2 = (float)i * kPi2 * 3800.0f / (float)this->pluginSampleRate;
+            float phase2 = (float)(i * kPi2 * 3800.0f / (double)this->pluginSampleRate);
             float s2 = (float)sin(phase2);
             
             float sample = s1 * this->formantTable[i];
@@ -164,98 +166,14 @@ namespace Core {
             this->sineTable = new float[this->sineTableSize];
         }
 
-        for (int i = 0; i < this->sineTableSize; ++i) {
+        for (i = 0; i < this->sineTableSize; ++i) {
             this->sineTable[i] = sinf(((float)i * 6.283185307f) / (float)this->sineTableSize);
         }
     }
 
     void DelayLamaAudio::processAudio(float** inputs, float** outputs, int32_t sampleFrames)
     {
-        float* outL = outputs[0];
-        float* outR = outputs[1];
-
-        // this->midiEventReadIndex = 0;
-
-        auto wrap = [](int& index, int size)
-        {
-            while (index >= size) index -= size;
-            while (index < 0)     index += size;
-        };
-
-        wrap(this->excitationWriteIndex, this->excitationBufferSize);
-
-        for (int i = 0; i < sampleFrames; ++i)
-        {
-            // Other stuff
-
-            // Some kind of cycling
-            if (!isSinging) {
-                vowelFilterDirty = true;
-
-                if (vowelStepIndex == vowelTriggerA || vowelStepIndex == vowelTriggerC) {
-                    setParameterValue(MonkParameterId, 0.06666667f);
-                } 
-                else if (vowelStepIndex == vowelTriggerB || vowelStepIndex == vowelTriggerD) {
-                    setParameterValue(MonkParameterId, 0.16666667f);
-                }
-
-                // Cycle through vowels logic
-                if (anotherVowelIndex >= vowelTriggerBase && vowelStepIndex >= vowelTriggerE) {
-                    if (vowelPresetIndex > 23) {
-                        vowelPresetIndex = 0;
-                    }
-
-                    anotherVowelIndex = 0;
-                    float presetVowel = vowelPresetTable[vowelPresetIndex];
-                    monkSprite = presetVowel;
-
-                    setParameterValue(MonkParameterId, presetVowel);
-
-                    vowelStepIndex = vowelTriggerE;
-                    vowelPresetIndex++;
-                }
-            }
-
-            // Bunch of other stuff
-
-            this->sampleCounter++;
-            this->vowelStepIndex++;
-            this->excitationWriteIndex++;
-            this->synthesisFrameCounter++;
-            this->anotherVowelIndex++;
-            this->smoothStep++;
-        }
-
-        for (int i = 0; i < sampleFrames; ++i)
-        {
-            wrap(this->excitationReadIndex, this->excitationBufferSize);
-            wrap(this->delayWriteIndex, this->delayBufferSize);
-            wrap(this->delayReadIndexL, this->delayBufferSize);
-            wrap(this->delayReadIndexR, this->delayBufferSize);
-
-            float excitation = this->excitationBuffer[this->excitationReadIndex];
-
-            // Delay
-            float dl = this->stereoDelayLBuffer[this->delayReadIndexL];
-            float dr = this->stereoDelayRBuffer[this->delayReadIndexR];
-
-            float writeL = (dl * this->delayFeedback + excitation) * this->delay;
-            float writeR = (dr * this->delayFeedback + excitation) * this->delay;
-
-            this->stereoDelayLBuffer[this->delayWriteIndex] = writeL;
-            this->stereoDelayRBuffer[this->delayWriteIndex] = writeR;
-
-            this->delayWriteIndex++;
-
-            float gain = (this->vowelMorph * -0.013888889f + 2.0f) * this->outputGain;
-
-            outL[i] = gain * (excitation + dl);
-            outR[i] = gain * (excitation + dr);
-
-            this->delayReadIndexL++;
-            this->delayReadIndexR++;
-            this->excitationReadIndex++;
-        }
+        // int i;
     }
 
     void DelayLamaAudio::setParameterValue(int parameterId, float value)

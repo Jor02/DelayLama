@@ -1,6 +1,5 @@
 #pragma once
 #include <Windows.h>
-#include <minwindef.h>
 #include <windef.h>
 #include <utils/portable_stdint.h>
 

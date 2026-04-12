@@ -1,5 +1,4 @@
 #include <Windows.h>
-#include <minwindef.h>
 #include "damsdk/gui/platform/windows/GDIDrawingContext.h"
 
 using DamSDK::Gui::Platform::Windows::GDIDrawingContext;

@@ -147,7 +147,7 @@ namespace Windows {
             // Generate unique class name: "Plugin" + hex instance handle
             sprintf(g_szWindowClassName, "Plugin%08x", (unsigned int)Windows::g_hInstance);
 
-            WNDCLASSA wc = {};
+            WNDCLASSA wc;
             wc.style         = CS_GLOBALCLASS;
             wc.lpfnWndProc   = pluginWndProc;
             wc.hInstance     = Windows::g_hInstance;
@@ -162,7 +162,12 @@ namespace Windows {
 
     static LRESULT CALLBACK pluginWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
-        Window* parentFramePtr = (Window*)GetWindowLongPtrA(hWnd, GWLP_USERDATA);
+        #ifdef GetWindowLongPtr
+            Window* parentFramePtr = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+        #else
+            // Will break if it were to be compiled in 64-bit
+            Window* parentFramePtr = (Window*)GetWindowLong(hWnd, GWL_USERDATA);
+        #endif
 
         switch (uMsg)
         {
@@ -244,7 +249,7 @@ namespace Windows {
         return DefWindowProcA(hWnd, uMsg, wParam, lParam);
     }
 
-    void Window::onMouseWheel(int unused1, POINT unused2, int hoverState) {}
+    void Window::onMouseWheel(GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta) {}
     void Window::drawControlOrSelf(Controls::Control *target) {}
     void Window::refresh() {
         if ((this->visible != false) && (this->redrawPending == false)) {

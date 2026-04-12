@@ -1,7 +1,9 @@
 #pragma once
-#include <Windows.h>
+#define _WIN32_WINNT 0x0501
+#include <windows.h>
 #include <windef.h>
 #include "damsdk/gui/base/View.h"
+#include "utils/portable_stdint.h"
 
 namespace DamSDK {
     namespace Api { class EditorBase; }
@@ -19,11 +21,11 @@ namespace Windows {
             char unused1;
             Api::EditorBase *editor;
             HWND handle;
-            struct Bitmap *backgroundBitmap;
+            Bitmap *backgroundBitmap;
             int numChildren;
             int maxChildren;
-            struct Controls::Control **children;
-            struct View *modalView;
+            Controls::Control **children;
+            Base::View *modalView;
             COLORREF* colors;
             bool redrawPending;
             bool visible;
@@ -39,7 +41,7 @@ namespace Windows {
             bool openPluginWindow(HWND hParent);
             bool needsRedraw();
             bool registerControl(Controls::Control *control);
-            void onMouseWheel(int unused1, POINT unused2, int hoverState);
+            void onMouseWheel(GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta) override;
             void drawControlOrSelf(Controls::Control *target);
             void refresh();
             static bool registerWindowClass();

@@ -106,8 +106,7 @@ namespace Api {
 
     bool EditorBase::onMouseWheel(float wheelDelta) {
         if (this->window != nullptr) {
-            POINT zeroPoint = {0, 0};
-            this->window->onMouseWheel(0, zeroPoint, wheelDelta);
+            this->window->onMouseWheel(nullptr, nullptr, wheelDelta);
             return true;
         }
         return false;
