@@ -1,5 +1,8 @@
 set(CMAKE_SYSTEM_NAME Windows)
 
+# Set Architecture
+set(ARCH "x32" CACHE STRING "Architecture for output paths")
+
 # Set the compilers
 set(MSVC6_ROOT "C:/Users/Jor02/AppData/Local/Programs/MSVC600")
 set(CMAKE_C_COMPILER "${MSVC6_ROOT}/VC98/Bin/cl.exe")
