@@ -169,7 +169,7 @@ namespace Api {
             return 0;
         return this->hostCallback(&this->plugin, hostGetTransportTimeInfo, 0, flags, nullptr, 0.0f);
     }
-    int32_t AudioBaseExtended::getHostTempoAtSample(float pos) {
+    int32_t AudioBaseExtended::getHostTempoAtSample(int32_t pos) {
         if (this->hostCallback == nullptr)
             return 0;
         return this->hostCallback(&this->plugin, hostGetTempoAtSamplePosition, 0, pos, nullptr, 0.0f);
@@ -279,7 +279,7 @@ namespace Api {
         return result != NULL;
     }
     bool AudioBaseExtended::setOutputSpeakerArrangement(int32_t arrangement, void* param_2) { return false; }
-    void AudioBaseExtended::setAudioSettings(int32_t hostBlockSize, int32_t sampleRate) {
+    void AudioBaseExtended::setAudioSettings(int32_t hostBlockSize, float sampleRate) {
         this->blockSize = hostBlockSize;
         this->sampleRate = sampleRate;
     }
@@ -405,7 +405,7 @@ namespace Api {
     int32_t AudioBaseExtended::getOutputBuffer() { return 0; }
     bool AudioBaseExtended::processVarIo(void *) { return false; }
     int32_t AudioBaseExtended::companySpecific(int32_t index, int32_t value, void *data, float optional) { return 0; }
-    intptr_t AudioBaseExtended::callCompanySpecific(int32_t index, int32_t valueHigh, int32_t valueLow, void* context) {
+    intptr_t AudioBaseExtended::callCompanySpecific(int32_t index, int32_t valueHigh, float valueLow, void* context) {
         if (this->hostCallback == nullptr)
             return 0;
         return this->hostCallback(&this->plugin, hostHandleCompanySpecific, index, valueHigh, context, valueLow);

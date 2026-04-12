@@ -12,8 +12,10 @@ namespace Windows {
     static COLORREF DAT_BACK_COLOR = RGB(0, 0, 0);
 
     GDIDrawingContext::GDIDrawingContext(Window *parentFramePtr,HDC hDC,HWND hWnd) {
-        this->screenPos = {0, 0};
-        this->drawOffset = {0, 0};
+        this->screenPos.x = 0;
+        this->screenPos.y = 0;
+        this->drawOffset.x = 0;
+        this->drawOffset.y = 0;
         this->hDC = hDC;
         this->hWnd = hWnd;
         this->parentFrame = parentFramePtr;
@@ -56,8 +58,10 @@ namespace Windows {
         this->backgroundColor = DAT_BACK_COLOR;
         this->textColor = DAT_FOREGROUND_COLOR;
 
-        this->drawOffset = {0, 0};
-        this->screenPos = {0, 0};
+        this->screenPos.x = 0;
+        this->screenPos.y = 0;
+        this->drawOffset.x = 0;
+        this->drawOffset.y = 0;
 
         if (hDC != NULL)
         {
@@ -92,7 +96,7 @@ namespace Windows {
     {
         this->penColor = color;
 
-        LOGPEN pen{};
+        LOGPEN pen;
         pen.lopnWidth.x = this->penWidth;
         pen.lopnWidth.y = this->penWidth;
         pen.lopnStyle   = this->penStyle;
@@ -121,7 +125,7 @@ namespace Windows {
         else
             this->penStyle = PS_SOLID;
 
-        LOGPEN pen{};
+        LOGPEN pen;
         pen.lopnWidth.x = this->penWidth;
         pen.lopnWidth.y = this->penWidth;
         pen.lopnStyle   = this->penStyle;
@@ -147,7 +151,7 @@ namespace Windows {
 
         SetBkColor(this->hDC, this->backgroundColor);
 
-        LOGBRUSH brush{};
+        LOGBRUSH brush;
         brush.lbStyle = BS_SOLID;
         brush.lbColor = this->backgroundColor;
         brush.lbHatch = 0;

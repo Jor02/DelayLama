@@ -27,6 +27,7 @@ namespace Base {
     void View::setDirty(bool isDirty) { _isDirty = isDirty; }
     void View::update(Platform::Windows::GDIDrawingContext *drawingContext) { }
     void View::onDraw(Platform::Windows::GDIDrawingContext* drawingContext) { }
+    void View::onMouseWheel(Platform::Windows::GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta) {}
     void View::onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* point) { }
     void View::setEnabled(bool enabled) { this->isEnabled = enabled; }
     void View::useBitmap(Platform::Windows::Bitmap *bmp) {

@@ -6,6 +6,9 @@
         #include <cstdint>
     #else
         // We are in MSVC 6.0 (or older), define manually.
+        #define override
+        #define nullptr NULL 
+
         typedef signed char        int8_t;
         typedef unsigned char      uint8_t;
         typedef short              int16_t;
@@ -16,6 +19,16 @@
         
         typedef __int64            int64_t;
         typedef unsigned __int64   uint64_t;
+
+        #ifdef _WIN64
+            typedef unsigned __int64 size_t;
+            typedef __int64          ptrdiff_t;
+            typedef __int64          intptr_t;
+        #else
+            typedef unsigned int     size_t;
+            typedef int              ptrdiff_t;
+            typedef int              intptr_t;
+        #endif
     #endif
 #else
     /* GCC / Clang / Modern Unix */

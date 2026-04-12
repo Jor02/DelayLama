@@ -110,7 +110,7 @@ namespace Api {
                 this->getParameterName(index, (char*)data);
                 break;
             case pluginGetVolume:
-                return this->getVolume();
+                return static_cast<int32_t>(this->getVolume() * 32767.0f);
             case pluginSetSampleRate:
                 this->setSampleRate(optional);
                 break;
@@ -189,8 +189,8 @@ namespace Api {
     int32_t AudioBase::setPluginStateData(void* ptr, int32_t value, bool index) { return 0; }
     
     // -- IO --
-    double AudioBase::getSampleRate() { return this->sampleRate; }
-    void AudioBase::setSampleRate(int32_t sampleRate) { this->sampleRate = sampleRate; }
+    float AudioBase::getSampleRate() { return this->sampleRate; }
+    void AudioBase::setSampleRate(float sampleRate) { this->sampleRate = sampleRate; }
     int32_t AudioBase::getMaxFramesPerProcess() { return this->blockSize; }
     void AudioBase::setMaxFramesPerProcess(int32_t blockSize) { this->blockSize = blockSize; }
 
@@ -230,7 +230,7 @@ namespace Api {
     void AudioBase::setAudioBase(AudioBase* base) { this->plugin.audioBase = base; }
     void AudioBase::setPluginProcessingTime(int32_t processingTime) { this->plugin.pluginProcessingTime = processingTime; }
 
-    long double AudioBase::getVolume() { return 0.; }
+    float AudioBase::getVolume() { return 0.f; }
     
     // -- Host Communication --
     int32_t AudioBase::getHostApiVersion() { 
@@ -255,10 +255,10 @@ namespace Api {
     // -- String Formatting --
     void AudioBase::formatFloatAsDecibelString(float linearValue, char* outText) {
         if (linearValue <= DECIBEL_THRESHOLD) {
-            std::strcpy(outText, INF_STRING);
+            ::strcpy(outText, INF_STRING);
             return;
         }
-        float dbValue = static_cast<float>(DECIBEL_FACTOR * std::log10(linearValue));
+        float dbValue = static_cast<float>(DECIBEL_FACTOR * ::log10(linearValue));
         this->formatFloatToString(dbValue, outText);
     }
     void AudioBase::formatSamplesAsHzString(float sampleCount, char* outText) {
@@ -281,7 +281,7 @@ namespace Api {
     void AudioBase::formatFloatToString(float value, char* outText) {
         double val = static_cast<double>(value);
         if (val >= HUGE_THRESHOLD) {
-            std::strcpy(outText, HUGE_STRING);
+            ::strcpy(outText, HUGE_STRING);
             return;
         }
 
@@ -289,7 +289,7 @@ namespace Api {
         if (negative)
             val = -val;
 
-        double intPart = std::floor(val);
+        double intPart = ::floor(val);
         double fracPart = val - intPart;
 
         char intBuffer[32];
@@ -300,18 +300,18 @@ namespace Api {
             *--p = '0';
         } else {
             while (intPart >= 1.0) {
-                double digit = std::fmod(intPart, TEN);
+                double digit = ::fmod(intPart, TEN);
                 int d = static_cast<int>(digit);
                 *--p = static_cast<char>('0' + d);
-                intPart = std::floor(intPart * ONE_TENTH);
+                intPart = ::floor(intPart * ONE_TENTH);
             }
         }
 
         char* out = outText;
         if (negative)
             *out++ = '-';
-        std::strcpy(out, p);
-        out += std::strlen(p);
+        ::strcpy(out, p);
+        out += ::strlen(p);
 
         *out++ = '.';
 
@@ -333,9 +333,9 @@ namespace Api {
     }
     void AudioBase::formatIntToString(int32_t value, char* outSmall, int32_t unused1, int32_t unused2, char* outLarge) {
         if (value >= INT_HUGE_LIMIT) {
-            std::strcpy(outSmall, HUGE_STRING);
+            ::strcpy(outSmall, HUGE_STRING);
         } else {
-            std::sprintf(outSmall, "%d", value);
+            ::sprintf(outSmall, "%d", value);
         }
     }
 

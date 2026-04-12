@@ -24,7 +24,7 @@ namespace Api {
         virtual intptr_t getIcon();
 
         // --- MIDI & Events ---
-        virtual void requestMidiSupport(intptr_t value);
+        virtual void requestMidiSupport(int32_t value);
         virtual int32_t processEvents(void* eventList);
         virtual int32_t getMidiProgram(int32_t index, void* out);
         virtual int32_t getMidiProgramName(int32_t index, char* outText);
@@ -36,7 +36,7 @@ namespace Api {
 
         // --- Advanced Host Communication ---
         virtual int32_t getHostTransportTime(int32_t flags);
-        virtual int32_t getHostTempoAtSample(float pos);
+        virtual int32_t getHostTempoAtSample(int32_t pos);
         virtual char* getHostWorkingDirectory();
         virtual bool openFileDialogOnHost(char* outText);
         virtual int32_t getHostLanguage();
@@ -70,7 +70,7 @@ namespace Api {
         virtual bool getOutputBusProperties(int32_t index,char *properties);
         virtual bool getOutputSpeakerArrangement(int32_t arrangement, void* param_2);
         virtual bool setOutputSpeakerArrangement(int32_t arrangement, void* param_2);
-        virtual void setAudioSettings(int32_t hostBlockSize, int32_t sampleRate);
+        virtual void setAudioSettings(int32_t hostBlockSize, float sampleRate);
         virtual int32_t setHostOutputSampleRate(float sampleRate);
         virtual double* getHostSampleRate();
 
@@ -113,7 +113,7 @@ namespace Api {
         virtual int32_t getOutputBuffer();
         virtual bool processVarIo(void *);
         virtual int32_t companySpecific(int32_t index, int32_t value, void *data, float optional);
-        virtual intptr_t callCompanySpecific(int32_t index, int32_t valueHigh, int32_t valueLow, void* context);
+        virtual intptr_t callCompanySpecific(int32_t index, int32_t valueHigh, float valueLow, void* context);
 
         // To be categorized
         virtual int32_t getTrailSize();

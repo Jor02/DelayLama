@@ -8,7 +8,7 @@ namespace Api {
     class AudioBase {
     public:
         float sampleRate;
-        struct EditorBase *editor;
+        class EditorBase *editor;
         Api::dispatchFunc hostCallback;
         int32_t presetCount;
         int32_t parameterCount;
@@ -49,8 +49,8 @@ namespace Api {
         virtual int32_t setPluginStateData(void* ptr, int32_t value, bool index);
         
         // -- IO --
-        virtual double getSampleRate();
-        virtual void setSampleRate(int32_t sampleRate);
+        virtual float getSampleRate();
+        virtual void setSampleRate(float sampleRate);
         virtual int32_t getMaxFramesPerProcess();
         virtual void setMaxFramesPerProcess(int32_t blockSize);
 
@@ -68,7 +68,7 @@ namespace Api {
         virtual void setAudioBase(AudioBase* base);
         virtual void setPluginProcessingTime(int32_t processingTime);
 
-        virtual long double getVolume();
+        virtual float getVolume();
         
         // -- Host Communication --
         virtual int32_t getHostApiVersion();
