@@ -34,19 +34,13 @@ namespace Api {
         audioBase->setParameterValue(parameterId, value);
     }
 
-    // FUNCTION: DELAYLAMA 0x
+    // FUNCTION: DELAYLAMA 0x100010c0
     static void _processFloat(DamPlugin* plugin, float** inputBuffer, float** outputBuffer, int32_t bufferSize) {
         AudioBase* audioBase = (AudioBase*) plugin->object;
         audioBase->invokeAudioProcess(inputBuffer, outputBuffer, bufferSize);
     }
 
-    // FUNCTION: DELAYLAMA 0x
-    static void _processDouble(DamPlugin* plugin, double** inputBuffer, double** outputBuffer, int32_t bufferSize) {
-        AudioBase* audioBase = (AudioBase*) plugin->object;
-        audioBase->invokeAudioProcess((float**)inputBuffer, (float**)outputBuffer, bufferSize);
-    }
-
-    // FUNCTION: DELAYLAMA 0x
+    // FUNCTION: DELAYLAMA 0x100010e0
     AudioBase::AudioBase(dispatchFunc hostCallback, uint32_t presetCount, uint32_t parameterCount) {
         // Zero out the DamPlugin structure to ensure all reserved fields are 0
         memset(&this->plugin, 0, sizeof(DamPlugin));
@@ -76,10 +70,11 @@ namespace Api {
 
         // Assign Global Dispatcher/Process Function Pointers
         this->plugin.dispatcherFunc       = _dispatcher;
-        this->plugin.processAudioFloat    = _processFloat;
+        this->plugin.processingFunc       = _processFloat;
         this->plugin.settingParameterFunc = _setParameter;
         this->plugin.gettingParameterFunc = _getParameter;
-        this->plugin.processAudioDouble   = _processDouble;
+
+        this->plugin.processAudioFloat    = _processFloat;
     }
 
     // FUNCTION: DELAYLAMA 0x100011a0
