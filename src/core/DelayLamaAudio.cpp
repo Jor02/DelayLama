@@ -2,10 +2,34 @@
 #include "PluginConfig.h"
 #include "core/PluginConfig.h"
 #include <cmath>
+#include "utils/portable_stdint.h"
 
 namespace DelayLama {
 namespace Core {
     DelayLamaAudio::DelayLamaAudio(DamSDK::Api::dispatchFunc hostCallback) : DamSDK::Api::AudioBaseExtended(hostCallback, PRESET_COUNT, PARAMETER_COUNT) {
+        this->synthesisBuffer = nullptr;
+        this->excitationBuffer = nullptr;
+        this->formantTable = nullptr;
+        this->glottalSource = nullptr;
+        this->harmonicBuffer = nullptr;
+        this->sineTable = nullptr;
+        this->vocalEnvelope = nullptr;
+        this->frequencyTable = nullptr;
+        this->stereoDelayLBuffer = nullptr;
+        this->stereoDelayRBuffer = nullptr;
+        this->formantTable1 = nullptr;
+        this->formantTable2 = nullptr;
+        this->formantTable3 = nullptr;
+        this->isSinging = false;
+
+        Preset* presets = new Preset[5];
+
+        if (presets != nullptr) {
+            this->initPresets();
+            this->loadPresetByIndex(0);
+        }
+
+        if (this->hostCallback != nullptr) {
         this->plugin.inputChannelCount = 0;
         this->plugin.outputChannelCount = 2;
         this->setSupportsInPlaceProcessing(true);
@@ -293,6 +317,38 @@ namespace Core {
             default:
                 break;
         }
+    }
+
+    void DelayLamaAudio::initPresets() {
+        // Preset 0
+        this->presets[0].portTime = 0.5f;
+        this->presets[0].delay     = 0.8f;
+        this->presets[0].headSize  = 0.5f;
+        strcpy(this->presets[0].name, "Rabten");
+
+        // Preset 1
+        this->presets[1].portTime = 0.4f;
+        this->presets[1].delay     = 0.3f;
+        this->presets[1].headSize  = 0.0f;
+        strcpy(this->presets[1].name, "Dorje");
+
+        // Preset 2
+        this->presets[2].portTime = 0.8f;
+        this->presets[2].delay     = 0.6f;
+        this->presets[2].headSize  = 0.25f;
+        strcpy(this->presets[2].name, "Ngawang");
+
+        // Preset 3
+        this->presets[3].portTime = 0.5f;
+        this->presets[3].delay     = 0.0f;
+        this->presets[3].headSize  = 0.75f;
+        strcpy(this->presets[3].name, "Jamyang");
+
+        // Preset 4
+        this->presets[4].portTime = 1.0f;
+        this->presets[4].delay     = 0.9f;
+        this->presets[4].headSize  = 1.0f;
+        strcpy(this->presets[4].name, "Tinley");
     }
 }
 }

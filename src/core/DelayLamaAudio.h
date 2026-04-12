@@ -24,7 +24,7 @@ namespace Core {
             bool vibratoDirty;
             bool pitchValueDirty;
             char unusedBytes00[2];
-            Preset (*presets)[5];
+            Preset* presets;
 
             // Midi Section, I think I might have misidentified some MidiEvents wrong or something here.
             int32_t midiEventReadIndex;
@@ -156,6 +156,7 @@ namespace Core {
             void setParameterValue(int parameterId,float value);
             void initialize();
             void processAudio(float** inputs,float** outputs,int32_t sampleFrames);
+            void initPresets();
     };
 }
 }
