@@ -340,7 +340,7 @@ public:
     void setMaxFramesPerProcess(uint32_t blocksize);
     void disableAudioProcessing();
     void enableAudioProcessing();
-    void resume();
+    void initialize();
     void buildPiecewiseCubicTable(int32_t* controlPoints, float* outSamples);
     void invokeAudioProcess(float* * inputs, float* * outputs, int32_t sampleFrames);
     void processAudio(float* * inputs, float* * outputs, void * sampleFrames);
