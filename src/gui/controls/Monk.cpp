@@ -1,0 +1,58 @@
+#pragma once
+#include "Monk.h"
+#include "damsdk/gui/platform/windows/Bitmap.h"
+
+namespace DelayLama {
+namespace Gui {
+namespace Controls {
+    Monk::Monk(RECT *pRect, void *unknown, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, unknown, parameterId, tileWidth, tileHeight, bmp, srcOffset)
+    {
+    }
+
+    void Monk::onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext)
+    {
+        this->tileHeight = 311;
+
+        const float frameValue = this->value;
+        if (this->value > 1.0f) {
+            this->value = 1.0f;
+        }
+
+        POINT srcPoint{};
+        int xOffsetAccumulator = 0;
+
+        if (this->value > 0.0f) {
+            const int frameIndex = static_cast<int>(frameValue);
+
+            const int row = frameIndex % 6;
+            const int column = frameIndex / 6;
+
+            srcPoint.y = row * 311;
+            xOffsetAccumulator = column * 314;
+        }
+
+        srcPoint.y += this->srcOffset.y;
+        srcPoint.x = xOffsetAccumulator + this->srcOffset.x;
+
+        DamSDK::Gui::Platform::Windows::Bitmap* fullGridBitmap = this->bitmap;
+        if (fullGridBitmap != nullptr) {
+            if (this->useAlphaBlending) {
+                fullGridBitmap->drawMasked(
+                    drawingContext,
+                    &this->rect,
+                    &srcPoint
+                );
+            } else {
+                fullGridBitmap->blit(
+                    drawingContext,
+                    &this->rect,
+                    &srcPoint
+                );
+            }
+        }
+
+        this->setDirty(false);
+    }
+}
+}
+}
