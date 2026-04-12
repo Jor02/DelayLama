@@ -15,5 +15,15 @@ namespace Core {
     // Destructor
     DelayLamaPlugin::~DelayLamaPlugin() {
     }
+
+    void DelayLamaPlugin::setParameterValue(int parameterIndex,float parameterValue) {
+        DelayLamaAudio::setParameterValue(parameterIndex,parameterValue);
+
+        Gui::DelayLamaEditor* editor = (Gui::DelayLamaEditor*)this->editor;
+        if (editor != nullptr) {
+            editor->dispatcher(parameterIndex,parameterValue);
+        }
+    }
+
 }
 }
