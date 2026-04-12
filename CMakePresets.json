@@ -2,22 +2,40 @@
   "version": 6,
   "configurePresets": [
     {
-      "name": "win32",
-      "displayName": "Win32 Configuration",
-      "description": "Configure for 32-bit Windows (x86)",
+      "name": "vs2026",
+      "displayName": "Visual Studio 2026",
+      "description": "Build with Visual Studio 2026 (modern MSVC)",
       "generator": "Visual Studio 18 2026",
       "binaryDir": "${sourceDir}/build",
       "architecture": {
         "value": "Win32",
         "strategy": "set"
       }
+    },
+    {
+      "name": "vc6",
+      "displayName": "Visual C++ 6.0 (NMake)",
+      "description": "Build with Visual C++ 6.0 using NMake Makefiles",
+      "generator": "NMake Makefiles",
+      "toolchainFile": "${sourceDir}/cmake/toolchain-vc6.cmake",
+      "binaryDir": "${sourceDir}/build/vc6",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "environment": {
+        "PATH": "C:/Users/Jor02/AppData/Local/Programs/MSVC600/VC98/Bin;$penv{PATH}"
+      }
     }
   ],
   "buildPresets": [
     {
-      "name": "win32",
-      "configurePreset": "win32",
-      "displayName": "Build Win32"
+      "name": "vs2026",
+      "configurePreset": "vs2026"
+    },
+    {
+      "name": "vc6",
+      "configurePreset": "vc6"
     }
   ]
 }

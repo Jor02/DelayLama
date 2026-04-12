@@ -1,10 +1,10 @@
 #pragma once
-#include <cstdint>
+#include <utils/portable_stdint.h>
 #include <windows.h>
 #include "reference/OriginalInternal.h"
 
 #pragma once
-#include <cstdint>
+#include <utils/portable_stdint.h>
 #include <windows.h>
 
 // Helper macros to strip one level of parentheses

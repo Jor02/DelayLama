@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <windef.h>
-#include <cstdint>
+#include <utils/portable_stdint.h>
 #include "AudioBase.h"
 #include "EditorBase.h"
 
