@@ -1,4 +1,5 @@
 set(CMAKE_SYSTEM_NAME Windows)
+set(CMAKE_TOOLCHAIN_OUTPUT_NAME vc6)
 
 # Set Architecture
 set(ARCH "x32" CACHE STRING "Architecture for output paths")
