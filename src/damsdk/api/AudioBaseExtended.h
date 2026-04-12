@@ -8,6 +8,7 @@
 namespace DamSDK {
 namespace Api {
 
+    // VTABLE: DELAYLAMA 0x1000b250
     class AudioBaseExtended : public AudioBase {
     public:
         AudioBaseExtended(dispatchFunc hostCallback, int32_t presetCount, int32_t parameterCount);
@@ -114,9 +115,6 @@ namespace Api {
         virtual bool processVarIo(void *);
         virtual int32_t companySpecific(int32_t index, int32_t value, void *data, float optional);
         virtual intptr_t callCompanySpecific(int32_t index, int32_t valueHigh, float valueLow, void* context);
-
-        // To be categorized
-        virtual int32_t getTrailSize();
 
         // -- Empty/Unknown Functions --
         virtual float returnZeroFloat();

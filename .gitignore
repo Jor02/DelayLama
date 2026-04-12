@@ -1,3 +1,7 @@
+# Ignore reccmp related files
+reccmp-build.yml
+progress.html
+
 # Ignore everything in the build folder
 /build/*
 
@@ -80,4 +84,4 @@ Testing/
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
-!*.code-workspace
+!*.code-workspacereccmp-user.yml

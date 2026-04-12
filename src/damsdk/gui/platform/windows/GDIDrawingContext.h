@@ -18,6 +18,7 @@ namespace Windows {
 
     extern HINSTANCE g_hInstance;
 
+    // VTABLE: DELAYLAMA 0x1000bbe4
     class GDIDrawingContext {
         public:
             POINT screenPos;

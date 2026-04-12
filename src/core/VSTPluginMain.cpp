@@ -11,9 +11,10 @@ using namespace Utils;
 namespace DelayLama {
 namespace Core {
 
+    // GLOBAL: DELAYLAMA: 0x1000d404
     bool g_bInitFailed = false;
 
-    // This is what the host calls
+    // FUNCTION DELAYLAMA: 0x10003560
     extern "C" __declspec(dllexport) DamSDK::Api::DamPlugin* __cdecl VSTPluginMain(DamSDK::Api::dispatchFunc hostCallback)
     {
         attachConsole();

@@ -31,6 +31,8 @@ using namespace DelayLama::Gui::Controls;
 
 namespace DelayLama {
 namespace Gui{
+
+    // VTABLE: DELAYLAMA 0x1000b8b8
     class DelayLamaEditor : public DamSDK::Api::EditorBase {
         public:
             char unused[3];

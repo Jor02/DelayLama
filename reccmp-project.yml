@@ -1,0 +1,14 @@
+targets:
+  DELAYLAMA:
+    filename: DelayLama.dll
+    source_root: .
+    hash:
+      sha256: abf4d545935b664727a698124d4a2c3ad365e1949e2124460791635dacb5ac04
+    data_sources: []
+    ghidra:
+      ignore_types: []
+      ignore_functions: []
+      name_substitutions: []
+      allow_hash_mismatch: false
+    report:
+      ignore_functions: []

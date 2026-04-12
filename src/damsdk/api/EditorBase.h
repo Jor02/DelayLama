@@ -15,8 +15,10 @@ namespace DamSDK {
 
 namespace DamSDK {
 namespace Api {
+
     extern int GLOBAL_KNOB_MODE;
 
+    // VTABLE: DELAYLAMA 0x1000bb80
     class EditorBase {
         public:
             AudioBase* mainPlugin;

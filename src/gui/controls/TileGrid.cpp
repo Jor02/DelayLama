@@ -7,6 +7,7 @@ namespace DelayLama {
 namespace Gui {
 namespace Controls {
     
+    // FUNCTION DELAYLAMA: 0x10009900
     TileGrid::TileGrid(RECT *pRect, void *unknown, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : DamSDK::Gui::Controls::Control(pRect, unknown, parameterId, bmp)
     {
         this->srcOffset = *srcOffset;
@@ -14,6 +15,7 @@ namespace Controls {
         this->tileHeight = tileHeight;
     }
 
+    // FUNCTION DELAYLAMA: 0x10009980
     void TileGrid::onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext) {
         POINT srcPoint;
         srcPoint.x = this->srcOffset.x;

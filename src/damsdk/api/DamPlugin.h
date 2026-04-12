@@ -234,7 +234,7 @@ namespace Api {
         pluginGetCompanyVersion = 49,
         plugingSpecific = 50,
         pluginSupportsFeature = 51,
-        pluginGetTrailSize = 52,
+        pluginGetTailLength = 52,
         pluginIdling = 53,
         pluginGetIcon = 54,
         pluginSetViewPosition = 55,

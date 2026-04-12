@@ -4,6 +4,8 @@
 namespace DamSDK {
 namespace Gui {
 namespace Controls {
+
+    // FUNCTION: DELAYLAMA 0x10008c80
     Control::Control(RECT *pRect, void *unknown, int parameterId, Platform::Windows::Bitmap *bmp) : Base::View(pRect) {
         this->unknown = unknown;
         this->prevValue = 1.0f;
@@ -22,10 +24,12 @@ namespace Controls {
         }
     }
 
+    // FUNCTION: DELAYLAMA 0x10001960 FOLDED
     void Control::setDefaultValue(float defaultValue) {
         this->defaultValue = defaultValue;
     }
 
+    // FUNCTION: DELAYLAMA 0x100047b0
     void Control::setValue(float newValue) {
         this->value = newValue;
     }

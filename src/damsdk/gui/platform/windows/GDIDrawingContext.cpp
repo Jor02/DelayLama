@@ -11,6 +11,7 @@ namespace Windows {
     static COLORREF DAT_FOREGROUND_COLOR = RGB(255, 255, 255);
     static COLORREF DAT_BACK_COLOR = RGB(0, 0, 0);
 
+    // FUNCTION: DELAYLAMA 0x10006960
     GDIDrawingContext::GDIDrawingContext(Window *parentFramePtr,HDC hDC,HWND hWnd) {
         this->screenPos.x = 0;
         this->screenPos.y = 0;
@@ -92,6 +93,7 @@ namespace Windows {
         }
     }
     
+    // FUNCTION: DELAYLAMA 0x10006da0
     void GDIDrawingContext::setPenColor(COLORREF color)
     {
         this->penColor = color;
@@ -116,6 +118,7 @@ namespace Windows {
         this->obj2 = newPen;
     }
 
+    // FUNCTION: DELAYLAMA 0x10006be0
     void GDIDrawingContext::setPenDashMode(bool penDashEnabled)
     {
         this->penDashEnabled = penDashEnabled;
@@ -145,6 +148,7 @@ namespace Windows {
         this->obj2 = newPen;
     }
 
+    // FUNCTION: DELAYLAMA 0x10006e20
     void GDIDrawingContext::setBackgroundColorAndBrush(COLORREF color)
     {
         this->backgroundColor = color;
@@ -173,12 +177,14 @@ namespace Windows {
         this->obj1 = newBrush;
     }
 
+    // FUNCTION: DELAYLAMA 0x10006d60
     void GDIDrawingContext::setTextColor(COLORREF color)
     {
         this->textColor = color;
         SetTextColor(this->hDC, this->textColor);
     }
 
+    // FUNCTION: DELAYLAMA 0x10003620
     int32_t GDIDrawingContext::setModuleHandle(HINSTANCE hInstance)
     {
         g_hInstance = hInstance;
