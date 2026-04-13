@@ -10,6 +10,9 @@
       "architecture": {
         "value": "Win32",
         "strategy": "set"
+      },
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_OUTPUT_NAME": "vs2026"
       }
     },
     {
@@ -26,6 +29,21 @@
       "environment": {
         "PATH": "C:/Users/Jor02/AppData/Local/Programs/MSVC600/VC98/Bin;$penv{PATH}"
       }
+    },
+    {
+      "name": "vc6-debug",
+      "displayName": "Visual C++ 6.0 Debug",
+      "description": "Debug build with VC6 (NMake)",
+      "generator": "NMake Makefiles",
+      "toolchainFile": "${sourceDir}/cmake/toolchain-vc6.cmake",
+      "binaryDir": "${sourceDir}/build/vc6-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "environment": {
+        "PATH": "C:/Users/Jor02/AppData/Local/Programs/MSVC600/VC98/Bin;$penv{PATH}"
+      }
     }
   ],
   "buildPresets": [
@@ -36,6 +54,10 @@
     {
       "name": "vc6",
       "configurePreset": "vc6"
+    },
+    {
+      "name": "vc6-debug",
+      "configurePreset": "vc6-debug"
     }
   ]
 }

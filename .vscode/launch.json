@@ -2,13 +2,22 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run DelayLama",
+      "name": "Run DelayLama Modern",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/Debug/DelayLama.exe",
-      "cwd": "${workspaceFolder}/build/Debug",
+      "program": "${workspaceFolder}/build/vs2026/Debug/DelayLama.exe",
+      "cwd": "${workspaceFolder}/build/vs2026/Debug/",
       "stopAtEntry": false,
-      "preLaunchTask": "build-delaylama"
+      "preLaunchTask": "build-delaylama-modern"
+    },
+    {
+      "name": "Run DelayLama VC6",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/vc6/x32/Debug/DelayLama.exe",
+      "cwd": "${workspaceFolder}/build/bin/vc6/x32/Debug/",
+      "stopAtEntry": false,
+      "preLaunchTask": "build-delaylama-vc6-debug"
     }
   ]
 }
