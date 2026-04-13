@@ -2,15 +2,29 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build-delaylama",
+      "label": "build-delaylama-modern",
       "type": "shell",
       "command": "cmake",
       "args": [
         "--build",
-        "${workspaceFolder}/build",
-        "--target",
-        "DelayLama"
+        "${workspaceFolder}/build/vs2026/",
+        "--preset vs2026",
+        "--config Debug"
       ],
+      "problemMatcher": []
+    },
+    {
+      "label": "build-delaylama-vc6-debug",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "\"C:\\Users\\Jor02\\AppData\\Local\\Programs\\MSVC600\\VC98\\Bin\\vcvars32.bat\" && cmake --build --preset vc6-debug"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "problemMatcher": []
     }
   ]
