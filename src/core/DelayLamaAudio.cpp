@@ -24,9 +24,9 @@ namespace Core {
         this->formantTable3 = nullptr;
         this->isSinging = false;
 
-        Preset* presets = new Preset[5];
+        this->presets = new Preset[5];
 
-        if (presets != nullptr) {
+        if (this->presets != nullptr) {
             this->initPresets();
             this->loadPresetByIndex(0);
         }
