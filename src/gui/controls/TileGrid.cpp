@@ -8,7 +8,7 @@ namespace Gui {
 namespace Controls {
     
     // FUNCTION DELAYLAMA: 0x10009900
-    TileGrid::TileGrid(RECT *pRect, void *unknown, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : DamSDK::Gui::Controls::Control(pRect, unknown, parameterId, bmp)
+    TileGrid::TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : DamSDK::Gui::Controls::Control(pRect, callback, parameterId, bmp)
     {
         this->srcOffset = *srcOffset;
         this->tileWidth = tileWidth;
@@ -51,6 +51,22 @@ namespace Controls {
 
         // Mark clean
         this->setDirty(false);
+    }
+
+    // STUB: DELAYLAMA 0x10009950
+    TileGrid::~TileGrid() {
+        // destoy(this);
+        // if (deleteObject) {
+        //   operator_delete(this);
+        // }
+        // return this;
+    }
+
+    // STUB: DELAYLAMA 0x10009970
+    void TileGrid::destoy() {
+        // this->vtable = &TileGridVTable_1000bf34;
+        // Control::destroy((Control *)this);
+        // return;
     }
 }
 }

@@ -104,6 +104,21 @@ namespace Api {
         int32_t height;
     };
 
+    struct Range {
+        int32_t min;
+        int32_t max;
+    };
+
+    union ColorRGBA {
+        uint32_t raw;
+        struct {
+            uint8_t r;
+            uint8_t g;
+            uint8_t b;
+            uint8_t a;
+        } bytes;
+    };
+
     /**
      * @brief Integer rectangle.
      */
@@ -118,6 +133,12 @@ namespace Api {
         int32_t asciiCharacter;
         unsigned char vkValue;
         unsigned char modifiers;
+    };
+
+    struct DamEventList {
+        int count;
+        int unknown;
+        struct DamEvent *events;
     };
 
     /**

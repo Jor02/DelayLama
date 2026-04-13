@@ -27,5 +27,11 @@ namespace Core {
         }
     }
 
+    // STUB: DELAYLAMA 0x10003520
+    void DelayLamaPlugin::destroy() {
+        // this->vtable = &DelayLama_vtable;
+        // DelayLamaAudio::destroy((DelayLamaAudio *)this);
+        // return;
+    }
 }
 }

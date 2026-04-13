@@ -570,6 +570,20 @@ namespace Api {
         return this->hostCallback(&this->plugin, hostHandleCompanySpecific, index, valueHigh, context, valueLow);
     }
 
+    // STUB: DELAYLAMA 0x10001aa0
+    void AudioBaseExtended::destroy() {
+        // this->vtable = &AudioBaseExtendedVTable_1000b250;
+        // AudioBase::destroy((AudioBase *)this);
+        // return;
+    }
+
+    // STUB: DELAYLAMA 0x10002280
+    uint32_t AudioBaseExtended::getBlockSize() {
+        if (this->hostCallback != nullptr)
+            this->hostCallback(&this->plugin, hostGetMaxFramesPerProcess, 0, 0, nullptr, 0.0f);
+        return this->blockSize;
+    }
+
     // -- Empty/Unknown Functions --
     // FUNCTION: DELAYLAMA 0x10002050
     float AudioBaseExtended::returnZeroFloat() { return 0.f; }

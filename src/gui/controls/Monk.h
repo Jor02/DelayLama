@@ -10,7 +10,8 @@ namespace Controls {
     class Monk : public TileGrid {
         public:
         public:
-            Monk(RECT *pRect, void *unknown, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
+            Monk(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
+            ~Monk();
             virtual void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext);
     };
     }

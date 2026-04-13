@@ -1,5 +1,5 @@
 #include "EditorBase.h"
-#include "AudioBase.h"
+#include "AudioBaseExtended.h"
 #include "damsdk/gui/platform/windows/Window.h"
 
 namespace DamSDK {
@@ -9,7 +9,7 @@ namespace Api {
     int GLOBAL_KNOB_MODE = 0;
 
     // FUNCTION: DELAYLAMA 0x10006680
-    EditorBase::EditorBase(AudioBase* mainPlugin) {
+    EditorBase::EditorBase(AudioBaseExtended* mainPlugin) {
         this->mainPlugin = mainPlugin;
         this->needsRedraw = false;
         this->window = nullptr;
@@ -73,6 +73,14 @@ namespace Api {
     // FUNCTION: DELAYLAMA 0x10006840
     void EditorBase::setKnobMode(int32_t mode) {
         GLOBAL_KNOB_MODE = mode;
+    }
+
+    // STUB: DELAYLAMA 0x100067b0
+    void EditorBase::destroy() {
+        // this->vtable = &EditorBaseVTable_1000bb80;
+        // OleUninitialize();
+        // this->vtable = (EditorBaseVTable *)&UnusedClassVTable_1000bbb8;
+        // return;
     }
 
     // FUNCTION: DELAYLAMA 0x10006ae0
