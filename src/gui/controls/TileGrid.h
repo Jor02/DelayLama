@@ -10,7 +10,9 @@ namespace Controls {
             int tileWidth;
             int tileHeight;
         public:
-            TileGrid(RECT *pRect, void *unknown, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
+            TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
+            ~TileGrid();
+            void destoy();
             virtual void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext);
     };
     }

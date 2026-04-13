@@ -36,7 +36,7 @@ namespace Gui{
     class DelayLamaEditor : public DamSDK::Api::EditorBase {
         public:
             char unused[3];
-            void* drawControl;
+            DamSDK::Gui::Controls::callbackCallback callback;
             Monk* monk;
             TwoAxisSlider* singingController;
             VerticalSlider* singingVerticalSlider;
@@ -58,6 +58,8 @@ namespace Gui{
             ~DelayLamaEditor();
             void open(HWND hParent) override;
             void dispatcher(int32_t parameterIndex, float value) override;
+            void destroy();
+            void close();
     };   
 }
 }

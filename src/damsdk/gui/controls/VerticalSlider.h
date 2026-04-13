@@ -14,17 +14,11 @@ namespace Controls {
             bool snapToMouse;
             Platform::Windows::Bitmap *backgroundBitmap;
         public:
-            VerticalSlider(RECT *pRect, void *unknown, int parameterId, int minValue, int maxValue,
-                            Platform::Windows::Bitmap *handleBmp,
-                            Platform::Windows::Bitmap *backgroundBmp,
-                            void *range, int flags)
-                : Control(pRect, unknown, parameterId, handleBmp)
-            {
-                this->backgroundBitmap = backgroundBmp;
-                this->range = range;
-                this->flags = flags;
-            }
-            void setSnapToMouse(bool snap) { this->snapToMouse = snap; }
+            VerticalSlider(RECT *pRect, callbackCallback callback, int parameterId, int minValue, int maxValue, Platform::Windows::Bitmap *handleBmp, Platform::Windows::Bitmap *backgroundBmp, void *range, int flags);
+            ~VerticalSlider();
+            void destroy();
+            void onDraw(Platform::Windows::GDIDrawingContext* drawingContext);
+            void onMouseDown(Platform::Windows::GDIDrawingContext* drawingContext, POINT* relativeMousePos);
     };
 }
 }

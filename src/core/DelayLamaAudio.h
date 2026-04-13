@@ -108,7 +108,7 @@ namespace Core {
             float pluginSampleRate;
             float prevSampleRate;
             int blockSize;
-            float rngState;
+            int rngState;
             float delayTimeScaler;
             bool initialVowelNeedsUpdate;
             char unusedBytes07[3];
@@ -152,12 +152,45 @@ namespace Core {
             DelayLamaAudio(DamSDK::Api::dispatchFunc hostCallback);
             ~DelayLamaAudio();
 
-            bool getPluginName(char* outText) override;
-            bool getCompanyName(char* outText) override;
-            void setParameterValue(int parameterId,float value);
-            void initialize();
-            void processAudio(float** inputs,float** outputs,int32_t sampleFrames);
-            void initPresets();
+            virtual bool getPluginName(char* outText) override;
+            virtual bool getCompanyName(char* outText) override;
+            virtual void setParameterValue(int parameterId, float value);
+            virtual void initialize();
+            virtual void processAudio(float** inputs,float** outputs,int32_t sampleFrames);
+            virtual void initPresets();
+            virtual bool sendEventsToHost(void* eventsPtr);
+            virtual void destroy();
+            virtual void loadPresetByIndex(int currentProgram);
+            virtual void setCurrentPresetName(char* newName);
+            virtual void getCurrentPresetName(char* outText);
+            virtual void getParameterUnitLabel(char* label);
+            virtual void getParameterValueString(int parameterId, char* outText);
+            virtual void getParameterName(int parameterId, char* outBuffer);
+            virtual float getParameterValue(int parameter);
+            virtual uint32_t getOutputBusProperties(uint32_t index, char* properties);
+            virtual bool getPresetNameByIndex(int category, int index, char* outText);
+            virtual bool copyPreset(int param_1);
+            virtual bool getProductName(char* outText);
+            virtual void setSampleRate(uint32_t sampleRate);
+            virtual void setMaxFramesPerProcess(uint32_t blocksize);
+            virtual void disableAudioProcessing();
+            virtual void enableAudioProcessing();
+            virtual void buildPiecewiseCubicTable(int32_t* controlPoints, float* outSamples);
+            virtual void invokeAudioProcess(float* * inputs, float* * outputs, int32_t sampleFrames);
+            virtual void dispatchMidiEvents(int sampleIdx, int sampleFrame);
+            virtual void addSynthesisToExcitation(int offsetIncrement);
+            virtual void updateVowelFilter(float vowelX);
+            virtual void processEvents(DamSDK::Api::DamEventList* eventList);
+            virtual void handleNoteEvent(int midiData1, int midiData2);
+            virtual void handleControlChange(int midiData1, int midiData2);
+            virtual float getRandomFloat();
+            virtual void sendMidiToHost(uint8_t status, uint8_t data1, uint8_t data2);
+
+            void iteratePresetBlocks(Preset* context, int stride, int iterationCount, void* callback, void* extra);
+            void _conditionalRunCallback(void* context, int param2, int unknownLocal, void* extraParam);
+            void __vector_destructor_iterator(int param_1, int param_2, int param_3, void* param_4);
+            void _conditionalCleanup();
+            void _forEachPresetBlockReverse(void* startPtr, int step, int count, void* callback);
     };
 }
 }

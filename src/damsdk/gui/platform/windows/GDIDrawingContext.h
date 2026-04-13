@@ -44,12 +44,22 @@ namespace Windows {
             UINT penStyle;
 
         public:
-            static int32_t setModuleHandle(HINSTANCE hInstance);
             GDIDrawingContext(Window *parentFramePtr,HDC hDC,HWND hWnd);
+            ~GDIDrawingContext();
+            static int32_t setModuleHandle(HINSTANCE hInstance);
             void setPenColor(COLORREF color);
             void setPenDashMode(bool penDashEnabled);
             void setBackgroundColorAndBrush(COLORREF color);
             void setTextColor(COLORREF color);
+            void cleanResources();
+            void moveToEx(POINT* target);
+            void lineTo(POINT* tageet);
+            void drawRectangleOutline(RECT* param_1);
+            void fillRectangleInset(RECT* param_1);
+            void getRelativeMousePos(POINT* outRelMousePos);
+            void copyToScreen(GDIDrawingContext* dest, int dstLeft, int dstTop, int dstRight, int dstBottom, int srcX, int srcY);
+            void setCursor(int cursorType);
+            void unregisterClass();
     };
 }
 }

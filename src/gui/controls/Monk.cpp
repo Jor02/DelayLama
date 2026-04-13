@@ -8,8 +8,17 @@ namespace Gui {
 namespace Controls {
 
     // FUNCTION DELAYLAMA: 0x10004600
-    Monk::Monk(RECT *pRect, void *unknown, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, unknown, parameterId, tileWidth, tileHeight, bmp, srcOffset)
+    Monk::Monk(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, callback, parameterId, tileWidth, tileHeight, bmp, srcOffset)
     {
+    }
+
+    // STUB: DELAYLAMA 0x10004650
+    Monk::~Monk() {
+        // TileGrid::destoy((TileGrid *)this);
+        // if (destroyObject) {
+        //   operator_delete(this);
+        // }
+        // return this;
     }
 
     // FUNCTION DELAYLAMA: 0x100046a0

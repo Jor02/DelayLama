@@ -83,6 +83,11 @@ namespace Api {
         virtual void formatFloatToString(float value, char* outText);
         virtual void formatIntToString(int32_t value, char* outSmall, int32_t unused1, int32_t unused2, char* outLarge);
 
+        //unsorted
+        void _process(DamPlugin* effect, float* * inputs, float* * outputs, int32_t sampleFrames);
+        void destroy();
+        void setHasSoundOutput(bool hasOutput);
+
         // -- Unused --
         virtual void setReservedValue(int32_t unusedValue); 
     };

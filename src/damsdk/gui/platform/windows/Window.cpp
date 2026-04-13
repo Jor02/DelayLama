@@ -2,7 +2,10 @@
 #include <windowsx.h>
 #include "Window.h"
 #include "damsdk/gui/controls/Control.h"
+#include "damsdk/api/AudioBaseExtended.h"
+#include "damsdk/api/EditorBase.h"
 #include "GDIDrawingContext.h"
+#include "DropTarget.h"
 #include "Bitmap.h"
 
 namespace DamSDK {
@@ -32,6 +35,17 @@ namespace Windows {
         this->closeParameter = nullptr;
         this->hWnd = nullptr;
         openPluginWindow(hParent);
+    }
+
+    // STUB: DELAYLAMA 0x10007330
+    Window::~Window() {
+        cleanup();
+    }
+
+    // STUB: DELAYLAMA 0x100071e0
+    void Window::resetVtable(Window* frame) {
+        // frame->vtable = (WindowVTable *)&ViewVTable_1000bbec;
+        // return;
     }
 
     // FUNCTION: DELAYLAMA 0x10007520
@@ -257,10 +271,45 @@ namespace Windows {
     }
 
     // STUB: DELAYLAMA 0x100077e0
-    void Window::onMouseWheel(GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta) {}
+    bool Window::onMouseWheel(GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta) {
+        // Control *child;
+        // HDC hDC;
+        // GDIDrawingContext *newDrawingContext;
+        // void *drawingContextMemory;
+        // LONG LStack_10;
+        // undefined1 *puStack_8;
+        // undefined4 __som;
+        
+        // __som = 0xffffffff;
+        // puStack_8 = &LAB_1000accb;
+        // child = getChildAtMousePos(this);
+        // newDrawingContext = NULL;
+        // if (child != NULL) {
+        //     hDC = GetDC(this->hWnd);
+        //     drawingContextMemory = operator_new(0x74);
+        //     __som = 0;
+        //     if (drawingContextMemory != NULL) {
+        //     newDrawingContext =
+        //         GDIDrawingContext::GDIDrawingContext(drawingContextMemory,this,hDC,this->hWnd);
+        //     }
+        //     __som = 0xffffffff;
+        //     if (newDrawingContext != NULL) {
+        //     drawingContextMemory = NULL;
+        //     LStack_10 = 0;
+        //     getLocalMousePos(this,(POINT *)&drawingContextMemory);
+        //     (*(child->vtable->view).onMouseWheel)(newDrawingContext,&drawingContextMemory,scrollDelta);
+        //     (*newDrawingContext->vtable->Destructor_0x0)(1);
+        //     }
+        //     ReleaseDC(this->hWnd,hDC);
+        // }
+        // return;
+        return false;
+    }
 
     // STUB: DELAYLAMA 0x100075c0
-    void Window::drawControlOrSelf(Controls::Control *target) {}
+    void Window::drawControlOrSelf(Controls::Control *target) {
+
+    }
 
     // FUNCTION: DELAYLAMA 0x10007960
     void Window::refresh() {
@@ -314,6 +363,301 @@ namespace Windows {
 
         return true;
     }
+
+    // STUB: DELAYLAMA 0x10007350
+    void Window::cleanup() {
+        // bool callExtraFlag;
+        // Window *local_10;
+        // undefined1 *puStack_8;
+        // undefined4 local_4;
+        //
+        // puStack_8 = &LAB_1000ac88;
+        // this->vtable = &WindowVTable_1000bc48;
+        // local_4 = 0;
+        // local_10 = this;
+        // GDIDrawingContext::setCursor((GDIDrawingContext *)this,0);
+        // setDragAndDropState(this,false);
+        // callExtraFlag = true;
+        // destroyChildren(this,&callExtraFlag);
+        // if (this->backgroundBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->backgroundBitmap);
+        // }
+        // if (this->hWnd != (HWND)0x0) {
+        //   SetWindowLongA(this->hWnd,-0x15,0);
+        //   DestroyWindow(this->hWnd);
+        //   GDIDrawingContext::unregisterClass();
+        // }
+        // if (this->isActive != false) {
+        //   closeWindow(this);
+        // }
+        // if (this->closeParameter != (void *)0x0) {
+        //   free(this->closeParameter);
+        // }
+        // resetVtable(this);
+        // return;
+    }
+
+    // STUB: DELAYLAMA 0x10007410
+    bool Window::closeWindow() {
+        // if (((this->isActive != false) && (this->visible != false)) && (this->handle != (HWND)0x0)) {
+        //   (*(((this->editor->guiEditor).mainPlugin)->vtable->audioVtable).audioEffectX.
+        //     closePluginEditorOnHost)(this->closeParameter);
+        //   this->handle = (HWND)0x0;
+        //   return true;
+        // }
+        return false;
+    }
+
+    // STUB: DELAYLAMA 0x100074c0
+    bool Window::setDragAndDropState(bool enable) {
+        // DropTarget *pDropTarget;
+        //
+        // if ((this->field13_0x56 != '\0') || (enable)) {
+        //   if (this->hWnd == (HWND)0x0) {
+        //     return false;
+        //   }
+        //   if (enable) {
+        //     pDropTarget = createDropTarget(this);
+        //     RegisterDragDrop(this->hWnd,(LPDROPTARGET)pDropTarget);
+        //     this->field13_0x56 = 1;
+        //     return true;
+        //   }
+        //   RevokeDragDrop(this->hWnd);
+        //   this->field13_0x56 = 0;
+        // }
+        return true;
+    }
+
+    // STUB: DELAYLAMA 0x10007690
+    void Window::onMouseDown(GDIDrawingContext* drawingContext, POINT* mousePos) {
+        // bool childEnabled;
+        // Control *currentChild;
+        // int i;
+        // View *modal;
+        //
+        // if (this->colors != (Color *)0x0) {
+        //   (**(code **)(this->colors->rgba + 0x18))(0);
+        //   this->colors = (Color *)0x0;
+        // }
+        // modal = this->modalView;
+        // if (modal == nullptr) {
+        //   i = this->numChildren;
+        //   do {
+        //     do {
+        //       i = i + -1;
+        //       if (i < 0) {
+        //         return;
+        //       }
+        //       childEnabled = (bool)(*(this->children[i]->vtable->view).getEnabled)();
+        //     } while (childEnabled == false);
+        //     currentChild = this->children[i];
+        //   } while ((((mousePos->x < (currentChild->members).viewMembers.rect.left) ||
+        //             ((currentChild->members).viewMembers.rect.right < mousePos->x)) ||
+        //            (mousePos->y < (currentChild->members).viewMembers.rect.top)) ||
+        //           ((currentChild->members).viewMembers.rect.bottom < mousePos->y));
+        //   (*(this->children[i]->vtable->view).onMouseDown)(drawingContext,mousePos);
+        // }
+        // else if ((((modal->members).rect.left <= mousePos->x) &&
+        //          (mousePos->x <= (modal->members).rect.right)) &&
+        //         (((modal->members).rect.top <= mousePos->y &&
+        //          (mousePos->y <= (modal->members).rect.bottom)))) {
+        //   (*modal->vtable->onMouseDown)(drawingContext,mousePos);
+        //   return;
+        // }
+        // return;
+    }
+
+    // STUB: DELAYLAMA 0x10007740
+    bool Window::routeMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, POINT* mousePos) {
+        // Control *pCVar1;
+        // bool childEnabled;
+        // bool cVar2;
+        // int i;
+        //
+        // if ((this->modalView != nullptr) || (this->colors != (Color *)0x0)) {
+        //   return false;
+        // }
+        // i = this->numChildren + -1;
+        // if (i < 0) {
+        //   return false;
+        // }
+        // do {
+        //   childEnabled = (bool)(*(this->children[i]->vtable->view).getEnabled)();
+        //   if (childEnabled != false) {
+        //     pCVar1 = this->children[i];
+        //     if (((((pCVar1->members).viewMembers.rect.left <= mousePos->x) &&
+        //          (mousePos->x <= (pCVar1->members).viewMembers.rect.right)) &&
+        //         ((pCVar1->members).viewMembers.rect.top <= mousePos->y)) &&
+        //        ((mousePos->y <= (pCVar1->members).viewMembers.rect.bottom &&
+        //         (cVar2 = (bool)(*(pCVar1->vtable->view).routeMessage)(uMsg,wParam,lParam,mousePos),
+        //         cVar2 != false)))) {
+        //       return true;
+        //     }
+        //   }
+        //   i = i + -1;
+        //   if (i < 0) {
+        //     return false;
+        //   }
+        // } while( true );
+        return false;
+    }
+
+    // STUB: DELAYLAMA 0x10007ac0
+    bool Window::removeChild(Controls::Control* child, bool shouldRelease) {
+        // bool bVar1;
+        // int iVar2;
+        // undefined3 in_stack_00000009;
+        //
+        // iVar2 = 0;
+        // bVar1 = false;
+        // if (0 < (int)this->numChildren) {
+        //   do {
+        //     if (bVar1) {
+        //       this->children[iVar2 + -1] = this->children[iVar2];
+        //     }
+        //     if (this->children[iVar2] == child) {
+        //       (*(child->vtable->view).attached)(this);
+        //       if (*_shouldRelease != '\0') {
+        //         (*(child->vtable->view).release)();
+        //       }
+        //       bVar1 = true;
+        //     }
+        //     iVar2 = iVar2 + 1;
+        //   } while (iVar2 < (int)this->numChildren);
+        //   if (bVar1) {
+        //     this->numChildren = this->numChildren + -1;
+        //   }
+        // }
+        return true;
+    }
+
+    // STUB: DELAYLAMA 0x10007b30
+    bool Window::destroyChildren(bool* callExtraFlag) {
+        // int i;
+        // int curChild;
+        //
+        // if (this->colors != (Color *)0x0) {
+        //   (**(code **)(this->colors->rgba + 0x18))(0);
+        //   this->colors = (Color *)0x0;
+        // }
+        // if (this->children == (Control **)0x0) {
+        //   return true;
+        // }
+        // i = 0;
+        // if (0 < (int)this->numChildren) {
+        //   do {
+        //     (*(this->children[i]->vtable->view).attached)(this);
+        //     if (*callExtraFlag != false) {
+        //       (*(this->children[i]->vtable->view).release)();
+        //     }
+        //     curChild = i + 1;
+        //     this->children[i] = (Control *)0x0;
+        //     i = curChild;
+        //   } while (curChild < (int)this->numChildren);
+        // }
+        // free(this->children);
+        // this->children = (Control **)0x0;
+        // this->numChildren = 0;
+        // this->maxChildren = 0;
+        return true;
+    }
+
+    // STUB: DELAYLAMA 0x10007bb0
+    bool Window::containsChild(Controls::Control* target) {
+        bool output = false;
+        int i = 0;
+        if (0 < (int)this->numChildren) {
+          Controls::Control ** children = this->children;
+          while (*children != target) {
+            i = i + 1;
+            children = children + 1;
+            if ((int)this->numChildren <= i) {
+              return output;
+            }
+          }
+          output = true;
+        }
+        return output;
+    }
+
+    // STUB: DELAYLAMA 0x10007be0
+    int32_t Window::setModalView(Base::View* view) {
+        if ((view != nullptr) && (this->modalView != nullptr)) {
+          return 0;
+        }
+        if (this->modalView != nullptr) {
+          this->modalView->returnTrue1(this);
+        }
+        this->modalView = view;
+        if (view != nullptr) {
+          view->returnTrue2(this);
+        }
+        return 1;
+    }
+
+    // FUNCTION: DELAYLAMA 0x10007c20
+    void Window::beginEdit(int parameterId) {
+        if (this->editor != nullptr) {
+            this->editor->mainPlugin->notifyHostClientBeginningParameterEdit(parameterId);
+        }
+    }
+
+    // FUNCTION: DELAYLAMA 0x10007c40
+    void Window::endEdit(int parameterId) {
+        if (this->editor != nullptr) {
+            this->editor->mainPlugin->notifyHostClientEndingParameterEdit(parameterId);
+        }
+    }
+
+    // FUNCTION: DELAYLAMA 0x10007c60
+    Controls::Control* Window::getChildAtMousePos() {
+        POINT mousePos;
+        mousePos.x = 0;
+        mousePos.y = 0;
+
+        this->getLocalMousePos(&mousePos);
+        
+        int i = this->numChildren + -1;
+        if (-1 < i) {
+            Controls::Control ** childIter = this->children + i;
+            do {
+                Controls::Control* child = *childIter;
+                if (((child != nullptr) && (child->rect.left <= mousePos.x)) && (mousePos.x <= child->rect.right) && ((child->rect.top <= mousePos.y && (mousePos.y <= child->rect.bottom))))
+                {
+                    return this->children[i];
+                }
+                i = i + -1;
+                childIter = childIter + -1;
+            } while (-1 < i);
+        }
+        return nullptr;
+    }
+
+    // FUNCTION: DELAYLAMA 0x10007cd0
+    void Window::getLocalMousePos(POINT* mousePos) {
+        HWND hWnd = this->hWnd;
+        tagPOINT mousePosTarget;
+        GetCursorPos(&mousePosTarget);
+        mousePos->x = mousePosTarget.x;
+        mousePos->y = mousePosTarget.y;
+        
+        if (hWnd != nullptr) {
+          GetWindowRect(hWnd,&rect);
+          mousePos->x = mousePos->x - rect.left;
+          mousePos->y = mousePos->y - rect.top;
+        }
+    }
+
+    // FUNCTION: DELAYLAMA 0x10008690
+    DropTarget* Window::createDropTarget() {
+
+        DropTarget* target = new DropTarget(this);
+        if (target != nullptr) {;
+          return target;
+        }
+        return nullptr;
+    }
+
 }
 }
 }

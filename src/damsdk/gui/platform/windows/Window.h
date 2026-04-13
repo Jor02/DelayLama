@@ -9,6 +9,9 @@ namespace DamSDK {
     namespace Api { class EditorBase; }
     namespace Gui {
         namespace Controls { class Control; }
+        namespace Platform {
+            namespace Windows { class DropTarget; }
+        }
     }
 }
 
@@ -38,16 +41,33 @@ namespace Windows {
             void *closeParameter;
         public:
             Window(RECT *pRect, HWND hParent, Api::EditorBase *editor);
+            ~Window();
             void update(GDIDrawingContext *drawingContext) override;
             void onDraw(GDIDrawingContext *drawingContext) override;
             bool openPluginWindow(HWND hParent);
             bool needsRedraw();
             bool registerControl(Controls::Control *control);
-            void onMouseWheel(GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta) override;
+            bool onMouseWheel(GDIDrawingContext *drawingContext, POINT *relativeMousePoint, float scrollDelta) override;
             void drawControlOrSelf(Controls::Control *target);
             void refresh();
             static bool registerWindowClass();
             void setBackgroundBitmap(Bitmap *background);
+            void resetVtable(Window* frame);
+            Window* destructor(bool deleteObject);
+            void cleanup();
+            bool closeWindow();
+            bool setDragAndDropState(bool enable);
+            void onMouseDown(GDIDrawingContext* drawingContext, POINT* mousePos);
+            bool routeMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, POINT* mousePos);
+            bool removeChild(Controls::Control* child, bool shouldRelease);
+            bool destroyChildren(bool* callExtraFlag);
+            bool containsChild(Controls::Control* target);
+            int32_t setModalView(Base::View* view);
+            void beginEdit(int parameterId);
+            void endEdit(int parameterId);
+            Controls::Control* getChildAtMousePos();
+            void getLocalMousePos(POINT* mousePos);
+            DropTarget* createDropTarget();
     };
 }
 }

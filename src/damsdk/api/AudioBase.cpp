@@ -40,6 +40,12 @@ namespace Api {
         audioBase->invokeAudioProcess(inputBuffer, outputBuffer, bufferSize);
     }
 
+    // STUB: DELAYLAMA 0x100010a0
+    void AudioBase::_process(DamPlugin* effect, float* * inputs, float* * outputs, int32_t sampleFrames) {
+        // (*effect->object->vtable->invokeAudioProcess)(inputs,outputs,sampleFrames);
+        // return;
+    }
+
     // FUNCTION: DELAYLAMA 0x100010e0
     AudioBase::AudioBase(dispatchFunc hostCallback, uint32_t presetCount, uint32_t parameterCount) {
         // Zero out the DamPlugin structure to ensure all reserved fields are 0
@@ -79,6 +85,18 @@ namespace Api {
 
     // FUNCTION: DELAYLAMA 0x100011a0
     AudioBase::~AudioBase() {
+    }
+
+    // STUB: DELAYLAMA 0x100011c0
+    void AudioBase::destroy() {
+        // DelayLamaEditor *editor;
+        //
+        // this->vtable = &AudioBaseVTable_1000b148;
+        // editor = this->editor;
+        // if (editor != (DelayLamaEditor *)0x0) {
+        //   (*(editor->vtable->editorBase).destructor)(1);
+        // }
+        // return;
     }
 
     // FUNCTION: DELAYLAMA 0x100011e0
@@ -284,6 +302,19 @@ namespace Api {
         else           this->plugin.flags &= ~PluginFlags::HasEditor;
     }
     
+    // STUB: DELAYLAMA 0x10001500
+    void AudioBase::setHasSoundOutput(bool hasOutput) {
+        // uint uVar1;
+        //
+        // uVar1 = this->plugin.flags;
+        // if (hasOutput) {
+        //   this->plugin.flags = uVar1 | 8;
+        //   return;
+        // }
+        // this->plugin.flags = uVar1 & 0xfffffff7;
+        // return;
+    }
+
     // FUNCTION: DELAYLAMA 0x100015a0
     void AudioBase::setAudioBase(AudioBase* base) { this->plugin.audioBase = base; }
     

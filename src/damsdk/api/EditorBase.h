@@ -5,7 +5,7 @@
 
 // Forward declarations
 namespace DamSDK {
-    namespace Api { class AudioBase; }
+    namespace Api { class AudioBaseExtended; }
     namespace Gui {
         namespace Platform {
             namespace Windows { class Window; }
@@ -21,7 +21,7 @@ namespace Api {
     // VTABLE: DELAYLAMA 0x1000bb80
     class EditorBase {
         public:
-            AudioBase* mainPlugin;
+            AudioBaseExtended* mainPlugin;
             HWND hParent;
             bool needsRedraw;
             Rect rect;
@@ -29,7 +29,7 @@ namespace Api {
             DWORD lastIdleTick;
             bool isInIdleUpdate;
         public:
-            EditorBase(AudioBase* plugin);
+            EditorBase(AudioBaseExtended* plugin);
             ~EditorBase();
             virtual void open(HWND hParent);
             virtual void getRect(Rect** outRect);
@@ -38,6 +38,7 @@ namespace Api {
             virtual int32_t keyDown(KeyCode* keycode);
             virtual int32_t keyUp(KeyCode* keycode);
             virtual void setKnobMode(int32_t mode);
+            void destroy();
             
             virtual void dispatcher(int parameterIndex, float value);
             virtual void draw();

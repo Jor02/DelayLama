@@ -1,6 +1,6 @@
 #include "DelayLamaEditor.h"
 #include "gui/Resources.h"
-#include "damsdk/api/AudioBase.h"
+#include "damsdk/api/AudioBaseExtended.h"
 #include "core/PluginConfig.h"
 
 // Components
@@ -19,7 +19,7 @@ namespace DelayLama {
 namespace Gui{
 
     // FUNCTION DELAYLAMA: 0x10003640
-    DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::Api::EditorBase((DamSDK::Api::AudioBase*)pluginInstance) {
+    DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::Api::EditorBase((DamSDK::Api::AudioBaseExtended*)pluginInstance) {
         this->reverbHandleBitmap = nullptr;
         this->monkSpriteSheetBitmap = nullptr;
         this->singingYHandleBitmap = nullptr;
@@ -43,6 +43,15 @@ namespace Gui{
         this->rect.right = (int16_t)background->height;
 
         // Utils::logf("{%d, %d, %d, %d}", this->rect.left, this->rect.top, this->rect.right, this->rect.bottom);
+    }
+    
+    // STUB: DELAYLAMA 0x10003710
+    DelayLamaEditor::~DelayLamaEditor() {
+        // destroy(this);
+        // if (deleteFlag) {
+        //   operator_delete(this);
+        // }
+        // return this;
     }
 
     // FUNCTION DELAYLAMA: 0x10003820
@@ -109,7 +118,7 @@ namespace Gui{
             knobRect.bottom = desiredTop;
         }
 
-        this->leftKnob = new DamSDK::Gui::Controls::Knob(&knobRect, &this->drawControl, LeftVoiceKnobParameterId, 60, 50, this->leftKnobBitmap, &origin);
+        this->leftKnob = new DamSDK::Gui::Controls::Knob(&knobRect, this->callback, LeftVoiceKnobParameterId, 60, 50, this->leftKnobBitmap, &origin);
         this->leftKnob->setValue(this->mainPlugin->getParameterValue(0));
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->leftKnob);
 
@@ -135,7 +144,7 @@ namespace Gui{
             rightKnobRect.bottom = desiredTop;
         }
 
-        this->rightKnob = new DamSDK::Gui::Controls::Knob(&rightKnobRect, &this->drawControl, RightGlideKnobParameterId, 60, 50, this->rightKnobBitmap, &origin);
+        this->rightKnob = new DamSDK::Gui::Controls::Knob(&rightKnobRect, this->callback, RightGlideKnobParameterId, 60, 50, this->rightKnobBitmap, &origin);
         this->rightKnob->setValue(this->mainPlugin->getParameterValue(1));
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->rightKnob);
 
@@ -145,7 +154,7 @@ namespace Gui{
         reverbRect.right = 0x1f8;
         reverbRect.bottom = 0;
 
-        this->reverbSlider = new DamSDK::Gui::Controls::HorizontalSlider(&reverbRect, &this->drawControl, ReverbSliderParameterId, 0x68, 0xff - this->reverbHandleBitmap->width, this->reverbHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffffac*/, 8);
+        this->reverbSlider = new DamSDK::Gui::Controls::HorizontalSlider(&reverbRect, this->callback, ReverbSliderParameterId, 0x68, 0xff - this->reverbHandleBitmap->width, this->reverbHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffffac*/, 8);
         this->reverbSlider->setValue(this->mainPlugin->getParameterValue(2));
         this->reverbSlider->setDefaultValue();
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->reverbSlider);
@@ -156,7 +165,7 @@ namespace Gui{
         twoAxisRect.right = 0;
         twoAxisRect.bottom = 0;
 
-        this->singingController = new DamSDK::Gui::Controls::TwoAxisSlider(&twoAxisRect, &this->drawControl, TwoAxisSliderParameterId, 96, 259, nullptr, nullptr, nullptr/*(Range *)&stack0xffffffa4*/, 8);
+        this->singingController = new DamSDK::Gui::Controls::TwoAxisSlider(&twoAxisRect, this->callback, TwoAxisSliderParameterId, 96, 259, nullptr, nullptr, nullptr/*(Range *)&stack0xffffffa4*/, 8);
         this->singingController->setSnapToMouse(true);
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingController);
 
@@ -166,7 +175,7 @@ namespace Gui{
         verticalRect.right = 0;
         verticalRect.bottom = 0;
 
-        this->singingVerticalSlider = new DamSDK::Gui::Controls::VerticalSlider(&verticalRect, &this->drawControl, SingingVerticalSliderParameterId, 0x166, 0x1bf - this->singingYHandleBitmap->height, this->singingYHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffff94*/, 0x40);
+        this->singingVerticalSlider = new DamSDK::Gui::Controls::VerticalSlider(&verticalRect, this->callback, SingingVerticalSliderParameterId, 0x166, 0x1bf - this->singingYHandleBitmap->height, this->singingYHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffff94*/, 0x40);
         this->singingVerticalSlider->setEnabled(true);
         this->singingVerticalSlider->setValue(this->mainPlugin->getParameterValue(3));
         this->singingVerticalSlider->setDefaultValue();
@@ -178,7 +187,7 @@ namespace Gui{
         singingHorizontalRect.right = 0;
         singingHorizontalRect.bottom = 0;
 
-        this->singingHorizontalSlider = new DamSDK::Gui::Controls::HorizontalSlider(&singingHorizontalRect, &this->drawControl, SingingHorizontalSliderParameterId, 93, 264 - this->singingXHandleBitmap->width, this->singingXHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffff80*/, 8);
+        this->singingHorizontalSlider = new DamSDK::Gui::Controls::HorizontalSlider(&singingHorizontalRect, this->callback, SingingHorizontalSliderParameterId, 93, 264 - this->singingXHandleBitmap->width, this->singingXHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffff80*/, 8);
         this->singingHorizontalSlider->setEnabled(true);
         this->singingHorizontalSlider->setValue(this->mainPlugin->getParameterValue(4));
         this->singingHorizontalSlider->setDefaultValue(0);
@@ -190,7 +199,7 @@ namespace Gui{
         monkRect.right = (monkSpriteSheetBitmap->width / 5) + 22;
         monkRect.bottom = (monkSpriteSheetBitmap->height / 6) + 5;
 
-        this->monk = new Controls::Monk(&monkRect, &this->drawControl, MonkParameterId, 30, this->monkSpriteSheetBitmap->height / 30, this->monkSpriteSheetBitmap, &origin);
+        this->monk = new Controls::Monk(&monkRect, this->callback, MonkParameterId, 30, this->monkSpriteSheetBitmap->height / 30, this->monkSpriteSheetBitmap, &origin);
         this->monk->setValue(this->mainPlugin->getParameterValue(6));
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->monk);
 
@@ -200,7 +209,7 @@ namespace Gui{
         splashRect.right = 0;
         splashRect.bottom = 0;
 
-        this->splashScreen = new Controls::SplashScreen(&splashRect, &this->drawControl, SplashScreenParameterId, this->aboutScreenBitmap, &splashRect, &origin);
+        this->splashScreen = new Controls::SplashScreen(&splashRect, this->callback, SplashScreenParameterId, this->aboutScreenBitmap, &splashRect, &origin);
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->splashScreen);
     }
 
@@ -252,6 +261,58 @@ namespace Gui{
         }
 
         invalidate();
+    }
+
+    // STUB: DELAYLAMA 0x10003740
+    void DelayLamaEditor::destroy() {
+        // this->vtable = &DelayLamaEditorVTable_1000b8b8;
+        // this->drawControl = &PTR_drawControl_1000b8b4;
+        // if (this->backgroundBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->backgroundBitmap);
+        // }
+        // this->backgroundBitmap = (Bitmap *)0x0;
+        // if (this->reverbHandleBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->reverbHandleBitmap);
+        // }
+        // this->reverbHandleBitmap = (Bitmap *)0x0;
+        // if (this->singingYHandleBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->singingYHandleBitmap);
+        // }
+        // this->singingYHandleBitmap = (Bitmap *)0x0;
+        // if (this->singingXHandleBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->singingXHandleBitmap);
+        // }
+        // this->singingXHandleBitmap = (Bitmap *)0x0;
+        // if (this->monkSpriteSheetBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->monkSpriteSheetBitmap);
+        // }
+        // this->monkSpriteSheetBitmap = (Bitmap *)0x0;
+        // if (this->aboutScreenBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->aboutScreenBitmap);
+        // }
+        // this->aboutScreenBitmap = (Bitmap *)0x0;
+        // if (this->leftKnobBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->leftKnobBitmap);
+        // }
+        // this->leftKnobBitmap = (Bitmap *)0x0;
+        // if (this->rightKnobBitmap != (Bitmap *)0x0) {
+        //   Bitmap::unregisterBitmap(this->rightKnobBitmap);
+        // }
+        // this->rightKnobBitmap = (Bitmap *)0x0;
+        // EditorBase::destroy((EditorBase *)this);
+        // return;
+    }
+
+    // STUB: DELAYLAMA 0x100040a0
+    void DelayLamaEditor::close() {
+        // Window *frame;
+        //
+        // frame = (this->guiEditor).window;
+        // if (frame != (Window *)0x0) {
+        //   (*(frame->vtable->view).destructor)(true);
+        // }
+        // (this->guiEditor).window = (Window *)0x0;
+        // return;
     }
 }
 }

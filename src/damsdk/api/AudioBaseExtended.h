@@ -116,6 +116,10 @@ namespace Api {
         virtual int32_t companySpecific(int32_t index, int32_t value, void *data, float optional);
         virtual intptr_t callCompanySpecific(int32_t index, int32_t valueHigh, float valueLow, void* context);
 
+        //unsorted
+        void destroy();
+        uint32_t getBlockSize();
+
         // -- Empty/Unknown Functions --
         virtual float returnZeroFloat();
     };
