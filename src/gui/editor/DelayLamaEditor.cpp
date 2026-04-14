@@ -42,17 +42,11 @@ namespace Gui{
         this->rect.left = 0;
         this->rect.bottom = (int16_t)background->width;
         this->rect.right = (int16_t)background->height;
-
-        // Utils::logf("{%d, %d, %d, %d}", this->rect.left, this->rect.top, this->rect.right, this->rect.bottom);
     }
     
-    // STUB: DELAYLAMA 0x10003710
+    // FUNCTION: DELAYLAMA 0x10003710
     DelayLamaEditor::~DelayLamaEditor() {
-        // destroy(this);
-        // if (deleteFlag) {
-        //   operator_delete(this);
-        // }
-        // return this;
+        destroy();
     }
 
     // FUNCTION DELAYLAMA: 0x10003820
@@ -155,9 +149,9 @@ namespace Gui{
         reverbRect.right = 256;
         reverbRect.bottom = 504;
 
-        DamSDK::Api::Range range;
-        range.min = 0.0f;
-        range.max = 1.0f;
+        POINT range;
+        range.x = 0;
+        range.y = 1;
 
         this->reverbSlider = new DamSDK::Gui::Controls::HorizontalSlider(&reverbRect, this->callback, ReverbSliderParameterId, 0x68, 0xff - this->reverbHandleBitmap->width, this->reverbHandleBitmap, this->backgroundBitmap, &range, 8);
         this->reverbSlider->setValue(this->mainPlugin->getParameterValue(2));
@@ -182,7 +176,7 @@ namespace Gui{
 
         this->singingVerticalSlider = new DamSDK::Gui::Controls::VerticalSlider(&verticalRect, this->callback, SingingVerticalSliderParameterId, 0x166, 0x1bf - this->singingYHandleBitmap->height, this->singingYHandleBitmap, this->backgroundBitmap, &range, 0x40);
         this->singingVerticalSlider->setEnabled(true);
-        this->singingVerticalSlider->setValue(this->mainPlugin->getParameterValue(3));
+        this->singingVerticalSlider->setValue(this->mainPlugin->getParameterValue(SingingVerticalSliderParameterId));
         this->singingVerticalSlider->setDefaultValue();
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingVerticalSlider);
 
@@ -194,7 +188,7 @@ namespace Gui{
 
         this->singingHorizontalSlider = new DamSDK::Gui::Controls::HorizontalSlider(&singingHorizontalRect, this->callback, SingingHorizontalSliderParameterId, 93, 264 - this->singingXHandleBitmap->width, this->singingXHandleBitmap, this->backgroundBitmap, &range, 8);
         this->singingHorizontalSlider->setEnabled(true);
-        this->singingHorizontalSlider->setValue(this->mainPlugin->getParameterValue(4));
+        this->singingHorizontalSlider->setValue(this->mainPlugin->getParameterValue(SingingHorizontalSliderParameterId));
         this->singingHorizontalSlider->setDefaultValue(0);
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingHorizontalSlider);
 
@@ -205,7 +199,7 @@ namespace Gui{
         monkRect.bottom = (monkSpriteSheetBitmap->height / 6) + 5;
 
         this->monk = new Controls::Monk(&monkRect, this->callback, MonkParameterId, 30, this->monkSpriteSheetBitmap->height / 30, this->monkSpriteSheetBitmap, &origin);
-        this->monk->setValue(this->mainPlugin->getParameterValue(6));
+        this->monk->setValue(this->mainPlugin->getParameterValue(MonkParameterId));
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->monk);
 
         RECT splashRect;
@@ -268,56 +262,58 @@ namespace Gui{
         invalidate();
     }
 
-    // STUB: DELAYLAMA 0x10003740
+    // FUNCTION: DELAYLAMA 0x10003740
     void DelayLamaEditor::destroy() {
-        // this->vtable = &DelayLamaEditorVTable_1000b8b8;
-        // this->drawControl = &PTR_drawControl_1000b8b4;
-        // if (this->backgroundBitmap != (Bitmap *)0x0) {
-        //   Bitmap::unregisterBitmap(this->backgroundBitmap);
-        // }
-        // this->backgroundBitmap = (Bitmap *)0x0;
-        // if (this->reverbHandleBitmap != (Bitmap *)0x0) {
-        //   Bitmap::unregisterBitmap(this->reverbHandleBitmap);
-        // }
-        // this->reverbHandleBitmap = (Bitmap *)0x0;
-        // if (this->singingYHandleBitmap != (Bitmap *)0x0) {
-        //   Bitmap::unregisterBitmap(this->singingYHandleBitmap);
-        // }
-        // this->singingYHandleBitmap = (Bitmap *)0x0;
-        // if (this->singingXHandleBitmap != (Bitmap *)0x0) {
-        //   Bitmap::unregisterBitmap(this->singingXHandleBitmap);
-        // }
-        // this->singingXHandleBitmap = (Bitmap *)0x0;
-        // if (this->monkSpriteSheetBitmap != (Bitmap *)0x0) {
-        //   Bitmap::unregisterBitmap(this->monkSpriteSheetBitmap);
-        // }
-        // this->monkSpriteSheetBitmap = (Bitmap *)0x0;
-        // if (this->aboutScreenBitmap != (Bitmap *)0x0) {
-        //   Bitmap::unregisterBitmap(this->aboutScreenBitmap);
-        // }
-        // this->aboutScreenBitmap = (Bitmap *)0x0;
-        // if (this->leftKnobBitmap != (Bitmap *)0x0) {
-        //   Bitmap::unregisterBitmap(this->leftKnobBitmap);
-        // }
-        // this->leftKnobBitmap = (Bitmap *)0x0;
-        // if (this->rightKnobBitmap != (Bitmap *)0x0) {
-        //   Bitmap::unregisterBitmap(this->rightKnobBitmap);
-        // }
-        // this->rightKnobBitmap = (Bitmap *)0x0;
-        // EditorBase::destroy((EditorBase *)this);
-        // return;
+        if (this->backgroundBitmap != nullptr) {
+          Bitmap::unregisterBitmap(this->backgroundBitmap);
+        }
+        this->backgroundBitmap = nullptr;
+
+        if (this->reverbHandleBitmap != nullptr) {
+          Bitmap::unregisterBitmap(this->reverbHandleBitmap);
+        }
+        this->reverbHandleBitmap = nullptr;
+
+        if (this->singingYHandleBitmap != nullptr) {
+          Bitmap::unregisterBitmap(this->singingYHandleBitmap);
+        }
+        this->singingYHandleBitmap = nullptr;
+
+        if (this->singingXHandleBitmap != nullptr) {
+          Bitmap::unregisterBitmap(this->singingXHandleBitmap);
+        }
+        this->singingXHandleBitmap = nullptr;
+
+        if (this->monkSpriteSheetBitmap != nullptr) {
+          Bitmap::unregisterBitmap(this->monkSpriteSheetBitmap);
+        }
+        this->monkSpriteSheetBitmap = nullptr;
+
+        if (this->aboutScreenBitmap != nullptr) {
+          Bitmap::unregisterBitmap(this->aboutScreenBitmap);
+        }
+        this->aboutScreenBitmap = nullptr;
+
+        if (this->leftKnobBitmap != nullptr) {
+          Bitmap::unregisterBitmap(this->leftKnobBitmap);
+        }
+        this->leftKnobBitmap = nullptr;
+
+        if (this->rightKnobBitmap != nullptr) {
+          Bitmap::unregisterBitmap(this->rightKnobBitmap);
+        }
+        this->rightKnobBitmap = nullptr;
+
+        EditorBase::destroy();
     }
 
-    // STUB: DELAYLAMA 0x100040a0
+    // FUNCTION: DELAYLAMA 0x100040a0
     void DelayLamaEditor::close() {
-        // Window *frame;
-        //
-        // frame = (this->guiEditor).window;
-        // if (frame != (Window *)0x0) {
-        //   (*(frame->vtable->view).destructor)(true);
-        // }
-        // (this->guiEditor).window = (Window *)0x0;
-        // return;
+        Window* frame = this->window;
+        if (frame != nullptr) {
+            delete frame;
+        }
+        this->window = nullptr;
     }
 }
 }
