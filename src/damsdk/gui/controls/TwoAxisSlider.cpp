@@ -1,13 +1,14 @@
 #pragma once
 #include "TwoAxisSlider.h"
 #include "damsdk/gui/platform/windows/GDIDrawingContext.h"
+#include "damsdk/gui/platform/windows/Window.h"
 
 namespace DamSDK {
 namespace Gui {
 namespace Controls {
 
     // STUB: DELAYLAMA 0x10004350
-    TwoAxisSlider::TwoAxisSlider(RECT *bounds, callbackCallback callback, int parameterId, int minValue, int maxValue, Platform::Windows::Bitmap *handle, Platform::Windows::Bitmap *background, Api::Range* range, int flags) : HorizontalSlider(bounds,callback,parameterId,minValue,maxValue,handle,background,range,flags)
+    TwoAxisSlider::TwoAxisSlider(RECT *bounds, callbackCallback callback, int parameterId, int minValue, int maxValue, Platform::Windows::Bitmap *handle, Platform::Windows::Bitmap *background, POINT* offset, int flags) : HorizontalSlider(bounds,callback,parameterId,minValue,maxValue,handle,background,offset,flags)
     {
         int handleHeight = this->handleHeight;
         
@@ -34,54 +35,48 @@ namespace Controls {
 
     // STUB: DELAYLAMA 0x10004460
     void TwoAxisSlider::onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawContext, POINT* mousePos) {
-        // byte inputMask;
-        // undefined3 _padding1;
-        // int isStillDown;
-        // undefined3 _padding3;
-        // int yTop;
-        // undefined3 _padding2;
-        // DrawControl *drawFunc;
-        // int handleWidth;
-        // int minX;
-        // TwoAxisSliderVTable *vtablePtr;
-        //
-        // if ((this->slider).control.viewMembers.isEnabled != false) {
-        //   inputMask = View::GetPressedModifiersAndMouseButtons();
-        //   if ((inputMask & 1) != 0) {
-        //     if (CONCAT31(_padding1,inputMask) != 0) {
-        //       drawFunc = (this->slider).control.callback;
-        //       (this->slider).control.value = 201.0;
-        //       (*(code *)**(undefined4 **)drawFunc)(drawContext,this);
-        //     }
-        //     handleWidth = (this->slider).handleWidth;
-        //     minX = (this->slider).trackMinX;
-        //     Window::beginEdit((this->slider).control.viewMembers.parent,(this->slider).control.parameterId
-        //                      );
-        //     inputMask = View::GetPressedModifiersAndMouseButtons();
-        //     isStillDown = CONCAT31(_padding2,inputMask);
-        //     while (isStillDown != 0) {
-        //       vtablePtr = this->vtable;
-        //       (this->slider).control.value =
-        //            (float)(mousePos->x - (handleWidth / 2 + minX)) / this->xValueRange;
-        //       (*(vtablePtr->slider).control.clampValue)();
-        //       (*(code *)**(undefined4 **)(this->slider).control.callback)(drawContext,this);
-        //       vtablePtr = this->vtable;
-        //       (this->slider).control.value = (float)(mousePos->y - yTop) / this->yValueRange;
-        //       (*(vtablePtr->slider).control.clampValue)();
-        //       drawFunc = (this->slider).control.callback;
-        //       (this->slider).control.value = (this->slider).control.value + FLOAT_1000b8b0;
-        //       (*(code *)**(undefined4 **)drawFunc)(drawContext,this);
-        //       GDIDrawingContext::getRelativeMousePos(drawContext,mousePos);
-        //       (*(this->vtable->slider).control.onIdle)();
-        //       inputMask = View::GetPressedModifiersAndMouseButtons();
-        //       isStillDown = CONCAT31(_padding3,inputMask);
-        //     }
-        //     drawFunc = (this->slider).control.callback;
-        //     (this->slider).control.value = 200.0;
-        //     (*(code *)**(undefined4 **)drawFunc)(drawContext,this);
-        //   }
-        // }
-        // return;
+        if (this->isEnabled != false) {
+            uint8_t inputMask = View::GetPressedModifiersAndMouseButtons();
+            
+            if ((inputMask & 1) != 0) {
+
+                if (inputMask != 0) {
+                    this->value = 201.0f;
+                    this->callback(drawContext, this);
+                }
+
+                int handleWidth = this->handleWidth;
+                int minX = this->trackMinX;
+
+                this->parent->beginEdit(this->parameterId);
+
+                inputMask = View::GetPressedModifiersAndMouseButtons();
+                int isStillDown = (int)inputMask;
+
+                while (isStillDown != 0) {
+                    // X-Axis Update
+                    this->value = (float)(mousePos->x - (handleWidth / 2 + minX)) / this->xValueRange;
+                    this->clampValue();
+                    this->callback(drawContext, this);
+
+                    // Y-Axis Update
+                    this->value = (float)(mousePos->y - this->yTop) / this->yValueRange;
+                    this->clampValue();
+                    
+                    this->value = this->value + 100.0f; 
+                    this->callback(drawContext, this);
+
+                    drawContext->getRelativeMousePos(mousePos);
+                    this->onIdle();
+
+                    inputMask = View::GetPressedModifiersAndMouseButtons();
+                    isStillDown = (int)inputMask;
+                }
+
+                this->value = 200.0f;
+                this->callback(drawContext, this);
+            }
+        }
     }
 }
 }
