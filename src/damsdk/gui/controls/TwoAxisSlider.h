@@ -22,7 +22,7 @@ namespace Controls {
             float yValueRange;
             int halfHandleHeight2;
         public:
-            TwoAxisSlider(RECT *bounds, callbackCallback callback, int parameterId, int minValue, int maxValue, Platform::Windows::Bitmap *handle, Platform::Windows::Bitmap *background, Api::Range*range, int flags);
+            TwoAxisSlider(RECT *bounds, callbackCallback callback, int parameterId, int minValue, int maxValue, Platform::Windows::Bitmap *handle, Platform::Windows::Bitmap *background, POINT* offset, int flags);
             ~TwoAxisSlider();
             void onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawContext, POINT* mousePos);
     };
