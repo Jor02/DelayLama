@@ -12,13 +12,9 @@ namespace Controls {
     {
     }
 
-    // STUB: DELAYLAMA 0x10004650
+    // FUNCTION: DELAYLAMA 0x10004650
     Monk::~Monk() {
-        // TileGrid::destoy((TileGrid *)this);
-        // if (destroyObject) {
-        //   operator_delete(this);
-        // }
-        // return this;
+        TileGrid::destroy();
     }
 
     // FUNCTION DELAYLAMA: 0x100046a0
