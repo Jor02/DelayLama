@@ -1,7 +1,7 @@
 #pragma once
 #include "TileGrid.h"
 #include "damsdk/gui/platform/windows/Bitmap.h"
-#include "utils/portable_stdint.h"
+#include "damsdk/utils/portable_stdint.h"
 
 namespace DelayLama {
 namespace Gui {

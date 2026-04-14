@@ -2,7 +2,7 @@
 #include "PluginConfig.h"
 #include "core/PluginConfig.h"
 #include <cmath>
-#include "utils/portable_stdint.h"
+#include "damsdk/utils/portable_stdint.h"
 #include <cstdio>
 
 namespace DelayLama {
