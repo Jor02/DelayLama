@@ -8,6 +8,9 @@
 #include "DropTarget.h"
 #include "Bitmap.h"
 
+// Logging
+#include "utils/Logger.h"
+
 namespace DamSDK {
 namespace Gui {
 namespace Platform {
@@ -117,7 +120,7 @@ namespace Windows {
     bool Window::openPluginWindow(HWND hParent) {
         HWND hChild;
   
-        if (hParent == NULL) {
+        if (hParent == nullptr) {
             return false;
         }
 
@@ -138,6 +141,7 @@ namespace Windows {
             Windows::g_hInstance,
             nullptr
         );
+        
         this->hWnd = hChild;
 
         SetWindowLongA(hChild,GWL_USERDATA,(LONG)this);
@@ -167,15 +171,19 @@ namespace Windows {
             // Generate unique class name: "Plugin" + hex instance handle
             sprintf(g_szWindowClassName, "Plugin%08x", (unsigned int)Windows::g_hInstance);
 
-            WNDCLASSA wc;
-            wc.style         = CS_GLOBALCLASS;
-            wc.lpfnWndProc   = pluginWndProc;
-            wc.hInstance     = Windows::g_hInstance;
-            wc.hCursor       = LoadCursorA(nullptr, IDC_ARROW);
-            wc.hbrBackground = GetSysColorBrush(COLOR_BTNFACE);
-            wc.lpszClassName = g_szWindowClassName;
+            WNDCLASSA windowClass;
+            windowClass.style         = CS_GLOBALCLASS;
+            windowClass.lpfnWndProc   = pluginWndProc;
+            windowClass.cbClsExtra = 0;
+            windowClass.cbWndExtra = 0;
+            windowClass.hInstance     = Windows::g_hInstance;
+            windowClass.hIcon = nullptr;
+            windowClass.hCursor       = LoadCursorA(nullptr, IDC_ARROW);
+            windowClass.hbrBackground = GetSysColorBrush(COLOR_BTNFACE);
+            windowClass.lpszMenuName = nullptr;
+            windowClass.lpszClassName = (LPCSTR)&g_szWindowClassName;
 
-            RegisterClassA(&wc);
+            RegisterClassA(&windowClass);
         }
         return true;
     }
@@ -307,8 +315,36 @@ namespace Windows {
     }
 
     // STUB: DELAYLAMA 0x100075c0
-    void Window::drawControlOrSelf(Controls::Control *target) {
+    void Window::drawControlOrSelf(Controls::Control *target) {        
+        Controls::Control* targetControl = NULL;
+        if (target != NULL) {
+            int i = 0;
+            if (0 < (int)this->numChildren) {
+            Controls::Control ** currentChild = this->children;
+            do {
+                if (*currentChild == target) {
+                targetControl = this->children[i];
+                break;
+                }
+                i += 1;
+                currentChild = currentChild + 1;
+            } while (i < (int)this->numChildren);
+            }
+        }
+        HDC hDC = GetDC(this->hWnd);
 
+        GDIDrawingContext* drawingContext = new GDIDrawingContext(this,hDC,this->hWnd);
+        if (drawingContext != nullptr) {
+            if (targetControl == nullptr) {
+                this->onDraw(drawingContext);
+            }
+            else {
+                targetControl->onDraw(drawingContext);
+            }
+            delete drawingContext;
+        }
+        ReleaseDC(this->hWnd,hDC);
+        return;
     }
 
     // FUNCTION: DELAYLAMA 0x10007960
