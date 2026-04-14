@@ -55,18 +55,12 @@ namespace Controls {
 
     // STUB: DELAYLAMA 0x10009950
     TileGrid::~TileGrid() {
-        // destoy(this);
-        // if (deleteObject) {
-        //   operator_delete(this);
-        // }
-        // return this;
+        destroy();
     }
 
     // STUB: DELAYLAMA 0x10009970
-    void TileGrid::destoy() {
-        // this->vtable = &TileGridVTable_1000bf34;
-        // Control::destroy((Control *)this);
-        // return;
+    void TileGrid::destroy() {
+        Control::destroy();
     }
 }
 }
