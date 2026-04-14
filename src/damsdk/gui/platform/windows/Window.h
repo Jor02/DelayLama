@@ -53,7 +53,6 @@ namespace Windows {
             static bool registerWindowClass();
             void setBackgroundBitmap(Bitmap *background);
             void resetVtable(Window* frame);
-            Window* destructor(bool deleteObject);
             void cleanup();
             bool closeWindow();
             bool setDragAndDropState(bool enable);
