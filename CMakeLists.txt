@@ -49,6 +49,11 @@ add_library(DelayLama SHARED
     resources.rc
 )
 
+# Allow for "#if defined(NOT_ORIGINAL_BUILD)" blocks for debugging
+target_compile_definitions(DelayLama PRIVATE
+    $<$<NOT:$<CONFIG:Release>>:NOT_ORIGINAL_BUILD>
+)
+
 set_target_properties(DelayLama PROPERTIES
     PREFIX ""
     OUTPUT_NAME "DelayLama"
