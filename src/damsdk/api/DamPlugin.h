@@ -119,6 +119,37 @@ namespace Api {
         } bytes;
     };
 
+    struct MidiEvent {
+        int timestamp;
+        int status;
+        int data1;
+        int data2;
+    };
+
+    struct DamEvent {
+        int32_t eventType;
+        int32_t eventSize;
+        int32_t frames;
+        int32_t flags;
+    };
+
+    struct DamMidiEvent {
+        DamEvent event;
+        int32_t noteLength;
+        int32_t noteOffset;
+        uint8_t midiData[4];
+        int8_t  detune;
+        int8_t  noteOffVelocity;
+        uint8_t unused1;
+        uint8_t unused2;
+    };
+
+    struct DamMidiEventList {
+        int32_t listSize;
+        int32_t unused;
+        DamEvent* events[1];
+    };
+
     /**
      * @brief Integer rectangle.
      */
