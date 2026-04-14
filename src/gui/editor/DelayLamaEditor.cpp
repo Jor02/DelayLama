@@ -1,6 +1,7 @@
 #include "DelayLamaEditor.h"
 #include "gui/Resources.h"
 #include "damsdk/api/AudioBaseExtended.h"
+#include "damsdk/api/DamPlugin.h"
 #include "core/PluginConfig.h"
 
 // Components
@@ -89,7 +90,7 @@ namespace Gui{
         windowRect.top = 0;
 
         this->window = new DamSDK::Gui::Platform::Windows::Window(&windowRect, parentWnd, this);
-        this->window->setBackgroundBitmap(backgroundBitmap);
+        this->window->setBackgroundBitmap(this->backgroundBitmap);
 
         POINT origin;
         origin.x = 0;
@@ -150,11 +151,15 @@ namespace Gui{
 
         RECT reverbRect;
         reverbRect.left = 0;
-        reverbRect.top = 0;
-        reverbRect.right = 0x1f8;
-        reverbRect.bottom = 0;
+        reverbRect.top = 479;
+        reverbRect.right = 256;
+        reverbRect.bottom = 504;
 
-        this->reverbSlider = new DamSDK::Gui::Controls::HorizontalSlider(&reverbRect, this->callback, ReverbSliderParameterId, 0x68, 0xff - this->reverbHandleBitmap->width, this->reverbHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffffac*/, 8);
+        DamSDK::Api::Range range;
+        range.min = 0.0f;
+        range.max = 1.0f;
+
+        this->reverbSlider = new DamSDK::Gui::Controls::HorizontalSlider(&reverbRect, this->callback, ReverbSliderParameterId, 0x68, 0xff - this->reverbHandleBitmap->width, this->reverbHandleBitmap, this->backgroundBitmap, &range, 8);
         this->reverbSlider->setValue(this->mainPlugin->getParameterValue(2));
         this->reverbSlider->setDefaultValue();
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->reverbSlider);
@@ -165,7 +170,7 @@ namespace Gui{
         twoAxisRect.right = 0;
         twoAxisRect.bottom = 0;
 
-        this->singingController = new DamSDK::Gui::Controls::TwoAxisSlider(&twoAxisRect, this->callback, TwoAxisSliderParameterId, 96, 259, nullptr, nullptr, nullptr/*(Range *)&stack0xffffffa4*/, 8);
+        this->singingController = new DamSDK::Gui::Controls::TwoAxisSlider(&twoAxisRect, this->callback, TwoAxisSliderParameterId, 96, 259, nullptr, nullptr, &range, 8);
         this->singingController->setSnapToMouse(true);
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingController);
 
@@ -175,7 +180,7 @@ namespace Gui{
         verticalRect.right = 0;
         verticalRect.bottom = 0;
 
-        this->singingVerticalSlider = new DamSDK::Gui::Controls::VerticalSlider(&verticalRect, this->callback, SingingVerticalSliderParameterId, 0x166, 0x1bf - this->singingYHandleBitmap->height, this->singingYHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffff94*/, 0x40);
+        this->singingVerticalSlider = new DamSDK::Gui::Controls::VerticalSlider(&verticalRect, this->callback, SingingVerticalSliderParameterId, 0x166, 0x1bf - this->singingYHandleBitmap->height, this->singingYHandleBitmap, this->backgroundBitmap, &range, 0x40);
         this->singingVerticalSlider->setEnabled(true);
         this->singingVerticalSlider->setValue(this->mainPlugin->getParameterValue(3));
         this->singingVerticalSlider->setDefaultValue();
@@ -187,7 +192,7 @@ namespace Gui{
         singingHorizontalRect.right = 0;
         singingHorizontalRect.bottom = 0;
 
-        this->singingHorizontalSlider = new DamSDK::Gui::Controls::HorizontalSlider(&singingHorizontalRect, this->callback, SingingHorizontalSliderParameterId, 93, 264 - this->singingXHandleBitmap->width, this->singingXHandleBitmap, this->backgroundBitmap, nullptr/*(Range *)&stack0xffffff80*/, 8);
+        this->singingHorizontalSlider = new DamSDK::Gui::Controls::HorizontalSlider(&singingHorizontalRect, this->callback, SingingHorizontalSliderParameterId, 93, 264 - this->singingXHandleBitmap->width, this->singingXHandleBitmap, this->backgroundBitmap, &range, 8);
         this->singingHorizontalSlider->setEnabled(true);
         this->singingHorizontalSlider->setValue(this->mainPlugin->getParameterValue(4));
         this->singingHorizontalSlider->setDefaultValue(0);

@@ -200,6 +200,8 @@ namespace Core {
         for (i = 0; i < this->sineTableSize; ++i) {
             this->sineTable[i] = sinf(((float)i * 6.283185307f) / (float)this->sineTableSize);
         }
+
+        // A lot more initialization
     }
 
     // FUNCTION DELAYLAMA: 0x100054c0
