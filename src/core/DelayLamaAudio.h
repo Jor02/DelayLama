@@ -13,141 +13,131 @@ namespace Core {
     // VTABLE: DELAYLAMA 0x1000b460
     class DelayLamaAudio : public DamSDK::Api::AudioBaseExtended {
         public:
-            float portamentoTime;
-            float curVowelValue;
-            float prevVowelValue;
-            float delay;
-            float monkSprite;
-            float headSize;
-            float vibratoDepthCurrent;
-            float vibratoAmount;
-            float pitchValue;
-            bool vibratoDirty;
-            bool pitchValueDirty;
-            char unusedBytes00[2];
-            Preset* presets;
+            float portamentoTime; // 0xb0
+            float curVowelValue; // 0xb4
+            float prevVowelValue; // 0xb8
+            float delay; // 0xbc
+            float monkSprite; // 0xc0
+            float headSize; // 0xc4
+            float vibratoDepthCurrent; // 0xc8
+            float vibratoAmount; // 0xcc
+            float pitchValue; // 0xd0
+            bool vibratoDirty; // 0xd4
+            bool pitchValueDirty; // 0xd5
+            char unusedBytes00[2]; // 0xd6
+            Preset* presets;// 0xd8
 
-            // Midi Section, I think I might have misidentified some MidiEvents wrong or something here.
-            int32_t midiEventReadIndex;
-            // MidiEvent midiQueue[1024];
-            // MidiEvent* vstMidiEvent;
-            int vstMidiEventSize;
-            int unknownMidi2;
-            char unusedBytes01[12];
-            byte midiStatus;
-            byte midiData1;
-            byte midiData2;
-            char unusedBytes02[5];
-            void* eventContainer;
-            int unknown;
-            // MidiEvent* midiEvent;
-            int unknownMidi;
-            int32_t midiDataValue;
-
-            float vowelFilterState1;
-            float vowelFilterState2;
-            int pitchBase; //A midi note
-            int pitchTargetRaw; //A midi note
-            float outputGain;
-            int pitchInterpData1[1024];
-            int pitchInterpData2[1024];
-            int isInterpActive;
-            int interpEventCount;
-            int interpSampleStep;
-            int interpCurrentIdx;
-            int synthesisFrameCounter;
-            float vowelTargetValue;
-            bool pitchTargetDirty;
-            bool isGlideActive;
-            bool vowelFilterDirty;
-            bool unusedBool;
-            int pitchTargetValue;
-            int vowelMorphDelta;
-            float vowelMorph;
-            bool isGateActive;
-            char unusedBytes04[3];
-            float vowelMorphCurrent;
-            float lfoPhaseAccumulator;
-            float lfoPhaseWrapValue;
-            float lfoDepth;
-            float lfoSampleValue;
-            float lfoPhaseIncrement;
-            int vowelFrameCounter;
-            int sampleCounter;
-            bool isSinging;
-            char unusedBytes05[3];
-            int noteStack[128];
-            int writeIndex;
-            int frequencyIndex;
-            float unusedFloat;
-            float frequencyValue;
-            int excitationWriteIndex;
-            int attackSamples;
-            int sustainStart;
-            int releaseSamples;
-            float vowelLookupIndex;
-            float formant1Bandwidth;
-            float formant2Bandwidth;
-            float formant3Bandwidth;
-            char unusedBytes06[8];
-            float resonanceGain;
-            int totalSmoothingFrames;
-            int smoothCounter;
-            int smoothingFrames;
-            int smoothStep;
-            int pitchCurrent;
-            int pitchTarget;
-            int pitchDelta;
-            int pitchSmoothingFramesRemaining;
-            int pitchStep;
-            float vibratoCurrent;
-            int vibratoTarget;
-            int vibratoDelta;
-            int vibratoStep;
-            int vibratoSmoothingFramesRemaining;
-            float pluginSampleRate;
-            float prevSampleRate;
-            int blockSize;
-            int rngState;
-            float delayTimeScaler;
-            bool initialVowelNeedsUpdate;
-            char unusedBytes07[3];
-            float vowelPresetTable[24];
-            int vowelPresetIndex;
-            int vowelStepIndex;
-            int anotherVowelIndex;
-            int vowelTriggerBase;
-            int vowelTriggerA;
-            int vowelTriggerB;
-            int vowelTriggerC;
-            int vowelTriggerD;
-            int vowelTriggerE;
-            int delayBufferSize;
-            int* stereoDelayLBuffer;
-            int* stereoDelayRBuffer;
-            float delayFeedback;
-            int delayWriteIndex;
-            int delayReadIndexL;
-            int delayReadIndexR;
-            float* synthesisBuffer;
-            int numSamples;
-            float* excitationBuffer;
-            int excitationBufferSize;
-            int excitationReadIndex;
-            float* sineTable;
-            int sineTableSize;
-            float* formantTable;
-            int formantTableSize;
-            float* vocalEnvelope;
-            float* glottalSource;
-            int glottalTableSize;
-            float glottalPhaseInc;
-            float* harmonicBuffer;
-            float* frequencyTable;
-            int frequencyTableSize; // 4096 size
-            float* formantTable1;
-            float* formantTable2;
-            float* formantTable3;
+             // Midi Section, I think I might have misidentified some MidiEvents wrong or something here. 
+            int32_t midiEventReadIndex; // 0xdc
+            DamSDK::Api::MidiEvent midiQueue[1024]; // 0xe0
+            DamSDK::Api::DamMidiEvent midiEvent; // 0x40e0
+            DamSDK::Api::DamMidiEventList midiEventList; // 0x40fc
+            int unknownMidi; // 0x410c
+            int32_t midiDataValue; // 0x4110
+            int currentMidiEventData2; // 0x4114
+            int currentMidiEventData1; // 0x4118
+            int pitchBase; //A midi note // 0x411c
+            int pitchTargetRaw; //A midi note // 0x4120
+            float outputGain; // 0x4124
+            int pitchInterpData1[1024]; // 0x4128
+            int pitchInterpData2[1024]; // 0x5128
+            int isInterpActive; // 0x6128
+            int interpEventCount; // 0x612c
+            int interpSampleStep; // 0x6130
+            int interpCurrentIdx; // 0x6134
+            int synthesisFrameCounter; // 0x6138
+            float vowelTargetValue; // 0x613c
+            bool pitchTargetDirty; // 0x6140
+            bool isGlideActive; // 0x6141
+            bool vowelFilterDirty; // 0x6142
+            bool unusedBool; // 0x6143
+            int pitchTargetValue; // 0x6144
+            int vowelMorphDelta; // 0x6148
+            float vowelMorph; // 0x614c
+            bool isGateActive; // 0x6150
+            char unusedBytes04[3]; // 0x6151
+            float vowelMorphCurrent; // 0x6154
+            float lfoPhaseAccumulator; // 0x6158
+            float lfoPhaseWrapValue; // 0x615c
+            float lfoDepth; // 0x6160
+            float lfoSampleValue; // 0x6164
+            float lfoPhaseIncrement; // 0x6168
+            int vowelFrameCounter; // 0x616c
+            int sampleCounter; // 0x6170
+            bool isSinging; // 0x6174
+            char unusedBytes05[3]; // 0x6175
+            int noteStack[128]; // 0x6178
+            int writeIndex; // 0x6378
+            int frequencyIndex; // 0x637c
+            float unusedFloat; // 0x6380
+            float frequencyValue; // 0x6384
+            int excitationWriteIndex; // 0x6388
+            int attackSamples; // 0x638c
+            int sustainStart; // 0x6390
+            int releaseSamples; // 0x6394
+            float vowelLookupIndex; // 0x6398
+            float formant1Bandwidth; // 0x639c
+            float formant2Bandwidth; // 0x63a0
+            float formant3Bandwidth; // 0x63a4
+            char unusedBytes06[8]; // 0x63a8
+            float vowelBlendFactor; // 0x63b0
+            int totalSmoothingFrames; // 0x63b4
+            int smoothCounter; // 0x63b8
+            int smoothingFrames; // 0x63bc
+            int smoothStep; // 0x63c0
+            int pitchCurrent; // 0x63c4
+            int pitchTarget; // 0x63c8
+            int pitchDelta; // 0x63cc
+            int pitchSmoothingFramesRemaining; // 0x63d0
+            int pitchStep; // 0x63d4
+            float vibratoCurrent; // 0x63d8
+            int vibratoTarget; // 0x63dc
+            int vibratoDelta; // 0x63e0
+            int vibratoStep; // 0x63e4
+            int vibratoSmoothingFramesRemaining; // 0x63e8
+            float pluginSampleRate; // 0x63ec
+            float prevSampleRate; // 0x63f0
+            int pluginBlockSize; // 0x63f4
+            int rngState; // 0x63f8
+            float delayTimeScaler; // 0x63fc
+            bool initialVowelNeedsUpdate; // 0x6400
+            char unusedBytes07[3]; // 0x6401
+            float vowelPresetTable[24]; // 0x6404
+            int vowelPresetIndex; // 0x6464
+            int vowelStepIndex; // 0x6468
+            int anotherVowelIndex; // 0x646c
+            int vowelTriggerBase; // 0x6470
+            int vowelTriggerA; // 0x6474
+            int vowelTriggerB; // 0x6478
+            int vowelTriggerC; // 0x647c
+            int vowelTriggerD; // 0x6480
+            int vowelTriggerE; // 0x6484
+            int delayBufferSize; // 0x6488
+            float* stereoDelayLBuffer; // 0x648c
+            float* stereoDelayRBuffer; // 0x6490
+            float delayFeedback; // 0x6494
+            int delayWriteIndex; // 0x6498
+            int delayReadIndexL; // 0x649c
+            int delayReadIndexR; // 0x64a0
+            float* synthesisBuffer; // 0x64a4
+            int numSamples; // 0x64a8
+            float* excitationBuffer; // 0x64ac
+            int excitationBufferSize; // 0x64b0
+            int excitationReadIndex; // 0x64b4
+            float* sineTable; // 0x64b8
+            int sineTableSize; // 0x64bc
+            float* formantTable; // 0x64c0
+            int formantTableSize; // 0x64c4
+            float* vocalEnvelope; // 0x64c8
+            float* glottalSource; // 0x64cc
+            int glottalTableSize; // 0x64d0
+            float glottalPhaseInc; // 0x64d4
+            float* harmonicBuffer; // 0x64d8
+            float* frequencyTable; // 0x64dc
+            int frequencyTableSize; // 0x64e0
+            float* formantTable1; // 0x64e4
+            float* formantTable2; // 0x64e8
+            float* formantTable3; // 0x64ec
         public:
             DelayLamaAudio(DamSDK::Api::dispatchFunc hostCallback);
             ~DelayLamaAudio();
@@ -158,7 +148,7 @@ namespace Core {
             virtual void initialize();
             virtual void processAudio(float** inputs,float** outputs,int32_t sampleFrames);
             virtual void initPresets();
-            virtual bool sendEventsToHost(void* eventsPtr);
+            virtual bool sendEventsToHost(DamSDK::Api::DamMidiEventList* eventsPtr);
             virtual void destroy();
             virtual void loadPresetByIndex(int currentProgram);
             virtual void setCurrentPresetName(char* newName);
@@ -167,11 +157,11 @@ namespace Core {
             virtual void getParameterValueString(int parameterId, char* outText);
             virtual void getParameterName(int parameterId, char* outBuffer);
             virtual float getParameterValue(int parameter);
-            virtual uint32_t getOutputBusProperties(uint32_t index, char* properties);
+            virtual bool getOutputBusProperties(uint32_t index, char* properties);
             virtual bool getPresetNameByIndex(int category, int index, char* outText);
             virtual bool copyPreset(int param_1);
             virtual bool getProductName(char* outText);
-            virtual void setSampleRate(uint32_t sampleRate);
+            virtual void setSampleRate(float sampleRate);
             virtual void setMaxFramesPerProcess(uint32_t blocksize);
             virtual void disableAudioProcessing();
             virtual void enableAudioProcessing();

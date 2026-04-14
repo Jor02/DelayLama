@@ -9,12 +9,12 @@ namespace Api {
     class AudioBase {
     public:
         float sampleRate;
+        int32_t blockSize;
         class EditorBase *editor;
         Api::dispatchFunc hostCallback;
         int32_t presetCount;
         int32_t parameterCount;
         int32_t currentPreset;
-        int32_t blockSize;
         struct Api::DamPlugin plugin;
     public:
         AudioBase(Api::dispatchFunc hostCallback, uint32_t presetCount, uint32_t parameterCount);
