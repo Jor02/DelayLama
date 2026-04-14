@@ -12,7 +12,7 @@ namespace Controls {
         public:
             TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
             ~TileGrid();
-            void destoy();
+            void destroy();
             virtual void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext);
     };
     }
