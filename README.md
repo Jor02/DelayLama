@@ -69,4 +69,4 @@ cmake --build build --config Release
 This is a reverse engineering project for educational and historical preservation purposes.
 Delay Lama is a product of [AudioNerdz](http://www.audionerdz.nl/). This project is not affiliated with or endorsed by AudioNerdz.
 
-The original VST 2.4 SDK is no longer publicly distributed by Steinberg. This project utilizes my [DamSDK](./src/damsdk/) alternative to handle host communication, ensuring the project remains open-source and distributable without infringing on restricted SDK licenses.
+The original VST 2.4 SDK is no longer publicly distributed by Steinberg. This project utilizes my [DamSDK](https://github.com/Jor02/DamSDK) alternative to handle host communication, ensuring the project remains open-source and distributable without infringing on restricted SDK licenses.
