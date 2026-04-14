@@ -8,8 +8,8 @@ namespace Windows {
 
     HINSTANCE g_hInstance = NULL;
 
-    static COLORREF DAT_FOREGROUND_COLOR = RGB(255, 255, 255);
-    static COLORREF DAT_BACK_COLOR = RGB(0, 0, 0);
+    COLORREF DAT_FOREGROUND_COLOR = RGB(255, 255, 255);
+    COLORREF DAT_BACK_COLOR = RGB(0, 0, 0);
 
     // FUNCTION: DELAYLAMA 0x10006960
     GDIDrawingContext::GDIDrawingContext(Window *parentFramePtr,HDC hDC,HWND hWnd) {
