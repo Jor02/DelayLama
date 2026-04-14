@@ -141,7 +141,6 @@ namespace Windows {
             Windows::g_hInstance,
             nullptr
         );
-        
         this->hWnd = hChild;
 
         SetWindowLongA(hChild,GWL_USERDATA,(LONG)this);
