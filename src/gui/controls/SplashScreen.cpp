@@ -24,7 +24,7 @@ namespace Controls {
 
     // STUB: DELAYLAMA 0x1000a5a0
     SplashScreen::~SplashScreen() {
-        // destroy(this);
+        // this->destroy();
         // if (deleteObject) {
         //   operator_delete(this);
         // }

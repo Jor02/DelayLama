@@ -51,7 +51,7 @@ namespace Controls {
 
     // STUB: DELAYLAMA 0x10008f60
     RotaryControl::~RotaryControl() {
-        // destroy(this);
+        // this->destroy();
         // if (deleteObject) {
         //   operator_delete(this);
         // }
@@ -289,7 +289,7 @@ namespace Controls {
         float valueWidth = (this->max - this->min) / this->totalRange;
         this->angleRange = valueWidth;
         this->angleOffset = this->min - valueWidth * this->startAngle;
-        this->deadZoneSize = (6.2831855f - abs(this->totalRange)) * 0.5f;
+        this->deadZoneSize = (6.2831855f - abs((float)this->totalRange)) * 0.5f;
         this->setDirty(true);
     }
 
