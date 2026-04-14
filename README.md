@@ -2,16 +2,16 @@
 
 # `⚠️ THIS PROJECT IS STILL IN EARLY DEVELOPMENT ⚠️`
 
-An open-source, faithful recreation of the legendary Delay Lama VST instrument. Originally released in 2002 by AudioNerdz, the "Singing Monk" became a cult classic for its unique vowel synthesis and charming animated interface. 
+This is an open source recreation of Delay Lama. A plugin that was originally released in 2002 by AudioNerdz. 
 
-As modern DAWs phase out support for legacy 32-bit plugins, the original Delay Lama risks becoming "abandonware." This project aims to preserve the plugin for the modern era through clean-room reverse engineering and a 64-bit modernization.
+I recently learned that DAWs (like Cubase and Ableton) are phasing out support for 32-bit plugins, since the original Delay Lama only has 32-bit build available, I decided to try to reverse engineer it to hopefully be able to make a 64-bit version of the original plugin. With this project i am aiming to preserve one of my favorite audio plugins for modern DAW's by using clean-room reverse engineering to be able to create modern 64-bit version of it.
 
 ## Goal
-The goal is a 1:1 functional recreation of the original plugin, that has all the same features, looks and feels the same, and hopefully also sounds the same.
+The goal is a 1:1 functional recreation of the original plugin, that has all the same features, looks and feels the same, and hopefully also sounds exactly the same.
 
 ## Motivation
 
-I've loved it ever since I first found out about it, but unfortunately delay lama is slowly getting less and less supported by existing DAWs, and it only having a 32-bit build doesn't help with that fact. So because of that, and because I've been wanting to get into reverse engineering for ages now, I decided I would try creating a faithul open-source recreation of this beloved extension.
+I've loved this plugin ever since I first found out about it, but unfortunately delay lama is slowly getting less and less supported by existing DAWs. So because of that, and because I've been wanting to get into reverse engineering for ages now, I decided I would try creating a faithul open-source recreation of my favorite audio synthesizer.
 
 ## Development Roadmap
 - [x] Fully annotate all functions in the original binary using Ghidra.
@@ -19,13 +19,13 @@ I've loved it ever since I first found out about it, but unfortunately delay lam
 - [ ] Get a fully working 32-bit build.
 - [ ] Clean up source code to improve the maintainability and readablitiy of the codebase.
 - [ ] Hopefully get a 64-bit build of Delay Lama working.
-- [ ] And lastly, if at all possible, get the project to compile to a fully byte accurate binary that 100% matches the original dll.
+- [ ] And lastly, if at all possible, get the project to compile to a fully byte accurate binary that 100% matches the original dll. (I've already added [Reccmp](https://github.com/isledecomp/reccmp) to help showing the progress.)
 
 I think it'd also be fun to make a very accurate 3D model of the Monk himself and his environment as a Blend file, but I haven't yet decided If I actually wanna do that.
 
 ## Built on DamSDK
 
-To achieve independence from proprietary or deprecated frameworks, this project is built atop [DamSDK](https://github.com/Jor02/DamSDK).
+To achieve independence from proprietary and deprecated frameworks, this project is built atop [DamSDK](https://github.com/Jor02/DamSDK).
 
 DamSDK is a custom, VST-compatible plugin interface developed specifically for this project. It provides the necessary architectural backbone to interface with plugin hosts while maintaining the specific logic requirements of the original Delay Lama.
 
