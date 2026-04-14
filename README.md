@@ -25,7 +25,7 @@ I think it'd also be fun to make a very accurate 3D model of the Monk himself an
 
 ## Built on DamSDK
 
-To achieve independence from proprietary or deprecated frameworks, this project is built atop [DamSDK](./src/damsdk/).
+To achieve independence from proprietary or deprecated frameworks, this project is built atop [DamSDK](https://github.com/Jor02/DamSDK).
 
 DamSDK is a custom, VST-compatible plugin interface developed specifically for this project. It provides the necessary architectural backbone to interface with plugin hosts while maintaining the specific logic requirements of the original Delay Lama.
 
