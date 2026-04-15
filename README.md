@@ -19,7 +19,7 @@ I've loved this plugin ever since I first found out about it, but unfortunately 
 - [ ] Get a fully working 32-bit build.
 - [ ] Clean up source code to improve the maintainability and readablitiy of the codebase.
 - [ ] Hopefully get a 64-bit build of Delay Lama working.
-- [ ] And lastly, if at all possible, get the project to compile to a fully byte accurate binary that 100% matches the original dll. (I've already added [Reccmp](https://github.com/isledecomp/reccmp) to help showing the progress.)
+- [ ] And lastly, if at all possible, get the project to compile to a fully byte accurate binary that 100% matches the original dll. (I've already added [Reccmp](https://github.com/isledecomp/reccmp) to help showing the current progress)
 
 I think it'd also be fun to make a very accurate 3D model of the Monk himself and his environment as a Blend file, but I haven't yet decided If I actually wanna do that.
 
