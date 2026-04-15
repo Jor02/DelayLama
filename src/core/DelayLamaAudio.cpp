@@ -5,6 +5,7 @@
 #include "damsdk/utils/portable_stdint.h"
 #include <cstdio>
 #include <gui/controls/Monk.h>
+#include "utils/Logger.h"
 
 namespace DelayLama {
 namespace Core {
@@ -389,7 +390,7 @@ namespace Core {
 
         // Vowel timing/frame math
         this->lfoReseedIntervalSamples = (int)(this->sampleRate * 104.0 * 0.001); // Effectively sampleRate * 0.104
-        this->initialVowelNeedsUpdate = true;
+        this->needsMonkAnimationRefresh = true;
         this->globalAnimationSampleCounter = 0;
         this->idleAnimationSampleCounter = 0;
         this->currentIdleFrame = 0;
@@ -581,16 +582,17 @@ namespace Core {
                 }
                 else
                 {
-                    // Singing Vowel Logic
+                    // Singing Animation Logic
                     this->idleAnimationSampleCounter = 0;
-                    if (this->initialVowelNeedsUpdate != false)
+                    if (this->needsMonkAnimationRefresh != false)
                     {
                         float newMonkSprite = this->curVowelValue * 24.0f * 0.033333335f + 0.2f;
                         this->monkSprite = newMonkSprite;
                         this->setParameterValue(MonkSpriteParameterId, newMonkSprite);
-                        this->initialVowelNeedsUpdate = false;
+                        this->needsMonkAnimationRefresh = false;
                     }
-                    // Portamento/Glide for the Vowel Filter
+
+                    // Portamento/Glide
                     if (this->isGateActive == false)
                     {
                         this->formantMorphValue = (float)this->pitchTargetValue;
@@ -831,12 +833,10 @@ namespace Core {
                     if (this->noteStack[0] == 0)
                     {
                         this->isSinging = false;
-
-                        // Magic constant preserved from original
-                        this->setParameterValue(6, 0.16670001f);
+                        this->setParameterValue(MonkSpriteParameterId, MONK_FRAME_VAL(0, 5));
 
                         this->currentIdleFrame = 0;
-                        this->initialVowelNeedsUpdate = true;
+                        this->needsMonkAnimationRefresh = true;
 
                         sendMidiToHost(0x80, 40, 64); // Note Off
                     }
@@ -993,147 +993,33 @@ namespace Core {
         this->setParameterValue(RightGlideKnobParameterId, this->headSize);
     }
 
-    // STUB: DELAYLAMA 0x10002b80
+    // FUNCTION: DELAYLAMA 0x10002b80
     void DelayLamaAudio::setCurrentPresetName(char* newName) {
-        // char cVar1;
-        // uint uVar2;
-        // uint uVar3;
-        // char *pcVar4;
-        // char *pcVar5;
-        //
-        // uVar2 = 0xffffffff;
-        // do {
-        //   pcVar4 = newName;
-        //   if (uVar2 == 0) break;
-        //   uVar2 = uVar2 - 1;
-        //   pcVar4 = newName + 1;
-        //   cVar1 = *newName;
-        //   newName = pcVar4;
-        // } while (cVar1 != '\0');
-        // uVar2 = ~uVar2;
-        // pcVar4 = pcVar4 + -uVar2;
-        // pcVar5 = (*this->presets)
-        //          [this->currentPreset].name;
-        // for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-        //   *(undefined4 *)pcVar5 = *(undefined4 *)pcVar4;
-        //   pcVar4 = pcVar4 + 4;
-        //   pcVar5 = pcVar5 + 4;
-        // }
-        // for (uVar2 = uVar2 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-        //   *pcVar5 = *pcVar4;
-        //   pcVar4 = pcVar4 + 1;
-        //   pcVar5 = pcVar5 + 1;
-        // }
-        // return;
+        strcpy(this->presets[this->currentPreset].name, newName);
     }
 
-    // STUB: DELAYLAMA 0x10002bc0
+    // FUNCTION: DELAYLAMA 0x10002bc0
     void DelayLamaAudio::getCurrentPresetName(char* outText) {
-        // char cVar1;
-        // uint uVar2;
-        // uint uVar3;
-        // char *pcVar4;
-        // char *pcVar5;
-        //
-        // uVar2 = 0xffffffff;
-        // pcVar4 = (*this->presets)
-        //          [this->currentPreset].name;
-        // do {
-        //   pcVar5 = pcVar4;
-        //   if (uVar2 == 0) break;
-        //   uVar2 = uVar2 - 1;
-        //   pcVar5 = pcVar4 + 1;
-        //   cVar1 = *pcVar4;
-        //   pcVar4 = pcVar5;
-        // } while (cVar1 != '\0');
-        // uVar2 = ~uVar2;
-        // pcVar4 = pcVar5 + -uVar2;
-        // for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-        //   *(undefined4 *)outText = *(undefined4 *)pcVar4;
-        //   pcVar4 = pcVar4 + 4;
-        //   outText = outText + 4;
-        // }
-        // for (uVar2 = uVar2 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-        //   *outText = *pcVar4;
-        //   pcVar4 = pcVar4 + 1;
-        //   outText = outText + 1;
-        // }
-        // return;
+        strcpy(outText, this->presets[this->currentPreset].name);
     }
 
-    // STUB: DELAYLAMA 0x10002c00
-    void DelayLamaAudio::getParameterUnitLabel(char* label) {
-        // char cVar1;
-        // uint uVar2;
-        // uint uVar3;
-        // char *pcVar4;
-        // char *pcVar5;
-        //
-        // switch(this) {
-        // case (DelayLamaAudio *)0x0:
-        //   pcVar4 = s_Hours_1000d2fc;
-        //   goto LAB_10002c25;
-        // case (DelayLamaAudio *)0x1:
-        //   pcVar4 = s_Vowel_1000d2f0;
-        //   break;
-        // case (DelayLamaAudio *)0x2:
-        //   pcVar4 = &DAT_1000d2e4;
-        // LAB_10002c25:
-        //   uVar2 = 0xffffffff;
-        //   do {
-        //     pcVar5 = pcVar4;
-        //     if (uVar2 == 0) break;
-        //     uVar2 = uVar2 - 1;
-        //     pcVar5 = pcVar4 + 1;
-        //     cVar1 = *pcVar4;
-        //     pcVar4 = pcVar5;
-        //   } while (cVar1 != '\0');
-        //   uVar2 = ~uVar2;
-        //   pcVar4 = pcVar5 + -uVar2;
-        //   for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-        //     *(undefined4 *)label = *(undefined4 *)pcVar4;
-        //     pcVar4 = pcVar4 + 4;
-        //     label = label + 4;
-        //   }
-        //   for (uVar2 = uVar2 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-        //     *label = *pcVar4;
-        //     pcVar4 = pcVar4 + 1;
-        //     label = label + 1;
-        //   }
-        //   return;
-        // case (DelayLamaAudio *)0x3:
-        //   pcVar4 = &DAT_1000d2d8;
-        //   break;
-        // default:
-        //   goto LAB_10002c6d;
-        // }
-        // uVar2 = 0xffffffff;
-        // do {
-        //   pcVar5 = pcVar4;
-        //   if (uVar2 == 0) break;
-        //   uVar2 = uVar2 - 1;
-        //   pcVar5 = pcVar4 + 1;
-        //   cVar1 = *pcVar4;
-        //   pcVar4 = pcVar5;
-        // } while (cVar1 != '\0');
-        // uVar2 = ~uVar2;
-        // pcVar4 = pcVar5 + -uVar2;
-        // for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-        //   *(undefined4 *)label = *(undefined4 *)pcVar4;
-        //   pcVar4 = pcVar4 + 4;
-        //   label = label + 4;
-        // }
-        // for (uVar2 = uVar2 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-        //   *label = *pcVar4;
-        //   pcVar4 = pcVar4 + 1;
-        //   label = label + 1;
-        // }
-        // LAB_10002c6d:
-        // return;
+    // FUNCTION: DELAYLAMA 0x10002c00
+    void DelayLamaAudio::getParameterUnitLabel(int parameterId, char* label) {
+        const char* unitLabel = nullptr;
+
+        switch (parameterId) {
+            case 0: unitLabel = " Hours  ";   break;
+            case 1: unitLabel = " Vowel  ";   break;
+            case 2: unitLabel = "   dB   ";        break;
+            case 3: unitLabel = "   cm   ";        break;
+            default: return;
+        }
+
+        strcpy(label, unitLabel);
     }
 
     // FUNCTION: DELAYLAMA 0x10002c90
-    void DelayLamaAudio::getParameterValueString(int parameterId, char* outText) {
+    void DelayLamaAudio::getParameterValueString(int32_t parameterId, char* outText) {
         *outText = '\0';
         switch(parameterId) {
         case LeftVoiceKnobParameterId:
@@ -1318,103 +1204,90 @@ namespace Core {
 
     // STUB: DELAYLAMA 0x10005ca0
     void DelayLamaAudio::dispatchMidiEvents(int sampleIdx, int sampleFrame) {
-        // int midiData2_;
-        // uint midiData2;
-        // int midiData1;
-        // uint midiCommand;
-        // int pitchInterpCount;
-        // int *pitchInterpQueue;
-        // uint statusByte;
-        // uint bendValue;
-        // int currentReadPtr;
-        // int nextInterpSample;
-        // int currentInterpIdx;
-        // int currentMidiEvent;
-        //
-        // pitchInterpCount = 0;
-        // if (this->midiQueue[this->midiEventReadIndex].timestamp == sampleIdx) {
-        //   pitchInterpQueue = this->pitchInterpData2;
-        //   do {
-        //     currentMidiEvent = this->midiEventReadIndex;
-        //     statusByte = this->midiQueue[currentMidiEvent].status;
-        //     if (statusByte == 0) break;
-        //     midiCommand = statusByte & 0xf0;
-        //                   /* Handle note on (0x90) / Note off (0x80) */
-        //     if ((midiCommand == 0x90) || (midiCommand == 0x80)) {
-        //       midiData2 = this->midiQueue[currentMidiEvent].data2 & 0x7f;
-        //       if (midiCommand == 0x80) {
-        //         midiData2 = 0;
-        //       }
-        //       handleNoteEvent(this,this->midiQueue[currentMidiEvent].data1 & 0x7f,midiData2);
-        //     }
-        //     else {
-        //                   /* Handle control change (0xB0) */
-        //       if (midiCommand == 0xb0) {
-        //         midiData1 = this->midiQueue[currentMidiEvent].data1 & 0x7f;
-        //         this->currentMidiEventData1 = midiData1;
-        //         midiData2_ = this->midiQueue[currentMidiEvent].data2 & 0x7f;
-        //         this->currentMidiEventData2 = midiData2_;
-        //         handleControlChange(this,midiData1,midiData2_);
-        //       }
-        //       else {
-        //                   /* Handle pitch bend (0xE0) */
-        //         if (midiCommand == 0xe0) {
-        //                   /* If the bend happens at the very start of the buffer (sample 0), the plugin
-        //                      sets up an interpolation routine to smooth the pitch change. */
-        //           if (sampleIdx == 0) {
-        //                   /* Store data in a temporary "interpolation queue" to be spread across the
-        //                      buffer */
-        //             pitchInterpQueue[-0x400] = this->midiQueue[currentMidiEvent].data1 & 0x7f;
-        //             pitchInterpCount = pitchInterpCount + 1;
-        //             *pitchInterpQueue =
-        //                  this->midiQueue[this->midiEventReadIndex].data2 & 0x7f;
-        //             pitchInterpQueue = pitchInterpQueue + 1;
-        //           }
-        //           else {
-        //             this->pitchBase = this->midiQueue[currentMidiEvent].data1 & 0x7f;
-        //             bendValue = this->midiQueue[currentMidiEvent].data2;
-        //             this->pitchTargetDirty = true;
-        //             this->pitchTargetRaw = bendValue & 0x7f;
-        //           }
-        //         }
-        //       }
-        //     }
-        //                   /* Wipe the queue slot so it isn't processed twice */
-        //     this->midiQueue[this->midiEventReadIndex].timestamp = 0;
-        //     this->midiQueue[this->midiEventReadIndex].status = 0;
-        //     this->midiQueue[this->midiEventReadIndex].data1 = 0;
-        //     this->midiQueue[this->midiEventReadIndex].data2 = 0;
-        //                   /* Advance the read pointer */
-        //     currentReadPtr = this->midiEventReadIndex;
-        //     this->midiEventReadIndex = currentReadPtr + 1;
-        //   } while (this->midiQueue[currentReadPtr + 1].timestamp == sampleIdx);
-        //                   /* If multiple pitch bend events occurred at sample 0, calculate how many
-        //                      samples to wait between each update to spread them evenly across the buffer
-        //                      (sampleFrameCount). */
-        //   if (pitchInterpCount != 0) {
-        //     this->isInterpActive = 1;
-        //     this->interpEventCount = pitchInterpCount;
-        //     this->interpCurrentIdx = 0;
-        //     this->interpSampleStep = (sampleFrame + -2) / pitchInterpCount;
-        //   }
-        // }
-        //                   /* If the interpolation logic was triggered above, this block executes at
-        //                      specific intervals throughout the buffer processing to update the pitch
-        //                      incrementally. */
-        // nextInterpSample = this->isInterpActive;
-        // if (((sampleIdx == nextInterpSample) && (sampleIdx != 0)) &&
-        //    (currentInterpIdx = this->interpCurrentIdx,
-        //    currentInterpIdx < this->interpEventCount)) {
-        //                   /* Apply the next piece of pitch data from the interpolation queue */
-        //   this->pitchBase = this->pitchInterpData1[currentInterpIdx];
-        //   pitchInterpCount = this->pitchInterpData2[currentInterpIdx];
-        //   this->interpCurrentIdx = currentInterpIdx + 1;
-        //   this->pitchTargetRaw = pitchInterpCount;
-        //   this->pitchTargetDirty = true;
-        //                   /* Set the timestamp for the next interpolation step */
-        //   this->isInterpActive = this->interpSampleStep + nextInterpSample;
-        // }
-        // return;
+        int pitchInterpCount = 0;
+        int currentReadPtr = 0;
+        if (this->midiQueue[this->midiEventReadIndex].timestamp == sampleIdx) {
+            int* pitchInterpQueue = this->pitchInterpData2;
+            do {
+                int currentMidiEvent = this->midiEventReadIndex;
+                int statusByte = this->midiQueue[currentMidiEvent].status;
+                if (statusByte == 0) break;
+                int midiCommand = statusByte & 0xf0;
+
+                // Handle note on (0x90) / Note off (0x80)
+                if ((midiCommand == 0x90) || (midiCommand == 0x80)) {
+                    int midiData2 = this->midiQueue[currentMidiEvent].data2 & 0x7f;
+                    if (midiCommand == 0x80) {
+                        midiData2 = 0;
+                    }
+                    this->handleNoteEvent(this->midiQueue[currentMidiEvent].data1 & 0x7f,midiData2);
+                }
+                else {
+
+                    // Handle control change (0xB0)
+                    if (midiCommand == 0xb0) {
+                        int midiData1 = this->midiQueue[currentMidiEvent].data1 & 0x7f;
+                        this->currentMidiEventData1 = midiData1;
+                        int midiData2 = this->midiQueue[currentMidiEvent].data2 & 0x7f;
+                        this->currentMidiEventData2 = midiData2;
+                        this->handleControlChange(midiData1,midiData2);
+                    }
+                    else {
+                        // Handle pitch bend (0xE0)
+                        if (midiCommand == 0xe0) {
+                            // If the bend happens at the very start of the buffer (sample 0), the plugin sets up an interpolation routine to smooth the pitch change.
+                            if (sampleIdx == 0) {
+                                // Store data in a temporary "interpolation queue" to be spread across the buffer
+                                pitchInterpQueue[-0x400] = this->midiQueue[currentMidiEvent].data1 & 0x7f;
+                                pitchInterpCount = pitchInterpCount + 1;
+                                *pitchInterpQueue =
+                                    this->midiQueue[this->midiEventReadIndex].data2 & 0x7f;
+                                pitchInterpQueue = pitchInterpQueue + 1;
+                            }
+                            else {
+                                this->pitchBase = this->midiQueue[currentMidiEvent].data1 & 0x7f;
+                                int bendValue = this->midiQueue[currentMidiEvent].data2;
+                                this->pitchTargetDirty = true;
+                                this->pitchTargetRaw = bendValue & 0x7f;
+                            }
+                        }
+                    }
+                }
+            
+                // Wipe the queue slot so it isn't processed twice
+                this->midiQueue[this->midiEventReadIndex].timestamp = 0;
+                this->midiQueue[this->midiEventReadIndex].status = 0;
+                this->midiQueue[this->midiEventReadIndex].data1 = 0;
+                this->midiQueue[this->midiEventReadIndex].data2 = 0;
+
+                // Advance the read pointer
+                currentReadPtr = this->midiEventReadIndex;
+                this->midiEventReadIndex = currentReadPtr + 1;
+            } while (this->midiQueue[currentReadPtr + 1].timestamp == sampleIdx);
+            // If multiple pitch bend events occurred at sample 0, calculate how many samples to wait between each update to spread them evenly across the buffer (sampleFrameCount).
+            if (pitchInterpCount != 0) {
+                this->isInterpActive = 1;
+                this->interpEventCount = pitchInterpCount;
+                this->interpCurrentIdx = 0;
+                this->interpSampleStep = (sampleFrame + -2) / pitchInterpCount;
+            }
+        }
+
+        // If the interpolation logic was triggered above, this block executes at specific intervals throughout the buffer processing to update the pitch incrementally.
+        int nextInterpSample = this->isInterpActive;
+        int currentInterpIdx = this->interpCurrentIdx;
+        if (((sampleIdx == nextInterpSample) && (sampleIdx != 0)) && currentInterpIdx < this->interpEventCount) {
+
+            // Apply the next piece of pitch data from the interpolation queue
+            this->pitchBase = this->pitchInterpData1[currentInterpIdx];
+            pitchInterpCount = this->pitchInterpData2[currentInterpIdx];
+            this->interpCurrentIdx = currentInterpIdx + 1;
+            this->pitchTargetRaw = pitchInterpCount;
+            this->pitchTargetDirty = true;
+
+            // Set the timestamp for the next interpolation step
+            this->isInterpActive = this->interpSampleStep + nextInterpSample;
+        }
     }
 
     // FUNCTION: DELAYLAMA 0x10005eb0
@@ -1552,69 +1425,73 @@ namespace Core {
     }
 
     // STUB: DELAYLAMA 0x10006240
-    void DelayLamaAudio::handleNoteEvent(int midiData1, int midiData2) {
-        // int *piVar1;
-        // int *nextNote;
-        // int i;
-        // int noteWithOffset;
-        // int *noteStackPtr;
-        // int activeNote;
-        // int currentNote;
-        // DelayLamaAudioVTable *vtable;
-        //
-        //                   /* Apply a -12 offset (one octave) to incoming MIDI notes */
-        // noteWithOffset = midiData1 + -0xc;
-        //                   /* Note off */
-        // if (midiData2 == 0) {
-        //   if ((noteWithOffset < 0x49) && (3 < noteWithOffset)) {
-        //     i = 0;
-        //     do {
-        //       currentNote = this->noteStack[i];
-        //       nextNote = this->noteStack + i;
-        //       if (currentNote == noteWithOffset) {
-        //         while (currentNote != 0) {
-        //           i = i + 1;
-        //           *nextNote = nextNote[1];
-        //           piVar1 = nextNote + 1;
-        //           nextNote = nextNote + 1;
-        //           currentNote = *piVar1;
-        //         }
-        //       }
-        //       i = i + 1;
-        //     } while (i < 128);
-        //   }
-        // }
-        // else {
-        //                   /* Note on */
-        //   if ((noteWithOffset < 73) && (3 < noteWithOffset)) {
-        //     noteStackPtr = this->noteStack + 127;
-        //     i = 127;
-        //     nextNote = noteStackPtr;
-        //     do {
-        //       if (*noteStackPtr != 0) break;
-        //       if (*nextNote != 0) {
-        //         nextNote[1] = *nextNote;
-        //       }
-        //       i = i + -1;
-        //       nextNote = nextNote + -1;
-        //     } while (-1 < i);
-        //     this->noteStack[0] = noteWithOffset;
-        //   }
-        // }
-        // activeNote = this->noteStack[0];
-        // this->pitchTargetValue = (int)(float)activeNote;
-        // this->isSinging = activeNote != 0;
-        // if (activeNote == 0) {
-        //   vtable = this->vtable;
-        //   this->isGateActive = false;
-        //   (*(vtable->audioEffectX).audioEffect.setParameterValue)(6,1042985832);
-        //   this->vowelPresetIndex = 0;
-        //   this->initialVowelNeedsUpdate = true;
-        // }
-        // if ((this->noteStack[1] != 0) && (this->isGateActive == false)) {
-        //   this->isGateActive = true;
-        // }
-        // return;
+    void DelayLamaAudio::handleNoteEvent(int midiData1, int midiData2)
+    {
+        // Apply a -12 offset (one octave) to incoming MIDI notes
+        int noteWithOffset = midiData1 + -0xc;
+        // Note off
+        if (midiData2 == 0)
+        {
+            if ((noteWithOffset < 0x49) && (3 < noteWithOffset))
+            {
+                int i = 0;
+                do
+                {
+                    int currentNote = this->noteStack[i];
+                    int* nextNote = this->noteStack + i;
+                    if (currentNote == noteWithOffset)
+                    {
+                        while (currentNote != 0)
+                        {
+                            i = i + 1;
+                            *nextNote = nextNote[1];
+                            int* piVar1 = nextNote + 1;
+                            nextNote = nextNote + 1;
+                            currentNote = *piVar1;
+                        }
+                    }
+                    i = i + 1;
+                } while (i < 128);
+            }
+        }
+        else
+        {
+            // Note on
+            if ((noteWithOffset < 73) && (3 < noteWithOffset))
+            {
+                int* noteStackPtr = this->noteStack + 127;
+                int i = 127;
+                int * nextNote = noteStackPtr;
+                do
+                {
+                    if (*noteStackPtr != 0)
+                        break;
+                    if (*nextNote != 0)
+                    {
+                        nextNote[1] = *nextNote;
+                    }
+                    i = i + -1;
+                    nextNote = nextNote + -1;
+                } while (-1 < i);
+                this->noteStack[0] = noteWithOffset;
+            }
+        }
+
+        int activeNote = this->noteStack[0];
+        this->pitchTargetValue = (int)(float)activeNote;
+        this->isSinging = activeNote != 0;
+
+        if (activeNote == 0)
+        {
+            this->isGateActive = false;
+            this->setParameterValue(MonkSpriteParameterId, MONK_FRAME_VAL(0, 5));
+            this->currentIdleFrame = 0;
+            this->needsMonkAnimationRefresh = true;
+        }
+        if ((this->noteStack[1] != 0) && (this->isGateActive == false))
+        {
+            this->isGateActive = true;
+        }
     }
 
     // FUNCTION: DELAYLAMA 0x10006330

@@ -100,7 +100,7 @@ namespace Core {
             int pluginBlockSize; // 0x63f4
             int rngState; // 0x63f8
             float delayTimeScaler; // 0x63fc
-            bool initialVowelNeedsUpdate; // 0x6400
+            bool needsMonkAnimationRefresh; // 0x6400
             char unusedBytes07[3]; // 0x6401
             float monkIdleFrameTable[24]; // 0x6404
             int currentIdleFrame; // 0x6464
@@ -153,8 +153,8 @@ namespace Core {
             virtual void loadPresetByIndex(int currentProgram);
             virtual void setCurrentPresetName(char* newName);
             virtual void getCurrentPresetName(char* outText);
-            virtual void getParameterUnitLabel(char* label);
-            virtual void getParameterValueString(int parameterId, char* outText);
+            virtual void getParameterUnitLabel(int parameterId, char* label);
+            virtual void getParameterValueString(int32_t parameterId, char* outText);
             virtual void getParameterName(int parameterId, char* outBuffer);
             virtual float getParameterValue(int parameter);
             virtual bool getOutputBusProperties(uint32_t index, char* properties);
