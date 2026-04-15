@@ -4,6 +4,7 @@
 #include <cmath>
 #include "damsdk/utils/portable_stdint.h"
 #include <cstdio>
+#include <gui/controls/Monk.h>
 
 namespace DelayLama {
 namespace Core {
@@ -319,30 +320,30 @@ namespace Core {
         }
 
         // Vowel Preset Values
-        this->vowelPresetTable[0] = 0.1667f;
-        this->vowelPresetTable[1] = 0.1f;
-        this->vowelPresetTable[2] = 0.1333f;
-        this->vowelPresetTable[3] = 0.1f;
-        this->vowelPresetTable[4] = 0.0667f;
-        this->vowelPresetTable[5] = 0.0333f;
-        this->vowelPresetTable[6] = 0.0f;
-        this->vowelPresetTable[7] = 0.0333f;
-        this->vowelPresetTable[8] = 0.1667f;
-        this->vowelPresetTable[9] = 0.1f;
-        this->vowelPresetTable[10] = 0.1333f;
-        this->vowelPresetTable[11] = 0.1f;
-        this->vowelPresetTable[12] = 0.1667f;
-        this->vowelPresetTable[13] = 0.0333f;
-        this->vowelPresetTable[14] = 0.0f;
-        this->vowelPresetTable[15] = 0.0333f;
-        this->vowelPresetTable[16] = 0.0667f;
-        this->vowelPresetTable[17] = 0.1f;
-        this->vowelPresetTable[18] = 0.1333f;
-        this->vowelPresetTable[19] = 0.1f;
-        this->vowelPresetTable[20] = 0.1667f;
-        this->vowelPresetTable[21] = 0.0333f;
-        this->vowelPresetTable[22] = 0.0f;
-        this->vowelPresetTable[23] = 0.0333f;
+        this->monkIdleFrameTable[0]  = MONK_FRAME_VAL(0, 5);
+        this->monkIdleFrameTable[1]  = MONK_FRAME_VAL(0, 3);
+        this->monkIdleFrameTable[2]  = MONK_FRAME_VAL(0, 4);
+        this->monkIdleFrameTable[3]  = MONK_FRAME_VAL(0, 3);
+        this->monkIdleFrameTable[4]  = MONK_FRAME_VAL(0, 2);
+        this->monkIdleFrameTable[5]  = MONK_FRAME_VAL(0, 1);
+        this->monkIdleFrameTable[6]  = MONK_FRAME_VAL(0, 0);
+        this->monkIdleFrameTable[7]  = MONK_FRAME_VAL(0, 1);
+        this->monkIdleFrameTable[8]  = MONK_FRAME_VAL(0, 5);
+        this->monkIdleFrameTable[9]  = MONK_FRAME_VAL(0, 3);
+        this->monkIdleFrameTable[10] = MONK_FRAME_VAL(0, 4);
+        this->monkIdleFrameTable[11] = MONK_FRAME_VAL(0, 3);
+        this->monkIdleFrameTable[12] = MONK_FRAME_VAL(0, 5);
+        this->monkIdleFrameTable[13] = MONK_FRAME_VAL(0, 1);
+        this->monkIdleFrameTable[14] = MONK_FRAME_VAL(0, 0);
+        this->monkIdleFrameTable[15] = MONK_FRAME_VAL(0, 1);
+        this->monkIdleFrameTable[16] = MONK_FRAME_VAL(0, 2);
+        this->monkIdleFrameTable[17] = MONK_FRAME_VAL(0, 3);
+        this->monkIdleFrameTable[18] = MONK_FRAME_VAL(0, 4);
+        this->monkIdleFrameTable[19] = MONK_FRAME_VAL(0, 3);
+        this->monkIdleFrameTable[20] = MONK_FRAME_VAL(0, 5);
+        this->monkIdleFrameTable[21] = MONK_FRAME_VAL(0, 1);
+        this->monkIdleFrameTable[22] = MONK_FRAME_VAL(0, 0);
+        this->monkIdleFrameTable[23] = MONK_FRAME_VAL(0, 1);
 
         // Delay Effect Initialization
         this->delayBufferSize = 20000;
@@ -369,38 +370,38 @@ namespace Core {
         this->pitchTargetDirty = false;
         this->isGlideActive = false;
         this->isSinging = false;
-        this->vowelFilterDirty = true;
+        this->formantTableNeedsUpdate = true;
         this->currentMidiEventData2 = 0;
         this->currentMidiEventData1 = 1;
         this->outputGain = 0.1f;
         this->pitchValueDirty = false;
         this->vibratoDirty = false;
 
-        updateVowelFilter(0.5f);
+        updateFormantTable(0.5f);
 
         this->prevVowelValue = 0.5;
         this->isGateActive = false;
-        this->vowelMorphCurrent = 36.0;
+        this->currentFormantMorphValue = 36.0;
         this->lfoPhaseWrapValue = 4.0;
         this->lfoDepth = 0.0;
         this->lfoSampleValue = 0.0;
         this->lfoPhaseAccumulator = 0.0;
 
         // Vowel timing/frame math
-        this->vowelFrameCounter = (int)(this->sampleRate * 104.0 * 0.001); // Effectively sampleRate * 0.104
+        this->lfoReseedIntervalSamples = (int)(this->sampleRate * 104.0 * 0.001); // Effectively sampleRate * 0.104
         this->initialVowelNeedsUpdate = true;
-        this->anotherVowelIndex = 0;
-        this->vowelStepIndex = 0;
-        this->vowelPresetIndex = 0;
+        this->globalAnimationSampleCounter = 0;
+        this->idleAnimationSampleCounter = 0;
+        this->currentIdleFrame = 0;
 
         // Vowel Trigger Envelope/Sequence Steps
-        int vowelTriggerBase = (int)(this->sampleRate * 0.208);
-        this->vowelTriggerBase = vowelTriggerBase;
-        this->vowelTriggerA = vowelTriggerBase * 7;
-        this->vowelTriggerB = (int)(vowelTriggerBase * 8.5);
-        this->vowelTriggerC = vowelTriggerBase * 15;
-        this->vowelTriggerD = vowelTriggerBase * 17;
-        this->vowelTriggerE = vowelTriggerBase * 23;
+        int idleSamplesPerFrame = (int)(this->sampleRate * 0.208f);
+        this->idleSamplesPerFrame = idleSamplesPerFrame;
+        this->startBlink1 = idleSamplesPerFrame * 7;
+        this->stopBlink1 = (int)(idleSamplesPerFrame * 8.5f);
+        this->startBlink2 = idleSamplesPerFrame * 15;
+        this->stopBlink2 = idleSamplesPerFrame * 17;
+        this->startIdleAnimation = idleSamplesPerFrame * 23;
 
         this->writeIndex = 0;
         this->excitationReadIndex = 0;
@@ -427,6 +428,8 @@ namespace Core {
     }
 
     const float kPitchScaleFactor = 16384.0f;
+    const float closeEyes = MONK_FRAME_VAL(0, 2);
+    const float openEyes  = MONK_FRAME_VAL(0, 5);
 
     // FUNCTION DELAYLAMA: 0x100054c0
     void DelayLamaAudio::processAudio(float** inputs, float** outputs, int32_t sampleFrames)
@@ -536,89 +539,93 @@ namespace Core {
                     }
                 }
 
-                // Idle Vowel Logic
                 if (this->isSinging == false)
                 {
-                    this->vowelFilterDirty = true;
-                    if (this->vowelStepIndex == this->vowelTriggerA)
+                    // Idle Animation Logic
+                    this->formantTableNeedsUpdate = true;
+
+                    // Blink 1
+                    if (this->idleAnimationSampleCounter == this->startBlink1)
                     {
-                        this->setParameterValue(MonkParameterId, 0.06667f);
+                        this->setParameterValue(MonkSpriteParameterId, closeEyes);
                     }
-                    if (this->vowelStepIndex == this->vowelTriggerB)
+                    if (this->idleAnimationSampleCounter == this->stopBlink1)
                     {
-                        this->setParameterValue(MonkParameterId, 0.16667f);
+                        this->setParameterValue(MonkSpriteParameterId, openEyes);
                     }
-                    if (this->vowelStepIndex == this->vowelTriggerC)
+                    
+                    // Blink 2
+                    if (this->idleAnimationSampleCounter == this->startBlink2)
                     {
-                        this->setParameterValue(MonkParameterId, 0.06667f);
+                        this->setParameterValue(MonkSpriteParameterId, closeEyes);
                     }
-                    if (this->vowelStepIndex == this->vowelTriggerD)
+                    if (this->idleAnimationSampleCounter == this->stopBlink2)
                     {
-                        this->setParameterValue(MonkParameterId, 0.16667f);
+                        this->setParameterValue(MonkSpriteParameterId, openEyes);
                     }
 
-                    // cycle through vowels?
-                    if ((this->vowelTriggerBase <= this->anotherVowelIndex) && (this->vowelTriggerE <= this->vowelStepIndex))
+                    // After two blinks, we start the idle dance animation
+                    if ((this->idleSamplesPerFrame <= this->globalAnimationSampleCounter) && (this->startIdleAnimation <= this->idleAnimationSampleCounter))
                     {
-                        if (23 < this->vowelPresetIndex)
+                        if (23 < this->currentIdleFrame)
                         {
-                            this->vowelPresetIndex = 0;
+                            this->currentIdleFrame = 0;
                         }
-                        this->anotherVowelIndex = 0;
-                        float targetMonkSprite = this->vowelPresetTable[this->vowelPresetIndex];
+                        this->globalAnimationSampleCounter = 0;
+                        float targetMonkSprite = this->monkIdleFrameTable[this->currentIdleFrame];
                         this->monkSprite = targetMonkSprite;
-                        this->setParameterValue(MonkParameterId, targetMonkSprite);
-                        this->vowelStepIndex = this->vowelTriggerE;
-                        this->vowelPresetIndex = this->vowelPresetIndex + 1;
+                        this->setParameterValue(MonkSpriteParameterId, targetMonkSprite);
+                        this->idleAnimationSampleCounter = this->startIdleAnimation;
+                        this->currentIdleFrame = this->currentIdleFrame + 1;
                     }
                 }
                 else
                 {
                     // Singing Vowel Logic
-                    this->vowelStepIndex = 0;
+                    this->idleAnimationSampleCounter = 0;
                     if (this->initialVowelNeedsUpdate != false)
                     {
-                        float tempVowelVal = this->curVowelValue * 24.0f * 0.033333335f + 0.2f;
-                        this->monkSprite = tempVowelVal;
-                        this->setParameterValue(MonkParameterId, tempVowelVal);
+                        float newMonkSprite = this->curVowelValue * 24.0f * 0.033333335f + 0.2f;
+                        this->monkSprite = newMonkSprite;
+                        this->setParameterValue(MonkSpriteParameterId, newMonkSprite);
                         this->initialVowelNeedsUpdate = false;
                     }
                     // Portamento/Glide for the Vowel Filter
                     if (this->isGateActive == false)
                     {
-                        this->vowelMorph = (float)this->pitchTargetValue;
+                        this->formantMorphValue = (float)this->pitchTargetValue;
                     }
                     else
                     {
                         // Calculate glide delta based on Portamento Time and Sample Rate
-                        if (this->vowelMorph <= (float)this->pitchTargetValue + 0.2)
+                        if (this->formantMorphValue <= (float)this->pitchTargetValue + 0.2)
                         {
-                            if ((float)this->pitchTargetValue - 0.2 <= this->vowelMorph)
+                            if ((float)this->pitchTargetValue - 0.2 <= this->formantMorphValue)
                             {
-                                this->vowelMorph = (float)this->pitchTargetValue;
-                                this->vowelMorphDelta = 0;
+                                this->formantMorphValue = (float)this->pitchTargetValue;
+                                this->formantMorphStep = 0;
                             }
                             else
                             {
-                                this->vowelMorphDelta = (int)(12.0 / ((this->portamentoTime + 0.01) * this->pluginSampleRate));
+                                this->formantMorphStep = (int)(12.0 / ((this->portamentoTime + 0.01) * this->pluginSampleRate));
                             }
                         }
                         else
                         {
-                            this->vowelMorphDelta = (int)(-12.0 / ((this->portamentoTime + 0.01) * this->pluginSampleRate));
+                            this->formantMorphStep = (int)(-12.0 / ((this->portamentoTime + 0.01) * this->pluginSampleRate));
                         }
-                        this->vowelMorph =
-                            this->vowelMorph + (float)this->vowelMorphDelta;
+                        this->formantMorphValue =
+                            this->formantMorphValue + (float)this->formantMorphStep;
                     }
 
                     // LFO Calculation (Frequency Wobble)
-                    this->vowelMorphCurrent = this->vowelMorph;
+                    this->currentFormantMorphValue = this->formantMorphValue;
                     int sineSize = this->sineTableSize;
                     if (sineSize <= this->lfoPhaseAccumulator)
                     {
                         this->lfoPhaseAccumulator = this->lfoPhaseAccumulator - sineSize;
                     }
-                    if (this->vowelFrameCounter <= this->sampleCounter)
+                    if (this->lfoReseedIntervalSamples <= this->sampleCounter)
                     {
                         this->sampleCounter = 0;
                         float random = getRandomFloat();
@@ -628,10 +635,10 @@ namespace Core {
                     int lfoSineIndex = static_cast<long>(this->lfoPhaseAccumulator);
                     this->lfoSampleValue = (this->lfoDepth + 0.2f) * (float)this->sineTable[lfoSineIndex];
                     this->lfoPhaseAccumulator = ((this->lfoDepth * 0.2f + 1.0f) * this->lfoPhaseWrapValue) / this->lfoPhaseIncrement + this->lfoPhaseAccumulator;
-                    this->vowelMorphCurrent = this->lfoSampleValue + this->vowelMorphCurrent;
+                    this->currentFormantMorphValue = this->lfoSampleValue + this->currentFormantMorphValue;
                     
                     // Fetch fundamental frequency for synthesis
-                    int freqTableIndex =  static_cast<long>(this->vowelMorphCurrent * -32.0f);
+                    int freqTableIndex =  static_cast<long>(this->currentFormantMorphValue * -32.0f);
                     float fundamentalFreq = this->frequencyTable[freqTableIndex];
                     this->frequencyValue = fundamentalFreq;
                     
@@ -639,27 +646,27 @@ namespace Core {
                     this->frequencyIndex = writeBoundary;
                     
                     // Perform the actual synthesis if filter is dirty or boundary reached
-                    if ((writeBoundary <= this->excitationWriteIndex) || (this->vowelFilterDirty != false))
+                    if ((writeBoundary <= this->excitationWriteIndex) || (this->formantTableNeedsUpdate != false))
                     {
-                        if (this->vowelFilterDirty != false)
+                        if (this->formantTableNeedsUpdate != false)
                         {
-                            updateVowelFilter(this->curVowelValue);
+                            updateFormantTable(this->curVowelValue);
                         }
                         addSynthesisToExcitation(this->excitationWriteIndex);
                         this->excitationWriteIndex = 0;
-                        this->vowelFilterDirty = false;
+                        this->formantTableNeedsUpdate = false;
                     }
                 }
 
                 // Increment per-sample counters
-                this->sampleCounter = this->sampleCounter + 1;
-                this->vowelStepIndex = this->vowelStepIndex + 1;
-                this->excitationWriteIndex = this->excitationWriteIndex + 1;
-                this->synthesisFrameCounter = this->synthesisFrameCounter + 1;
-                sampleIdx += 1;
+                this->sampleCounter++;
+                this->idleAnimationSampleCounter++;
+                this->excitationWriteIndex++;
+                this->synthesisFrameCounter++;
+                sampleIdx ++;
                 frame--;
-                this->anotherVowelIndex = this->anotherVowelIndex + 1;
-                this->smoothStep = this->smoothStep + 1;
+                this->globalAnimationSampleCounter++;
+                this->smoothStep++;
 
             } while (frame != 0);
         }
@@ -737,7 +744,7 @@ namespace Core {
                 
                 // Final Output Mix & Volume Normalization
                 // Volume is adjusted slightly depending on the mouth position/vowel.
-                float morphScale = (this->vowelMorph * -0.013888889f + 2.0f) * this->outputGain;
+                float morphScale = (this->formantMorphValue * -0.013888889f + 2.0f) * this->outputGain;
                 
                 // Left Channel: Dry Excitation + Delay Line L
                 outLeft[frame] = morphScale * (excitation + this->stereoDelayLBuffer[this->delayReadIndexL]);
@@ -746,9 +753,9 @@ namespace Core {
                 outRight[frame] = morphScale * (excitation + this->stereoDelayRBuffer[this->delayReadIndexR]);
                 
                 this->excitationBuffer[this->excitationReadIndex] = 0.0f;
-                this->excitationReadIndex = this->excitationReadIndex + 1;
+                this->excitationReadIndex++;
                 
-                outPtr = outPtr + 1;
+                outPtr++;
                 frame--;
             } while (frame != 0);
         }
@@ -773,11 +780,11 @@ namespace Core {
                     const float monkSprite = value * 24.0f * 0.033333335f + 0.2f;
                     this->monkSprite = monkSprite;
 
-                    this->setParameterValue(MonkParameterId, monkSprite);
+                    this->setParameterValue(MonkSpriteParameterId, monkSprite);
 
                     if (this->curVowelValue != this->prevVowelValue)
                     {
-                        updateVowelFilter(value);
+                        updateFormantTable(value);
                     }
                 }
 
@@ -795,7 +802,7 @@ namespace Core {
 
                 if (this->isSinging)
                 {
-                    updateVowelFilter(this->curVowelValue);
+                    updateFormantTable(this->curVowelValue);
                 }
                 break;
             }
@@ -804,7 +811,7 @@ namespace Core {
                 this->vibratoDepthCurrent = value;
                 break;
             }
-            case MonkParameterId: // Scaled Vowel
+            case MonkSpriteParameterId: // Monk Sprite
             {
                 if (!this->isSinging)
                 {
@@ -828,7 +835,7 @@ namespace Core {
                         // Magic constant preserved from original
                         this->setParameterValue(6, 0.16670001f);
 
-                        this->vowelPresetIndex = 0;
+                        this->currentIdleFrame = 0;
                         this->initialVowelNeedsUpdate = true;
 
                         sendMidiToHost(0x80, 40, 64); // Note Off
@@ -1169,7 +1176,7 @@ namespace Core {
                 return this->headSize;
             case SingingHorizontalSliderParameterId:
                 return this->vibratoDepthCurrent;
-            case MonkParameterId:
+            case MonkSpriteParameterId:
                 return this->monkSprite;
             default:
                 return 0.0;
@@ -1455,14 +1462,14 @@ namespace Core {
     const float kTableIndexMax = 1279.0f;
     
     // FUNCTION: DELAYLAMA 0x10005fb0
-    void DelayLamaAudio::updateVowelFilter(float vowelX) {
+    void DelayLamaAudio::updateFormantTable(float vowelX) {
         // Scale vowel position to table index range (0.0 .. 1279.0)
         float vowelIndex = vowelX * kTableIndexMax;
         this->vowelLookupIndex = vowelIndex;
 
         // Compute a blend factor from vowelMorphCurrent (offset 0xc4)
         // blend = vowelMorphCurrent * 0.5 + 0.75
-        float blendFactor = static_cast<float>(this->vowelMorphCurrent * 0.5 + 0.75);
+        float blendFactor = static_cast<float>(this->currentFormantMorphValue * 0.5 + 0.75);
         this->vowelBlendFactor = blendFactor;  // offset 0x63b0
 
         // Convert vowel index to integer for table lookup
