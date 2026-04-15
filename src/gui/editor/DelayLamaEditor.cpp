@@ -198,8 +198,8 @@ namespace Gui{
         monkRect.right = (monkSpriteSheetBitmap->width / 5) + 22;
         monkRect.bottom = (monkSpriteSheetBitmap->height / 6) + 5;
 
-        this->monk = new Controls::Monk(&monkRect, this->callback, MonkParameterId, 30, this->monkSpriteSheetBitmap->height / 30, this->monkSpriteSheetBitmap, &origin);
-        this->monk->setValue(this->mainPlugin->getParameterValue(MonkParameterId));
+        this->monk = new Controls::Monk(&monkRect, this->callback, MonkSpriteParameterId, 30, this->monkSpriteSheetBitmap->height / 30, this->monkSpriteSheetBitmap, &origin);
+        this->monk->setValue(this->mainPlugin->getParameterValue(MonkSpriteParameterId));
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->monk);
 
         RECT splashRect;
@@ -249,9 +249,9 @@ namespace Gui{
                     this->singingHorizontalSlider->setValue(this->mainPlugin->getParameterValue(SingingHorizontalSliderParameterId));
                 }
                 break;
-            case MonkParameterId:
+            case MonkSpriteParameterId:
                 if (this->monk != nullptr) {
-                    this->monk->setValue(this->mainPlugin->getParameterValue(MonkParameterId));
+                    this->monk->setValue(this->mainPlugin->getParameterValue(MonkSpriteParameterId));
                     invalidate();
                 }
                 break;
