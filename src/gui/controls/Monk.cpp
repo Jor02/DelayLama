@@ -2,7 +2,6 @@
 #include "Monk.h"
 #include "damsdk/gui/platform/windows/Bitmap.h"
 #include "damsdk/utils/portable_stdint.h"
-#include "utils/Logger.h"
 
 namespace DelayLama {
 namespace Gui {
