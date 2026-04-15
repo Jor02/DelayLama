@@ -49,20 +49,20 @@ namespace Core {
             float vowelTargetValue; // 0x613c
             bool pitchTargetDirty; // 0x6140
             bool isGlideActive; // 0x6141
-            bool vowelFilterDirty; // 0x6142
+            bool formantTableNeedsUpdate; // 0x6142
             bool unusedBool; // 0x6143
             int pitchTargetValue; // 0x6144
-            int vowelMorphDelta; // 0x6148
-            float vowelMorph; // 0x614c
+            int formantMorphStep; // 0x6148
+            float formantMorphValue; // 0x614c
             bool isGateActive; // 0x6150
             char unusedBytes04[3]; // 0x6151
-            float vowelMorphCurrent; // 0x6154
+            float currentFormantMorphValue; // 0x6154
             float lfoPhaseAccumulator; // 0x6158
             float lfoPhaseWrapValue; // 0x615c
             float lfoDepth; // 0x6160
             float lfoSampleValue; // 0x6164
             float lfoPhaseIncrement; // 0x6168
-            int vowelFrameCounter; // 0x616c
+            int lfoReseedIntervalSamples; // 0x616c
             int sampleCounter; // 0x6170
             bool isSinging; // 0x6174
             char unusedBytes05[3]; // 0x6175
@@ -102,16 +102,16 @@ namespace Core {
             float delayTimeScaler; // 0x63fc
             bool initialVowelNeedsUpdate; // 0x6400
             char unusedBytes07[3]; // 0x6401
-            float vowelPresetTable[24]; // 0x6404
-            int vowelPresetIndex; // 0x6464
-            int vowelStepIndex; // 0x6468
-            int anotherVowelIndex; // 0x646c
-            int vowelTriggerBase; // 0x6470
-            int vowelTriggerA; // 0x6474
-            int vowelTriggerB; // 0x6478
-            int vowelTriggerC; // 0x647c
-            int vowelTriggerD; // 0x6480
-            int vowelTriggerE; // 0x6484
+            float monkIdleFrameTable[24]; // 0x6404
+            int currentIdleFrame; // 0x6464
+            int idleAnimationSampleCounter; // 0x6468
+            int globalAnimationSampleCounter; // 0x646c
+            int idleSamplesPerFrame; // 0x6470
+            int startBlink1; // 0x6474
+            int stopBlink1; // 0x6478
+            int startBlink2; // 0x647c
+            int stopBlink2; // 0x6480
+            int startIdleAnimation; // 0x6484
             int delayBufferSize; // 0x6488
             float* stereoDelayLBuffer; // 0x648c
             float* stereoDelayRBuffer; // 0x6490
@@ -169,7 +169,7 @@ namespace Core {
             virtual void invokeAudioProcess(float* * inputs, float* * outputs, int32_t sampleFrames);
             virtual void dispatchMidiEvents(int sampleIdx, int sampleFrame);
             virtual void addSynthesisToExcitation(int offsetIncrement);
-            virtual void updateVowelFilter(float vowelX);
+            virtual void updateFormantTable(float vowelX);
             virtual void processEvents(DamSDK::Api::DamEventList* eventList);
             virtual void handleNoteEvent(int midiData1, int midiData2);
             virtual void handleControlChange(int midiData1, int midiData2);
