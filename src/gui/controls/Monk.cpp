@@ -2,13 +2,14 @@
 #include "Monk.h"
 #include "damsdk/gui/platform/windows/Bitmap.h"
 #include "damsdk/utils/portable_stdint.h"
+#include "utils/Logger.h"
 
 namespace DelayLama {
 namespace Gui {
 namespace Controls {
 
     // FUNCTION DELAYLAMA: 0x10004600
-    Monk::Monk(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, callback, parameterId, tileWidth, tileHeight, bmp, srcOffset)
+    Monk::Monk(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, callback, parameterId, frameCount, tileHeight, bmp, srcOffset)
     {
     }
 
@@ -20,31 +21,29 @@ namespace Controls {
     // FUNCTION DELAYLAMA: 0x100046a0
     void Monk::onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext)
     {
-        this->tileHeight = 311;
+        this->tileHeight = TILE_HEIGHT;
 
-        const float frameValue = this->value;
         if (this->value > 1.0f) {
             this->value = 1.0f;
         }
 
-        POINT srcPoint;
-        srcPoint.x = 0;
-        srcPoint.y = 0;
-
-        int xOffsetAccumulator = 0;
+        int xOffset = 0;
+        int yOffset = 0;
 
         if (this->value > 0.0f) {
-            const int frameIndex = static_cast<int>(frameValue);
+            int maxFrames = this->frameCount - 1; 
+            int frameIndex = static_cast<int>((maxFrames * this->value) + 0.5f);
 
-            const int row = frameIndex % 6;
-            const int column = frameIndex / 6;
+            int row = frameIndex % Y_TILES;
+            int column = frameIndex / Y_TILES;
 
-            srcPoint.y = row * 311;
-            xOffsetAccumulator = column * 314;
+            yOffset = row * TILE_HEIGHT;
+            xOffset = column * TILE_WIDTH;
         }
 
-        srcPoint.y += this->srcOffset.y;
-        srcPoint.x = xOffsetAccumulator + this->srcOffset.x;
+        POINT srcPoint;
+        srcPoint.x = xOffset + this->srcOffset.x;
+        srcPoint.y = yOffset + this->srcOffset.y;
 
         DamSDK::Gui::Platform::Windows::Bitmap* fullGridBitmap = this->bitmap;
         if (fullGridBitmap != nullptr) {

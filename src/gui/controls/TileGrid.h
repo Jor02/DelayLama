@@ -7,10 +7,10 @@ namespace Controls {
     class TileGrid : public DamSDK::Gui::Controls::Control {
         public:
             POINT srcOffset;
-            int tileWidth;
+            int frameCount;
             int tileHeight;
         public:
-            TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
+            TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
             ~TileGrid();
             void destroy();
             virtual void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext);

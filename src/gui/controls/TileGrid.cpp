@@ -8,10 +8,10 @@ namespace Gui {
 namespace Controls {
     
     // FUNCTION DELAYLAMA: 0x10009900
-    TileGrid::TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int tileWidth, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : DamSDK::Gui::Controls::Control(pRect, callback, parameterId, bmp)
+    TileGrid::TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : DamSDK::Gui::Controls::Control(pRect, callback, parameterId, bmp)
     {
         this->srcOffset = *srcOffset;
-        this->tileWidth = tileWidth;
+        this->frameCount = frameCount;
         this->tileHeight = tileHeight;
     }
 
