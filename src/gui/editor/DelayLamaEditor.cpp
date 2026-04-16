@@ -19,8 +19,12 @@
 namespace DelayLama {
 namespace Gui{
 
+    DelayLamaEditor* DelayLamaEditor::currentEditor = nullptr;
+
     // FUNCTION DELAYLAMA: 0x10003640
     DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::Api::EditorBase((DamSDK::Api::AudioBaseExtended*)pluginInstance) {
+        currentEditor = this;
+        this->callback = &onControlChangedThunk;
         this->reverbHandleBitmap = nullptr;
         this->monkSpriteSheetBitmap = nullptr;
         this->singingYHandleBitmap = nullptr;
@@ -44,6 +48,70 @@ namespace Gui{
         this->rect.right = (int16_t)background->height;
     }
     
+    // Not in the original binary, just couldn't figure out how else to implement this.
+    void DelayLamaEditor::onControlChangedThunk(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext, DamSDK::Gui::Controls::Control* control)
+    {
+        if (currentEditor != nullptr)
+        {
+            currentEditor->onControlChanged(drawingContext, control);
+        }
+    }
+
+    // FUNCTION: DELAYLAMA 0x10004210
+    void DelayLamaEditor::onControlChanged(GDIDrawingContext *drawingContext, Control *control)
+    {
+        if (control == nullptr)
+            return;
+
+        const int parameterId = control->parameterId;
+        const float value = control->getValue();
+
+        switch (parameterId)
+        {
+            case LeftVoiceKnobParameterId:
+            case SingingVerticalSliderParameterId:
+            case ReverbSliderParameterId:
+            case RightGlideKnobParameterId:
+            case SingingHorizontalSliderParameterId:
+            case MonkSpriteParameterId:
+            {
+                this->mainPlugin->setParameterValue(parameterId, value);
+                control->update(drawingContext);
+                return;
+            }
+
+            case TwoAxisSliderParameterId:
+            {
+                if (value > -2.0f && value < 3.0f)
+                {
+                    this->mainPlugin->setParameterValue(VibratoAmountParameterId, value);
+                }
+
+                if (value > 98.0f && value < 103.0f)
+                {
+                    const float pitchValue = 1.0f - (value - 100.0f);
+                    this->mainPlugin->setParameterValue(PitchValueParameterId, pitchValue);
+                }
+
+                if (value == 200.0f)
+                {
+                    this->mainPlugin->setParameterValue(SingingEnabledParameterId, 0.0f);
+                }
+
+                if (value == 201.0f)
+                {
+                    this->mainPlugin->setParameterValue(SingingEnabledParameterId, 1.0f);
+                }
+
+                control->update(drawingContext);
+                return;
+            }
+
+            default:
+                return;
+        }
+    }
+
     // FUNCTION: DELAYLAMA 0x10003710
     DelayLamaEditor::~DelayLamaEditor() {
         destroy();
