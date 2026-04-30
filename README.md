@@ -23,9 +23,9 @@ I've loved this plugin ever since I first found out about it, but unfortunately 
 
 I think it'd also be fun to make a very accurate 3D model of the Monk himself and his environment as a Blend file, but I haven't yet decided If I actually wanna do that.
 
-## Built on DamSDK
+## DamSDK
 
-To achieve independence from proprietary and deprecated frameworks, this project is built atop [DamSDK](https://github.com/Jor02/DamSDK).
+Because I want this to be separated from proprietary and deprecated frameworks, this project is built atop [DamSDK](https://github.com/Jor02/DamSDK).
 
 DamSDK is a custom, VST-compatible plugin interface developed specifically for this project. It provides the necessary architectural backbone to interface with plugin hosts while maintaining the specific logic requirements of the original Delay Lama.
 
