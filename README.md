@@ -15,17 +15,17 @@ I've loved this plugin ever since I first found out about it, but unfortunately 
 
 ## Development Roadmap
 - [x] Fully annotate all functions in the original binary using Ghidra.
-- [ ] Turn the ghidra findings and functions into actual C++ code.
+- [x] Turn the ghidra findings and functions into actual C++ code.
 - [ ] Get a fully working 32-bit build.
-- [ ] Clean up source code to improve the maintainability and readablitiy of the codebase.
+- [ ] Clean up source code to improve the maintainability and readablitiy of the codebase, without changing the functionality.
 - [ ] Hopefully get a 64-bit build of Delay Lama working.
 - [ ] And lastly, if at all possible, get the project to compile to a fully byte accurate binary that 100% matches the original dll. (I've already added [Reccmp](https://github.com/isledecomp/reccmp) to help showing the current progress)
 
 I think it'd also be fun to make a very accurate 3D model of the Monk himself and his environment as a Blend file, but I haven't yet decided If I actually wanna do that.
 
-## Built on DamSDK
+## DamSDK
 
-To achieve independence from proprietary and deprecated frameworks, this project is built atop [DamSDK](https://github.com/Jor02/DamSDK).
+Because I want this to be separated from proprietary and deprecated frameworks, this project is built atop [DamSDK](https://github.com/Jor02/DamSDK).
 
 DamSDK is a custom, VST-compatible plugin interface developed specifically for this project. It provides the necessary architectural backbone to interface with plugin hosts while maintaining the specific logic requirements of the original Delay Lama.
 
