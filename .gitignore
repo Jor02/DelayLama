@@ -5,6 +5,9 @@ progress.html
 # Ignore everything in the build folder
 /build/*
 
+# Ignore assets
+/assets/
+
 # Ignore the clangd file (for now)
 .clangd
 
