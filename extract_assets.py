@@ -82,7 +82,7 @@ def extract(dll_path: Path, output_dir: Path) -> None:
             out_path = output_dir / filename
             out_path.write_bytes(bmp_bytes)
 
-            print(f"  [{rid}] → {out_path}  ({len(bmp_bytes):,} bytes)")
+            print(f"  [{rid}] -> {out_path}  ({len(bmp_bytes):,} bytes)")
             extracted[rid] = filename
 
     pe.close()
