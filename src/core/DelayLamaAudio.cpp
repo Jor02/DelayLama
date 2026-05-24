@@ -234,7 +234,7 @@ namespace Core {
                 this->vocalEnvelope[i] = value;
             }
         }
-        
+
         // Apply Release Phase (Cosine shaping)
         int relLoopIdx = this->sustainStart;
         int nextIndex = 0;
@@ -506,6 +506,7 @@ namespace Core {
                     this->vibratoStep = (int)(tempVowelVal / (float)this->smoothingFrames);
                     this->vibratoSmoothingFramesRemaining = this->smoothingFrames;
                 }
+                
                 // Apply Parameter Smoothing
                 if (this->smoothCounter <= this->smoothStep)
                 {
