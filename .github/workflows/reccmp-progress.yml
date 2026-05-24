@@ -64,12 +64,16 @@ jobs:
 
       - name: Configure CMake
         shell: cmd
+        env:
+          MSVC600_PATH: C:\MSVC600
         run: |
           call C:\MSVC600\VC98\Bin\VCVARS32.BAT
           cmake --preset vc6
 
       - name: Build
         shell: cmd
+        env:
+          MSVC600_PATH: C:\MSVC600
         run: |
           call C:\MSVC600\VC98\Bin\VCVARS32.BAT
           cmake --build --preset vc6
