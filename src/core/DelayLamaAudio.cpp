@@ -234,6 +234,7 @@ namespace Core {
                 this->vocalEnvelope[i] = value;
             }
         }
+        
         // Apply Release Phase (Cosine shaping)
         int relLoopIdx = this->sustainStart;
         int nextIndex = 0;
