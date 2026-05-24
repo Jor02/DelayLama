@@ -11,6 +11,9 @@ progress.html
 # Ignore the clangd file (for now)
 .clangd
 
+# Ignore cmake files
+CMakeUserPresets.json
+
 # Prerequisites
 *.d
 
@@ -88,4 +91,3 @@ Testing/
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 !*.code-workspacereccmp-user.yml
-

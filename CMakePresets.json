@@ -27,7 +27,7 @@
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       },
       "environment": {
-        "PATH": "C:/Users/Jor02/AppData/Local/Programs/MSVC600/VC98/Bin;$penv{PATH}"
+        "PATH": "$env{MSVC600_PATH}/VC98/Bin;$penv{PATH}"
       }
     },
     {
@@ -42,22 +42,13 @@
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       },
       "environment": {
-        "PATH": "C:/Users/Jor02/AppData/Local/Programs/MSVC600/VC98/Bin;$penv{PATH}"
+        "PATH": "$env{MSVC600_PATH}/VC98/Bin;$penv{PATH}"
       }
     }
   ],
   "buildPresets": [
-    {
-      "name": "vs2026",
-      "configurePreset": "vs2026"
-    },
-    {
-      "name": "vc6",
-      "configurePreset": "vc6"
-    },
-    {
-      "name": "vc6-debug",
-      "configurePreset": "vc6-debug"
-    }
+    { "name": "vs2026", "configurePreset": "vs2026" },
+    { "name": "vc6",    "configurePreset": "vc6"    },
+    { "name": "vc6-debug", "configurePreset": "vc6-debug" }
   ]
 }
