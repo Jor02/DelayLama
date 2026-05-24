@@ -11,6 +11,8 @@ if(NOT MSVC6_ROOT)
     )
 endif()
 
+file(TO_CMAKE_PATH "${MSVC6_ROOT}" MSVC6_ROOT)
+
 # Set the compilers
 set(CMAKE_C_COMPILER   "${MSVC6_ROOT}/VC98/Bin/cl.exe")
 set(CMAKE_CXX_COMPILER "${MSVC6_ROOT}/VC98/Bin/cl.exe")
