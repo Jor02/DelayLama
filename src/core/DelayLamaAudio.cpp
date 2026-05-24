@@ -506,7 +506,7 @@ namespace Core {
                     this->vibratoStep = (int)(tempVowelVal / (float)this->smoothingFrames);
                     this->vibratoSmoothingFramesRemaining = this->smoothingFrames;
                 }
-                
+
                 // Apply Parameter Smoothing
                 if (this->smoothCounter <= this->smoothStep)
                 {
@@ -574,6 +574,7 @@ namespace Core {
                         {
                             this->currentIdleFrame = 0;
                         }
+                        
                         this->globalAnimationSampleCounter = 0;
                         float targetMonkSprite = this->monkIdleFrameTable[this->currentIdleFrame];
                         this->monkSprite = targetMonkSprite;
