@@ -3,18 +3,24 @@ set(CMAKE_TOOLCHAIN_OUTPUT_NAME vc6)
 
 # Set Architecture
 set(ARCH "x32" CACHE STRING "Architecture for output paths")
+set(MSVC6_ROOT "$ENV{MSVC600_PATH}")
+
+if(NOT MSVC6_ROOT)
+    message(FATAL_ERROR
+        "MSVC600_PATH environment variable is not set.\n"
+    )
+endif()
 
 # Set the compilers
-set(MSVC6_ROOT "C:/Users/Jor02/AppData/Local/Programs/MSVC600")
-set(CMAKE_C_COMPILER "${MSVC6_ROOT}/VC98/Bin/cl.exe")
+set(CMAKE_C_COMPILER   "${MSVC6_ROOT}/VC98/Bin/cl.exe")
 set(CMAKE_CXX_COMPILER "${MSVC6_ROOT}/VC98/Bin/cl.exe")
-set(CMAKE_LINKER "${MSVC6_ROOT}/VC98/Bin/link.exe")
+set(CMAKE_LINKER       "${MSVC6_ROOT}/VC98/Bin/link.exe")
 
 # Compiler flags
 set(CMAKE_CXX_FLAGS "/W3 /GX /D \"WIN32\" /D \"_WINDOWS\"" CACHE STRING "" FORCE)
 set(CMAKE_CXX_FLAGS_DEBUG "/Gm /Zi /Od /D \"_DEBUG\"" CACHE STRING "" FORCE)
 set(CMAKE_CXX_FLAGS_RELEASE "/O2 /D \"NDEBUG\"" CACHE STRING "" FORCE)
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO
     "/Zi /O2 /Ob2 /Oy- /GX /D \"NDEBUG\" /D \"WIN32\" /D \"_WINDOWS\" /MT"
     CACHE STRING "" FORCE)
 set(CMAKE_CXX_FLAGS_MINSIZEREL "/Os /D \"NDEBUG\"" CACHE STRING "" FORCE)
@@ -36,5 +42,5 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STR
 
 # Serial build pool for VC6
 set(CMAKE_JOB_POOL_COMPILE "msvc_vc6_pool" CACHE STRING "" FORCE)
-set(CMAKE_JOB_POOL_LINK "msvc_vc6_pool" CACHE STRING "" FORCE)
+set(CMAKE_JOB_POOL_LINK    "msvc_vc6_pool" CACHE STRING "" FORCE)
 set_property(GLOBAL PROPERTY JOB_POOLS "msvc_vc6_pool=1")
