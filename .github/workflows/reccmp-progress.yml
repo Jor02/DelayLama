@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: jor02/delaylama-assets
-          token: ${{ secrets.ASSETS_PAT }}
+          token: ${{ secrets.DLL_PAT }}
           path: delaylama-assets
 
       - name: Set up Python 3.14
@@ -51,7 +51,7 @@ jobs:
         shell: cmd
         run: |
           call .venv\Scripts\activate.bat
-          python extract_assets.py private-assets\DelayLama.dll assets
+          python %GITHUB_WORKSPACE%\extract_assets.py delaylama-assets\DelayLama.dll %GITHUB_WORKSPACE%\assets
 
       - name: Write reccmp-user.yml
         shell: powershell
