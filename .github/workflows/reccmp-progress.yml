@@ -1,0 +1,100 @@
+name: Recompilation Progress
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+
+permissions:
+  contents: write
+
+jobs:
+  reccmp-progress:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout delaylama assets
+        uses: actions/checkout@v4
+        with:
+          repository: jor02/delaylama-assets
+          token: ${{ secrets.ASSETS_PAT }}
+          path: delaylama-assets
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+
+      - name: Set up CMake 4.3.2
+        uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: '4.3.2'
+
+      - name: Clone VC6 toolchain
+        shell: cmd
+        run: git clone --depth 1 https://github.com/itsmattkc/MSVC600 C:\MSVC600
+
+      - name: Install python prerequisites
+        shell: cmd
+        run: |
+          python -m venv .venv
+          call .venv\Scripts\activate.bat
+          pip install --upgrade pip
+          pip install reccmp pefile
+
+      - name: Extract bitmap assets from DLL
+        shell: cmd
+        run: |
+          call .venv\Scripts\activate.bat
+          python extract_assets.py private-assets\DelayLama.dll assets
+
+      - name: Write reccmp-user.yml
+        shell: powershell
+        run: |
+          @"
+          targets:
+            DELAYLAMA:
+              path: $env:GITHUB_WORKSPACE\dlls\DelayLama.dll
+          "@ | Set-Content "$env:GITHUB_WORKSPACE\reccmp-user.yml"
+
+      - name: Configure CMake
+        shell: cmd
+        run: |
+          call C:\MSVC600\VC98\Bin\VCVARS32.BAT
+          cmake --preset vc6
+
+      - name: Build
+        shell: cmd
+        run: |
+          call C:\MSVC600\VC98\Bin\VCVARS32.BAT
+          cmake --build --preset vc6
+
+      - name: Generate progress files
+        shell: cmd
+        working-directory: build\bin\vc6\x32\RelWithDebInfo
+        run: |
+          call %GITHUB_WORKSPACE%\.venv\Scripts\activate.bat
+          reccmp-reccmp ^
+            --target DELAYLAMA ^
+            --html %GITHUB_WORKSPACE%\progress.html ^
+            --svg  %GITHUB_WORKSPACE%\progress.svg  ^
+            --silent
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: .
+          include_files: |
+            progress.svg
+            progress.html
+          keep_files: true
+          commit_message: "Update recompilation progress"
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
