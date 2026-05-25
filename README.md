@@ -1,13 +1,13 @@
 # Delay Lama Recreation
-
-# `⚠️ THIS PROJECT IS STILL IN EARLY DEVELOPMENT ⚠️`
+[![Unit Tests](https://github.com/Jor02/DelayLama/actions/workflows/tests.yml/badge.svg)](https://github.com/Jor02/DelayLama/actions/workflows/tests.yml) ![GitHub contributors](https://img.shields.io/github/contributors/Jor02/DelayLama) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Jor02/DelayLama) ![GitHub last commit](https://img.shields.io/github/last-commit/Jor02/DelayLama)
 
 <p align="center">
   <a href="https://jor02.github.io/DelayLama/progress.html">
-    <img src="https://jor02.github.io/DelayLama/progress.svg" alt="reccmp progress">
+    <img height="380" src="https://jor02.github.io/DelayLama/progress.svg" alt="reccmp progress">
   </a>
 </p>
 
+---
 
 This is an open source recreation of Delay Lama. A plugin that was originally released in 2002 by AudioNerdz. 
 
