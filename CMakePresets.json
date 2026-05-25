@@ -16,6 +16,20 @@
       }
     },
     {
+      "name": "vs2022",
+      "displayName": "Visual Studio 2022",
+      "description": "Build with Visual Studio 2022 (modern MSVC)",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/vs2022",
+      "architecture": {
+        "value": "Win32",
+        "strategy": "set"
+      },
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_OUTPUT_NAME": "vs2022"
+      }
+    },
+    {
       "name": "vc6",
       "displayName": "Visual C++ 6.0 (NMake)",
       "description": "Build with Visual C++ 6.0 using NMake Makefiles",
@@ -48,6 +62,7 @@
   ],
   "buildPresets": [
     { "name": "vs2026", "configurePreset": "vs2026" },
+    { "name": "vs2022", "configurePreset": "vs2022" },
     { "name": "vc6",    "configurePreset": "vc6"    },
     { "name": "vc6-debug", "configurePreset": "vc6-debug" }
   ]

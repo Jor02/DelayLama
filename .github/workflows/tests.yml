@@ -31,10 +31,10 @@ jobs:
         run: python extract_assets.py --placeholder --output assets
 
       - name: Configure CMake
-        run: cmake --preset vs2026
+        run: cmake --preset vs2022 
 
       - name: Build
-        run: cmake --build --preset vs2026 --target DelayLamaTests
+        run: cmake --build --preset vs2022 --target DelayLamaTests
 
       - name: Run tests
-        run: ctest --test-dir build/vs2026 --output-on-failure
+        run: ctest --test-dir build/vs2022 --output-on-failure
