@@ -7,6 +7,7 @@
   </a>
 </p>
 
+---
 
 This is an open source recreation of Delay Lama. A plugin that was originally released in 2002 by AudioNerdz. 
 
