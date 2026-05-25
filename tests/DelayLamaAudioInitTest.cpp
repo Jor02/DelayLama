@@ -166,7 +166,6 @@ TEST_F(DelayLamaAudioInitTest, Initialize_Scalars_Bools) {
         { "pitchTargetDirty",         &DelayLama::Core::DelayLamaAudio::pitchTargetDirty         },
         { "isGlideActive",            &DelayLama::Core::DelayLamaAudio::isGlideActive            },
         { "formantTableNeedsUpdate",  &DelayLama::Core::DelayLamaAudio::formantTableNeedsUpdate  },
-        { "unusedBool",               &DelayLama::Core::DelayLamaAudio::unusedBool               },
         { "isGateActive",             &DelayLama::Core::DelayLamaAudio::isGateActive             },
         { "isSinging",                &DelayLama::Core::DelayLamaAudio::isSinging                },
         { "needsMonkAnimationRefresh",&DelayLama::Core::DelayLamaAudio::needsMonkAnimationRefresh },
