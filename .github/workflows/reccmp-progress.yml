@@ -63,7 +63,7 @@ jobs:
           @"
           targets:
             DELAYLAMA:
-              path: $env:GITHUB_WORKSPACE\dlls\DelayLama.dll
+              path: $env:GITHUB_WORKSPACE\delaylama-assets\DelayLama.dll
           "@ | Set-Content "$env:GITHUB_WORKSPACE\reccmp-user.yml"
 
       - name: Configure CMake
