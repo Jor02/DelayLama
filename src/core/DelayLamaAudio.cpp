@@ -1540,6 +1540,7 @@ namespace Core {
           this->headSize = headSize;
           this->setParameterValue(RightGlideKnobParameterId, headSize);
         }
+        
     }
 
     // FUNCTION: DELAYLAMA 0x10006400
