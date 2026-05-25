@@ -2,7 +2,12 @@
 
 # `⚠️ THIS PROJECT IS STILL IN EARLY DEVELOPMENT ⚠️`
 
-[![reccmp progress](https://jor02.github.io/DelayLama/progress.svg)](https://jor02.github.io/DelayLama/progress.html)
+<p align="center">
+  <a href="https://jor02.github.io/DelayLama/progress.html">
+    <img src="https://jor02.github.io/DelayLama/progress.svg" alt="reccmp progress">
+  </a>
+</p>
+
 
 This is an open source recreation of Delay Lama. A plugin that was originally released in 2002 by AudioNerdz. 
 
