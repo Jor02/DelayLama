@@ -1,3 +1,0 @@
-LIBRARY XYMonk.dll
-EXPORTS
-    main=VSTPluginMain
