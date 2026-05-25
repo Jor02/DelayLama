@@ -1499,7 +1499,6 @@ namespace Core {
 
     // FUNCTION: DELAYLAMA 0x10006330
     void DelayLamaAudio::handleControlChange(int midiData1, int midiData2) {
-        
         // Modulation Wheel
         if (midiData1 == 1) {
           this->lfoDepth = (float)midiData2 * 0.007874016f;
