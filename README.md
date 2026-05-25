@@ -1,6 +1,10 @@
 # Delay Lama Recreation
+[![Unit Tests](https://github.com/Jor02/DelayLama/actions/workflows/tests.yml/badge.svg)](https://github.com/Jor02/DelayLama/actions/workflows/tests.yml) ![GitHub contributors](https://img.shields.io/github/contributors/Jor02/DelayLama) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Jor02/DelayLama) ![GitHub last commit](https://img.shields.io/github/last-commit/Jor02/DelayLama)
 
-# `⚠️ THIS PROJECT IS STILL IN EARLY DEVELOPMENT ⚠️`
+
+
+
+## `⚠️ THIS PROJECT IS STILL IN EARLY DEVELOPMENT ⚠️`
 
 <p align="center">
   <a href="https://jor02.github.io/DelayLama/progress.html">
