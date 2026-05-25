@@ -100,16 +100,19 @@ jobs:
             --svg  %GITHUB_WORKSPACE%\progress.svg  ^
             --silent
 
+      - name: Prepare deploy directory
+        shell: cmd
+        run: |
+          mkdir deploy
+          copy %GITHUB_WORKSPACE%\progress.svg deploy\progress.svg
+          copy %GITHUB_WORKSPACE%\progress.html deploy\progress.html
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: .
-          include_files: |
-            progress.svg
-            progress.html
-          keep_files: true
+          publish_dir: deploy
           commit_message: "Update recompilation progress"
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
