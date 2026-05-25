@@ -72,3 +72,78 @@ target_link_libraries(DelayLama
 
 # Linker warning suppression
 target_link_options(DelayLama PRIVATE "/IGNORE:4070")
+
+### Tests ### 
+add_library(DelayLamaCore STATIC ${SOURCES})
+target_compile_definitions(DelayLamaCore PRIVATE NOT_ORIGINAL_BUILD)
+target_include_directories(DelayLamaCore PUBLIC src/)
+target_link_libraries(DelayLamaCore kernel32 user32 gdi32)
+
+option(DELAYLAMA_BUILD_TESTS
+    "Build DelayLama unit tests"
+    ON
+)
+
+# GTest does not support VC6
+if(CMAKE_TOOLCHAIN_OUTPUT_NAME STREQUAL "vc6")
+    set(DELAYLAMA_BUILD_TESTS OFF)
+endif()
+
+if(DELAYLAMA_BUILD_TESTS)
+
+    message(STATUS "Building tests: ENABLED")
+
+    include(FetchContent)
+
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG        v1.17.0
+    )
+
+    # Prevent GTest from overriding compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+    FetchContent_MakeAvailable(googletest)
+
+    FetchContent_Declare(
+        nlohmann_json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG        v3.12.0
+    )
+
+    FetchContent_MakeAvailable(nlohmann_json)
+
+    enable_testing()
+
+    file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS
+        "tests/*.cpp"
+    )
+
+    add_executable(DelayLamaTests
+        ${TEST_SOURCES}
+    )
+
+    target_include_directories(DelayLamaTests PRIVATE
+        src/
+        tests/helpers/
+    )
+
+    target_compile_definitions(DelayLamaTests PRIVATE
+        TEST_FIXTURES_DIR="${CMAKE_SOURCE_DIR}/tests/fixtures"
+        NOT_ORIGINAL_BUILD
+    )
+
+    target_link_libraries(DelayLamaTests PRIVATE
+        DelayLamaCore
+        GTest::gtest_main
+        GTest::gmock
+        nlohmann_json::nlohmann_json
+    )
+
+    include(GoogleTest)
+
+    gtest_discover_tests(DelayLamaTests)
+else()
+    message(STATUS "Building tests: DISABLED")
+endif()

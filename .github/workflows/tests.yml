@@ -1,0 +1,40 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'CMakeLists.txt'
+      - 'CMakePresets.json'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'CMakeLists.txt'
+      - 'CMakePresets.json'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Generate placeholder bitmap assets
+        run: python extract_assets.py --placeholder --output assets
+
+      - name: Configure CMake
+        run: cmake --preset vs2026
+
+      - name: Build
+        run: cmake --build --preset vs2026 --target DelayLamaTests
+
+      - name: Run tests
+        run: ctest --test-dir build/vs2026 --output-on-failure
