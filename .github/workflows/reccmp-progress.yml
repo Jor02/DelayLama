@@ -82,6 +82,13 @@ jobs:
           call C:\MSVC600\VC98\Bin\VCVARS32.BAT
           cmake --build --preset vc6
 
+      - name: Generate reccmp-build.yml
+        shell: cmd
+        working-directory: build\bin\vc6\x32\RelWithDebInfo
+        run: |
+          call %GITHUB_WORKSPACE%\.venv\Scripts\activate.bat
+          reccmp-project detect --what recompiled
+
       - name: Generate progress files
         shell: cmd
         working-directory: build\bin\vc6\x32\RelWithDebInfo
