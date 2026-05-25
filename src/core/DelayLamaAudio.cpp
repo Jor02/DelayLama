@@ -80,43 +80,43 @@ namespace Core {
         this->pluginSampleRate = (float)currentSampleRate;
         if (currentSampleRate != this->prevSampleRate) {
             if (this->synthesisBuffer != nullptr) {
-                delete this->synthesisBuffer;
+                delete[] this->synthesisBuffer;
             }
             if (this->excitationBuffer != nullptr) {
-                delete this->excitationBuffer;
+                delete[] this->excitationBuffer;
             }
             if (this->sineTable != nullptr) {
-                delete this->sineTable;
+                delete[] this->sineTable;
             }
             if (this->formantTable != nullptr) {
-                delete this->formantTable;
+                delete[] this->formantTable;
             }
             if (this->vocalEnvelope != nullptr) {
-                delete this->vocalEnvelope;
+                delete[] this->vocalEnvelope;
             }
             if (this->glottalSource != nullptr) {
-                delete this->glottalSource;
+                delete[] this->glottalSource;
             }
             if (this->harmonicBuffer != nullptr) {
-                delete this->harmonicBuffer;
+                delete[] this->harmonicBuffer;
             }
             if (this->frequencyTable != nullptr) {
-                delete this->frequencyTable;
+                delete[] this->frequencyTable;
             }
             if (this->stereoDelayLBuffer != nullptr) {
-                delete this->stereoDelayLBuffer;
+                delete[] this->stereoDelayLBuffer;
             }
             if (this->stereoDelayRBuffer != nullptr) {
-                delete this->stereoDelayRBuffer;
+                delete[] this->stereoDelayRBuffer;
             }
             if (this->formantTable1 != nullptr) {
-                delete this->formantTable1;
+                delete[] this->formantTable1;
             }
             if (this->formantTable2 != nullptr) {
-                delete this->formantTable2;
+                delete[] this->formantTable2;
             }
             if (this->formantTable3 != nullptr) {
-                delete this->formantTable3;
+                delete[] this->formantTable3;
             }
 
             // Nullify all dangling pointers
