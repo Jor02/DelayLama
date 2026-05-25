@@ -3,7 +3,7 @@
 
 <p align="center">
   <a href="https://jor02.github.io/DelayLama/progress.html">
-    <img src="https://jor02.github.io/DelayLama/progress.svg" alt="reccmp progress">
+    <img height="380" src="https://jor02.github.io/DelayLama/progress.svg" alt="reccmp progress">
   </a>
 </p>
 
