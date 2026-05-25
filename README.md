@@ -2,6 +2,8 @@
 
 # `⚠️ THIS PROJECT IS STILL IN EARLY DEVELOPMENT ⚠️`
 
+[![reccmp progress](https://jor02.github.io/DelayLama/progress.svg)](https://jor02.github.io/DelayLama/progress.html)
+
 This is an open source recreation of Delay Lama. A plugin that was originally released in 2002 by AudioNerdz. 
 
 I recently learned that DAWs (like Cubase and Ableton) are phasing out support for 32-bit plugins (when my friend tried using this plugin in Cubase), and since the original Delay Lama only has a 32-bit build available this would mean that this plugin also no longer would be supported. So I decided to try to reverse engineer it to hopefully be able to make a 64-bit version of the original plugin. With this project I am aiming to update one of my favorite audio synthesizers to support modern DAW's by using "clean-room" reverse engineering (basically meaning, I am not using any public or leaked code for my code) to be able to create modern 64-bit version of it.
