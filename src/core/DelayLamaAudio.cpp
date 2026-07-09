@@ -236,17 +236,10 @@ namespace Core {
         }
 
         // Apply Release Phase (Cosine shaping)
-        int relLoopIdx = this->sustainStart;
-        int nextIndex = 0;
-        if (relLoopIdx < this->numSamples) {
-            do {
-                int tempRelSamples = this->releaseSamples;
-                nextIndex = relLoopIdx + 1;
-                double phase = (static_cast<double>(i) * kPi) / static_cast<double>(releaseSamples);
-                float value = static_cast<float>(0.5 * (1.0 + cos(phase)));
-                this->vocalEnvelope[relLoopIdx] = value;
-                relLoopIdx = nextIndex;
-            } while (nextIndex < this->numSamples);
+        for (int j = 0; (this->sustainStart + j) < this->numSamples; ++j) {
+            double phase = (static_cast<double>(j) * kPi) / static_cast<double>(this->releaseSamples);
+            float value = static_cast<float>(0.5 * (1.0 + cos(phase)));
+            this->vocalEnvelope[this->sustainStart + j] = value;
         }
         
         // Pitch/Frequency Lookup Table
@@ -258,7 +251,7 @@ namespace Core {
         // MIDI to frequency conversion: f = 8.175798916 * 2^(i / 12)
         for (i = 0; i < this->frequencyTableSize; ++i) {
             double exponent = static_cast<double>(i) / 12.0;
-            this->frequencyTable[i] = static_cast<float>(kMidiNote0Frequency * pow(2.0, exponent));
+            this->frequencyTable[i] = static_cast<float>(kMidiNote0Frequency * pow(2.0, static_cast<double>(i) / 384.0));
         }
 
         // Formant Control Points Setup (Vowel filters)
