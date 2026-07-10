@@ -142,6 +142,11 @@ namespace Core {
             DelayLamaAudio(DamSDK::Api::dispatchFunc hostCallback);
             ~DelayLamaAudio();
 
+            static void iteratePresetBlocks(Preset* context, int stride, int iterationCount, void* callback, void* extra);
+            static void _conditionalRunCallback(void* context, int stride, int processedCount, void* extra, bool successFlag);
+            static void _forEachPresetBlockReverse(void* startPtr, int step, int count, void* callback);
+            static void generic18();
+
             virtual bool getPluginName(char* outText) override;
             virtual bool getCompanyName(char* outText) override;
             virtual void setParameterValue(int parameterId, float value);
@@ -175,12 +180,6 @@ namespace Core {
             virtual void handleControlChange(int midiData1, int midiData2);
             virtual float getRandomFloat();
             virtual void sendMidiToHost(uint8_t status, uint8_t data1, uint8_t data2);
-
-            void iteratePresetBlocks(Preset* context, int stride, int iterationCount, void* callback, void* extra);
-            void _conditionalRunCallback(void* context, int param2, int unknownLocal, void* extraParam);
-            void __vector_destructor_iterator(int param_1, int param_2, int param_3, void* param_4);
-            void _conditionalCleanup();
-            void _forEachPresetBlockReverse(void* startPtr, int step, int count, void* callback);
     };
 }
 }

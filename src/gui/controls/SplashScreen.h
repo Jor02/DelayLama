@@ -9,6 +9,11 @@ namespace Controls {
     // VTABLE: DELAYLAMA 0x1000c154
     class SplashScreen : public DamSDK::Gui::Controls::Control {
         public:
+            // Member variables from original decompilation
+            RECT destRect;
+            RECT absRect;
+            POINT srcPoint;
+            
         public:
             SplashScreen(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, DamSDK::Gui::Platform::Windows::Bitmap *bmp, RECT *destRect,POINT *srcPoint);
             ~SplashScreen();

@@ -215,20 +215,20 @@ namespace Gui{
 
         // Delay Slider
         //[HorizontalSlider::ctor] this=08A44420 rect={104,479,256,504} onChangeCallback=08A42704 controlId=2 min=104 max=235 handle=08A414E8 bg=08A412A8 backgroundOffset={104,479} flags=8
-        // RECT reverbSliderRect;
-        // reverbSliderRect.left   = 104;
-        // reverbSliderRect.top    = 479;
-        // reverbSliderRect.right  = 256;
-        // reverbSliderRect.bottom = 504;
+        RECT reverbSliderRect;
+        reverbSliderRect.left   = 104;
+        reverbSliderRect.top    = 479;
+        reverbSliderRect.right  = 256;
+        reverbSliderRect.bottom = 504;
 
-        // POINT reverbSliderBackgroundOffset;
-        // reverbSliderBackgroundOffset.x = reverbSliderRect.left;
-        // reverbSliderBackgroundOffset.y = reverbSliderRect.top;
+        POINT reverbSliderBackgroundOffset;
+        reverbSliderBackgroundOffset.x = reverbSliderRect.left;
+        reverbSliderBackgroundOffset.y = reverbSliderRect.top;
 
-        // this->reverbSlider = new DamSDK::Gui::Controls::HorizontalSlider(&reverbSliderRect, this->callback, ReverbSliderParameterId, 104, 255 - this->reverbHandleBitmap->width, this->reverbHandleBitmap, this->backgroundBitmap, &reverbSliderBackgroundOffset, 8);
-        // this->reverbSlider->setValue(this->mainPlugin->getParameterValue(ReverbSliderParameterId));
-        // this->reverbSlider->setDefaultValue(0.75f);
-        // this->window->registerControl((DamSDK::Gui::Controls::Control*)this->reverbSlider);
+        this->reverbSlider = new DamSDK::Gui::Controls::HorizontalSlider(&reverbSliderRect, this->callback, ReverbSliderParameterId, 104, 255 - this->reverbHandleBitmap->width, this->reverbHandleBitmap, this->backgroundBitmap, &reverbSliderBackgroundOffset, 8);
+        this->reverbSlider->setValue(this->mainPlugin->getParameterValue(ReverbSliderParameterId));
+        this->reverbSlider->setDefaultValue(0.75f);
+        this->window->registerControl((DamSDK::Gui::Controls::Control*)this->reverbSlider);
 
         // - - - Singing Sliders - - -
         // Two Axis slider
@@ -249,39 +249,39 @@ namespace Gui{
 
         // Singing Vertical Slider
         //[VerticalSlider::ctor] this=08A445A0 rect={86,358,96,446} onChangeCallback=08A42704 controlId=1 min=358 max=437 handle=08A415E8 bg=08A412A8 backgroundOffset={86,358} flags=64
-        // RECT singingVerticalRect;
-        // singingVerticalRect.left = 96 - this->singingYHandleBitmap->width;
-        // singingVerticalRect.top = 358;
-        // singingVerticalRect.right = 96;
-        // singingVerticalRect.bottom = 446;
+        RECT singingVerticalRect;
+        singingVerticalRect.left = 96 - this->singingYHandleBitmap->width;
+        singingVerticalRect.top = 358;
+        singingVerticalRect.right = 96;
+        singingVerticalRect.bottom = 446;
 
-        // POINT singingVerticalSliderBackgroundOffset;
-        // singingVerticalSliderBackgroundOffset.x = singingVerticalRect.left;
-        // singingVerticalSliderBackgroundOffset.y = singingVerticalRect.top;
+        POINT singingVerticalSliderBackgroundOffset;
+        singingVerticalSliderBackgroundOffset.x = singingVerticalRect.left;
+        singingVerticalSliderBackgroundOffset.y = singingVerticalRect.top;
 
-        // this->singingVerticalSlider = new DamSDK::Gui::Controls::VerticalSlider(&singingVerticalRect, this->callback, SingingVerticalSliderParameterId, 358, 447 - this->singingYHandleBitmap->height, this->singingYHandleBitmap, this->backgroundBitmap, &singingVerticalSliderBackgroundOffset, 64);
-        // this->singingVerticalSlider->setEnabled(true);
-        // this->singingVerticalSlider->setValue(this->mainPlugin->getParameterValue(SingingVerticalSliderParameterId));
-        // this->singingVerticalSlider->setDefaultValue(0.5f);
-        // this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingVerticalSlider);
+        this->singingVerticalSlider = new DamSDK::Gui::Controls::VerticalSlider(&singingVerticalRect, this->callback, SingingVerticalSliderParameterId, 358, 447 - this->singingYHandleBitmap->height, this->singingYHandleBitmap, this->backgroundBitmap, &singingVerticalSliderBackgroundOffset, 64);
+        this->singingVerticalSlider->setEnabled(true);
+        this->singingVerticalSlider->setValue(this->mainPlugin->getParameterValue(SingingVerticalSliderParameterId));
+        this->singingVerticalSlider->setDefaultValue(0.5f);
+        this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingVerticalSlider);
 
         // Singing Horizontal Slider
         //[HorizontalSlider::ctor] this=08A41D08 rect={93,352,265,362} onChangeCallback=08A42704 controlId=5 min=93 max=254 handle=08A415C8 bg=08A412A8 backgroundOffset={93,352} flags=8
-        // RECT singingHorizontalRect;
-        // singingHorizontalRect.left = 93;
-        // singingHorizontalRect.top = 362 - this->singingXHandleBitmap->height;
-        // singingHorizontalRect.right = 265;
-        // singingHorizontalRect.bottom = 362;
+        RECT singingHorizontalRect;
+        singingHorizontalRect.left = 93;
+        singingHorizontalRect.top = 362 - this->singingXHandleBitmap->height;
+        singingHorizontalRect.right = 265;
+        singingHorizontalRect.bottom = 362;
 
-        // POINT singingHorizontalBackgroundOffset;
-        // singingHorizontalBackgroundOffset.x = singingHorizontalRect.left;
-        // singingHorizontalBackgroundOffset.y = singingHorizontalRect.top;
+        POINT singingHorizontalBackgroundOffset;
+        singingHorizontalBackgroundOffset.x = singingHorizontalRect.left;
+        singingHorizontalBackgroundOffset.y = singingHorizontalRect.top;
 
-        // this->singingHorizontalSlider = new DamSDK::Gui::Controls::HorizontalSlider(&singingHorizontalRect, this->callback, SingingHorizontalSliderParameterId, 93, 264 - this->singingXHandleBitmap->width, this->singingXHandleBitmap, this->backgroundBitmap, &singingHorizontalBackgroundOffset, 8);
-        // this->singingHorizontalSlider->setEnabled(true);
-        // this->singingHorizontalSlider->setValue(this->mainPlugin->getParameterValue(SingingHorizontalSliderParameterId));
-        // this->singingHorizontalSlider->setDefaultValue(0.0f);
-        // this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingHorizontalSlider);
+        this->singingHorizontalSlider = new DamSDK::Gui::Controls::HorizontalSlider(&singingHorizontalRect, this->callback, SingingHorizontalSliderParameterId, 93, 264 - this->singingXHandleBitmap->width, this->singingXHandleBitmap, this->backgroundBitmap, &singingHorizontalBackgroundOffset, 8);
+        this->singingHorizontalSlider->setEnabled(true);
+        this->singingHorizontalSlider->setValue(this->mainPlugin->getParameterValue(SingingHorizontalSliderParameterId));
+        this->singingHorizontalSlider->setDefaultValue(0.0f);
+        this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingHorizontalSlider);
 
         RECT monkRect;
         monkRect.left = 22;
