@@ -2,6 +2,7 @@
 #include "Monk.h"
 #include "damsdk/gui/platform/windows/Bitmap.h"
 #include "damsdk/utils/portable_stdint.h"
+#include "utils/Logger.h"
 
 namespace DelayLama {
 namespace Gui {
@@ -10,6 +11,7 @@ namespace Controls {
     // FUNCTION DELAYLAMA: 0x10004600
     Monk::Monk(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, callback, parameterId, frameCount, tileHeight, bmp, srcOffset)
     {
+        Utils::log("Monk::ctor\n");
     }
 
     // FUNCTION: DELAYLAMA 0x10004650
@@ -38,6 +40,8 @@ namespace Controls {
 
             yOffset = row * TILE_HEIGHT;
             xOffset = column * TILE_WIDTH;
+
+            Utils::logf("Monk::onDraw frameIndex=%d row=%d col=%d\n", frameIndex, row, column);
         }
 
         POINT srcPoint;

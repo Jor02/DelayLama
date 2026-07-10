@@ -2,6 +2,7 @@
 #include "TileGrid.h"
 #include "damsdk/gui/platform/windows/Bitmap.h"
 #include "damsdk/utils/portable_stdint.h"
+#include "utils/Logger.h"
 
 namespace DelayLama {
 namespace Gui {
@@ -10,6 +11,7 @@ namespace Controls {
     // FUNCTION DELAYLAMA: 0x10009900
     TileGrid::TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : DamSDK::Gui::Controls::Control(pRect, callback, parameterId, bmp)
     {
+        Utils::log("TileGrid::ctor\n");
         this->srcOffset = *srcOffset;
         this->frameCount = frameCount;
         this->tileHeight = tileHeight;
@@ -29,6 +31,7 @@ namespace Controls {
         if (this->value > 0.0f) {
             int tileIndex = static_cast<int>(this->value);
             srcPoint.y += tileIndex * this->tileHeight;
+            Utils::logf("TileGrid::onDraw tileIndex=%d\n", tileIndex);
         }
 
         DamSDK::Gui::Platform::Windows::Bitmap* fullGridBitmap = this->bitmap;

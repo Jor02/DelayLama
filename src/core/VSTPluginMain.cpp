@@ -29,7 +29,9 @@ namespace Core {
     // FUNCTION DELAYLAMA: 0x10003560
     extern "C" __declspec(dllexport) DamSDK::Api::DamPlugin* __cdecl VSTPluginMain(DamSDK::Api::dispatchFunc hostCallback)
     {
+#ifdef DELAYLAMA_DEBUG_CONSOLE
         attachConsole();
+#endif
 
         log("VSTPluginMain called\n");
 
@@ -50,6 +52,8 @@ namespace Core {
 
         // Return the DamPlugin
         DamSDK::Api::DamPlugin* plugin = &delayLama->plugin;
+
+        log("Returning DamPlugin poiner to host\n");
 
         return plugin;
     }

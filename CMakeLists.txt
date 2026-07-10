@@ -2,6 +2,17 @@ cmake_minimum_required(VERSION 3.15)
 
 project(DelayLama CXX)
 
+# Options
+option(DELAYLAMA_DEBUG_CONSOLE
+    "Attach a console for debug logging"
+    OFF
+)
+
+option(DELAYLAMA_BUILD_TESTS
+    "Build DelayLama unit tests"
+    ON
+)
+
 # Generate compile_commands.json for clangd intellisense
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
@@ -49,6 +60,10 @@ add_library(DelayLama SHARED
     resources.rc
 )
 
+if(DELAYLAMA_DEBUG_CONSOLE)
+    target_compile_definitions(DelayLama PRIVATE DELAYLAMA_DEBUG_CONSOLE)
+endif()
+
 # Allow for "#if defined(NOT_ORIGINAL_BUILD)" blocks for debugging
 target_compile_definitions(DelayLama PRIVATE
     $<$<NOT:$<CONFIG:Release>>:NOT_ORIGINAL_BUILD>
@@ -78,11 +93,6 @@ add_library(DelayLamaCore STATIC ${SOURCES})
 target_compile_definitions(DelayLamaCore PRIVATE NOT_ORIGINAL_BUILD)
 target_include_directories(DelayLamaCore PUBLIC src/)
 target_link_libraries(DelayLamaCore kernel32 user32 gdi32)
-
-option(DELAYLAMA_BUILD_TESTS
-    "Build DelayLama unit tests"
-    ON
-)
 
 # GTest does not support VC6
 if(CMAKE_TOOLCHAIN_OUTPUT_NAME STREQUAL "vc6")

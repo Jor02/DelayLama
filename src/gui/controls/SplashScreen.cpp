@@ -1,6 +1,7 @@
 #include "SplashScreen.h"
 #include "damsdk/gui/platform/windows/Bitmap.h"
 #include "damsdk/gui/platform/windows/Window.h"
+#include "utils/Logger.h"
 
 namespace DelayLama {
 namespace Gui {
@@ -9,6 +10,7 @@ namespace Controls {
     // FUNCTION DELAYLAMA: 0x1000a530
     SplashScreen::SplashScreen(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, DamSDK::Gui::Platform::Windows::Bitmap *bmp, RECT *destRect, POINT *srcPoint) : DamSDK::Gui::Controls::Control(pRect, callback, parameterId, bmp)
     {
+        Utils::log("SplashScreen::ctor\n");
         this->destRect.left = destRect->left;
         this->destRect.top = destRect->top;
         this->destRect.right = destRect->right;
@@ -52,6 +54,7 @@ namespace Controls {
     void SplashScreen::onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext) {
         if (this->isEnabled && (View::GetPressedModifiersAndMouseButtons() & 0x1) != 0) {
             bool isDismissing = (this->value == 0.0f);
+            Utils::logf("SplashScreen::onMouseDown %s\n", isDismissing ? "show" : "dismiss");
             this->value = (float)(int)isDismissing;
 
             if (isDismissing) {

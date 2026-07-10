@@ -3,10 +3,14 @@
 #include <cstdarg>
 #include "Logger.h"
 
+#ifdef DELAYLAMA_DEBUG_CONSOLE
 // This stays static so it's only visible inside Logger.cpp
 static bool g_consoleAttached = false;
+#endif
 
 namespace Utils {
+
+#ifdef DELAYLAMA_DEBUG_CONSOLE
 
     void attachConsole()
     {
@@ -23,6 +27,7 @@ namespace Utils {
             freopen("CONOUT$", "w", stdout);
             freopen("CONOUT$", "w", stderr);
 #endif
+
             setvbuf(stdout, NULL, _IONBF, 0);
             setvbuf(stderr, NULL, _IONBF, 0);
 
@@ -31,18 +36,23 @@ namespace Utils {
         }
         else
         {
-            log("AllocConsole failed\n");
+            OutputDebugStringA("AllocConsole failed\n");
         }
     }
 
+#endif
+
     void log(const char* msg)
     {
-        if (!g_consoleAttached) {
-            OutputDebugStringA(msg);
-        } else {
+#ifdef DELAYLAMA_DEBUG_CONSOLE
+        if (g_consoleAttached) {
             printf("%s", msg);
             fflush(stdout);
+            return;
         }
+#endif
+
+        OutputDebugStringA(msg);
     }
 
     void logf(const char* format, ...)
@@ -51,20 +61,25 @@ namespace Utils {
         va_list args;
 
         va_start(args, format);
+
 #if _MSC_VER >= 1400
         vsnprintf(buffer, sizeof(buffer), format, args);
 #else
         _vsnprintf(buffer, sizeof(buffer) - 1, format, args);
-        buffer[sizeof(buffer) - 1] = '\0'; // ensure null termination
+        buffer[sizeof(buffer) - 1] = '\0';
 #endif
+
         va_end(args);
 
-        if (!g_consoleAttached) {
-            OutputDebugStringA(buffer);
-        } else {
+#ifdef DELAYLAMA_DEBUG_CONSOLE
+        if (g_consoleAttached) {
             printf("%s", buffer);
             fflush(stdout);
+            return;
         }
+#endif
+
+        OutputDebugStringA(buffer);
     }
 
 }

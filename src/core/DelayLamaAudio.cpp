@@ -12,6 +12,7 @@ namespace Core {
 
     // FUNCTION DELAYLAMA: 0x10002820
     DelayLamaAudio::DelayLamaAudio(DamSDK::Api::dispatchFunc hostCallback) : DamSDK::Api::AudioBaseExtended(hostCallback, PRESET_COUNT, PARAMETER_COUNT) {
+        Utils::log("DelayLamaAudio::ctor\n");
         this->synthesisBuffer = nullptr;
         this->excitationBuffer = nullptr;
         this->formantTable = nullptr;
@@ -31,7 +32,7 @@ namespace Core {
         this->presets = new Preset[5];
 
         if (this->presets != nullptr) {
-            iteratePresetBlocks(this->presets, 36, 5, nullptr, (void*)DelayLamaAudio::generic18);
+            iteratePresetBlocks(this->presets, 36, 5, (void*)DelayLamaAudio::generic18, nullptr);
             initPresets();
             loadPresetByIndex(0);
         }
@@ -85,6 +86,7 @@ namespace Core {
         int i; // For loop index
 
         double currentSampleRate = this->getSampleRate();
+        Utils::logf("DelayLamaAudio::initialize sampleRate=%f\n", currentSampleRate);
         this->pluginSampleRate = (float)currentSampleRate;
         if (currentSampleRate != this->prevSampleRate) {
             if (this->synthesisBuffer != nullptr) {
@@ -929,6 +931,7 @@ namespace Core {
 
     // STUB: DELAYLAMA 0x100029a0
     void DelayLamaAudio::destroy() {
+        Utils::log("DelayLamaAudio::destroy\n");
 
         if (this->presets != nullptr) {
             delete[] this->presets;
@@ -995,6 +998,7 @@ namespace Core {
 
     // FUNCTION: DELAYLAMA 0x10002b10
     void DelayLamaAudio::loadPresetByIndex(int currentProgram) {
+        Utils::logf("DelayLamaAudio::loadPresetByIndex %d\n", currentProgram);
         Preset* presets = this->presets;
         this->currentPreset = currentProgram;
         
@@ -1150,6 +1154,7 @@ namespace Core {
 
     // FUNCTION: DELAYLAMA 0x100048b0
     void DelayLamaAudio::enableAudioProcessing() {
+        Utils::log("DelayLamaAudio::enableAudioProcessing\n");
         this->requestMidiSupport(1);
         initialize();
     }
@@ -1217,7 +1222,7 @@ namespace Core {
         this->processAudio(inputs,outputs,sampleFrames);
     }
 
-    // STUB: DELAYLAMA 0x10005ca0
+    // FUNCTION: DELAYLAMA 0x10005ca0
     void DelayLamaAudio::dispatchMidiEvents(int sampleIdx, int sampleFrame) {
         int pitchInterpCount = 0;
         int currentReadPtr = 0;
@@ -1351,6 +1356,7 @@ namespace Core {
     
     // FUNCTION: DELAYLAMA 0x10005fb0 (updateVowelFilter in original)
     void DelayLamaAudio::updateFormantTable(float vowelX) {
+        Utils::logf("DelayLamaAudio::updateFormantTable vowelX=%f\n", vowelX);
         // Scale vowel position to table index range (0.0 .. 1279.0)
         float vowelIndex = vowelX * kTableIndexMax;
         this->vowelLookupIndex = vowelIndex;
@@ -1427,6 +1433,8 @@ namespace Core {
             return;
         }
 
+        Utils::logf("DelayLamaAudio::processEvents count=%d\n", eventList->count);
+
         int writeIndex = 0;
 
         for (int i = 0; i < eventList->count; ++i) {
@@ -1449,6 +1457,7 @@ namespace Core {
     // STUB: DELAYLAMA 0x10006240
     void DelayLamaAudio::handleNoteEvent(int midiData1, int midiData2)
     {
+        Utils::logf("DelayLamaAudio::handleNoteEvent note=%d velocity=%d\n", midiData1, midiData2);
         // Apply a -12 offset (one octave) to incoming MIDI notes
         int noteWithOffset = midiData1 + -0xc;
         // Note off
@@ -1518,6 +1527,7 @@ namespace Core {
 
     // FUNCTION: DELAYLAMA 0x10006330
     void DelayLamaAudio::handleControlChange(int midiData1, int midiData2) {
+        Utils::logf("DelayLamaAudio::handleControlChange cc=%d value=%d\n", midiData1, midiData2);
         // Modulation Wheel
         if (midiData1 == 1) {
           this->lfoDepth = (float)midiData2 * 0.007874016f;
@@ -1621,7 +1631,7 @@ namespace Core {
 
     // FUNCTION: DELAYLAMA 0x10006430
     void DelayLamaAudio::sendMidiToHost(uint8_t status, uint8_t data1, uint8_t data2) {
-        
+        Utils::logf("DelayLamaAudio::sendMidiToHost status=0x%02x data1=%d data2=%d\n", status, data1, data2);
         DamSDK::Api::DamMidiEvent* damMidiEvent = &this->midiEvent;
         DamSDK::Api::DamMidiEventList* eventList = &this->midiEventList;
 

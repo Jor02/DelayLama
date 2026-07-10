@@ -23,6 +23,7 @@ namespace Gui{
 
     // FUNCTION DELAYLAMA: 0x10003640
     DelayLamaEditor::DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance) : DamSDK::Api::EditorBase((DamSDK::Api::AudioBaseExtended*)pluginInstance) {
+        Utils::log("DelayLamaEditor::ctor\n");
         currentEditor = this;
         this->callback = &onControlChangedThunk;
         this->reverbHandleBitmap = nullptr;
@@ -65,6 +66,7 @@ namespace Gui{
 
         const int parameterId = control->parameterId;
         const float value = control->getValue();
+        Utils::logf("DelayLamaEditor::onControlChanged id=%d value=%f\n", parameterId, value);
 
         switch (parameterId)
         {
@@ -120,6 +122,7 @@ namespace Gui{
     // FUNCTION DELAYLAMA: 0x10003820
     void DelayLamaEditor::open(HWND parentWnd)
     {
+        Utils::log("DelayLamaEditor::open\n");
         EditorBase::open(parentWnd);
         
         if (this->reverbHandleBitmap == NULL) {
@@ -313,6 +316,7 @@ namespace Gui{
     // FUNCTION DELAYLAMA: 0x100040c0
     void DelayLamaEditor::dispatcher(int32_t parameterIndex, float parameterValue)
     {
+        Utils::logf("DelayLamaEditor::dispatcher id=%d value=%f\n", parameterIndex, parameterValue);
         if (this->window == nullptr)
             return;
 
@@ -362,6 +366,7 @@ namespace Gui{
 
     // FUNCTION: DELAYLAMA 0x10003740
     void DelayLamaEditor::destroy() {
+        Utils::log("DelayLamaEditor::destroy\n");
         if (this->backgroundBitmap != nullptr) {
           Bitmap::unregisterBitmap(this->backgroundBitmap);
         }
@@ -407,6 +412,7 @@ namespace Gui{
 
     // FUNCTION: DELAYLAMA 0x100040a0
     void DelayLamaEditor::close() {
+        Utils::log("DelayLamaEditor::close\n");
         Window* frame = this->window;
         if (frame != nullptr) {
             delete frame;
