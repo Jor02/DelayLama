@@ -82,32 +82,68 @@ namespace Gui{
                 return;
             }
 
-            case TwoAxisSliderParameterId:
-            {
-                if (value > -2.0f && value < 3.0f)
-                {
-                    this->mainPlugin->setParameterValue(VibratoAmountParameterId, value);
-                }
+             case TwoAxisSliderParameterId:
+             {
+                 // Update horizontal and vertical sliders when clicking on TwoAxisSlider
+                 float xValue = value;
+                 float yValue = 0.0f;
+                 
+                 if (control->prevValue > 98.0f && control->prevValue < 103.0f) {
+                     // Previous Y value was in 100-101 range, extract it
+                     yValue = 1.0f - (control->prevValue - 100.0f);
+                 }
+                 
+                 if (value > -2.0f && value < 3.0f)
+                 {
+                     // This is an X-axis update (vibrato amount, 0-1 normalized)
+                     xValue = value;
+                     this->mainPlugin->setParameterValue(VibratoAmountParameterId, xValue);
+                     
+                     // Update the horizontal slider position
+                     if (this->singingHorizontalSlider != nullptr) {
+                         this->singingHorizontalSlider->setValue(xValue);
+                         this->singingHorizontalSlider->setDirty(true);
+                     }
+                 }
 
-                if (value > 98.0f && value < 103.0f)
-                {
-                    const float pitchValue = 1.0f - (value - 100.0f);
-                    this->mainPlugin->setParameterValue(PitchValueParameterId, pitchValue);
-                }
+                  if (value > 98.0f && value < 103.0f)
+                  {
+                      // This is a Y-axis update (pitch, 100-101 range)
+                      const float pitchValue = 1.0f - (value - 100.0f);
+                      this->mainPlugin->setParameterValue(PitchValueParameterId, pitchValue);
+                      
+                      // Update the vertical slider position
+                      // The vertical slider has flags=64, and its onDraw inverts when flags & 0x20 == 0
+                      // Since 64 & 32 == 0, onDraw will invert, so we set the pitchValue directly
+                      // and let onDraw handle the inversion
+                      if (this->singingVerticalSlider != nullptr) {
+                          this->singingVerticalSlider->setValue(pitchValue);
+                          this->singingVerticalSlider->setDirty(true);
+                      }
+                  }
 
-                if (value == 200.0f)
-                {
-                    this->mainPlugin->setParameterValue(SingingEnabledParameterId, 0.0f);
-                }
+                 if (value == 200.0f)
+                 {
+                     this->mainPlugin->setParameterValue(SingingEnabledParameterId, 0.0f);
+                 }
 
-                if (value == 201.0f)
-                {
-                    this->mainPlugin->setParameterValue(SingingEnabledParameterId, 1.0f);
-                }
+                 if (value == 201.0f)
+                 {
+                     this->mainPlugin->setParameterValue(SingingEnabledParameterId, 1.0f);
+                 }
 
-                control->update(drawingContext);
-                return;
-            }
+                 control->update(drawingContext);
+                 
+                 // Update both sliders visually
+                 if (this->singingHorizontalSlider != nullptr && this->singingHorizontalSlider->isDirty()) {
+                     this->singingHorizontalSlider->onDraw(drawingContext);
+                 }
+                 if (this->singingVerticalSlider != nullptr && this->singingVerticalSlider->isDirty()) {
+                     this->singingVerticalSlider->onDraw(drawingContext);
+                 }
+                 
+                 return;
+             }
 
             default:
                 return;
@@ -246,7 +282,7 @@ namespace Gui{
         twoAxisBackgroundOffset.x = 0;
         twoAxisBackgroundOffset.y = 0;
 
-        this->singingController = new DamSDK::Gui::Controls::TwoAxisSlider(&twoAxisRect, this->callback, TwoAxisSliderParameterId, 96, 259, nullptr, nullptr, &twoAxisBackgroundOffset, 8);
+        this->singingController = new DamSDK::Gui::Controls::TwoAxisSlider(&twoAxisRect, this->callback, TwoAxisSliderParameterId, 96, 259, nullptr, nullptr, &twoAxisBackgroundOffset, 1); // flags=1 to match original behavior (flags & 8 == 0 means invert value)
         this->singingController->setSnapToMouse(true);
         this->window->registerControl((DamSDK::Gui::Controls::Control*)this->singingController);
 
