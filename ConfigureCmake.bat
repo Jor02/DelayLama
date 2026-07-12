@@ -1,6 +1,12 @@
 @echo off
 call "%~dp0LocalPaths.bat"
-call "%MSVC600_PATH%\VC98\Bin\vcvars32.bat"
+
+if not exist "%MSVC600_PATH%\VC98\Bin\VCVARS32.BAT" (
+    echo VCVARS32.BAT not found in "%MSVC600_PATH%\VC98\Bin"
+    exit /b 1
+)
+
+call "%MSVC600_PATH%\VC98\Bin\VCVARS32.BAT"
 
 set CMAKE_ARGS=
 
