@@ -19,7 +19,7 @@
       "command": "cmd",
       "args": [
         "/c",
-        "\"C:\\Users\\Jor02\\AppData\\Local\\Programs\\MSVC600\\VC98\\Bin\\vcvars32.bat\" && cmake --build --preset vc6-debug"
+        "\"C:\\Users\\Jor02\\AppData\\Local\\Programs\\MSVC600\\VC98\\Bin\\VCVARS32.BAT\" && cmake --build --preset vc6-debug"
       ],
       "group": {
         "kind": "build",
