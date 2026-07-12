@@ -63,7 +63,7 @@ namespace Gui{
             void open(HWND hParent) override;
             void dispatcher(int32_t parameterIndex, float value) override;
             void destroy();
-            void close();
+            void close() override;
     };   
 }
 }

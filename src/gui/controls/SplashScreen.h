@@ -18,8 +18,8 @@ namespace Controls {
             SplashScreen(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, DamSDK::Gui::Platform::Windows::Bitmap *bmp, RECT *destRect,POINT *srcPoint);
             ~SplashScreen();
             void destroy();
-            void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContect);
-            void onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext);
+            virtual void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContect) override;
+            virtual void onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext);
     };
 }
 }
