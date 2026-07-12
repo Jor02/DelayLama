@@ -1,3 +1,6 @@
+#Delete env batch
+LocalPaths.bat
+
 # Ignore reccmp related files
 reccmp-user.yml
 progress.html
