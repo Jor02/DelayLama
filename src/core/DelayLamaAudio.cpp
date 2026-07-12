@@ -929,7 +929,7 @@ namespace Core {
         return false;
     }
 
-    // STUB: DELAYLAMA 0x100029a0
+    // FUNCTION: DELAYLAMA 0x100029a0
     void DelayLamaAudio::destroy() {
         Utils::log("DelayLamaAudio::destroy\n");
 
@@ -1454,7 +1454,7 @@ namespace Core {
         }
     }
 
-    // STUB: DELAYLAMA 0x10006240
+    // FUNCTION: DELAYLAMA 0x10006240
     void DelayLamaAudio::handleNoteEvent(int midiData1, int midiData2)
     {
         Utils::logf("DelayLamaAudio::handleNoteEvent note=%d velocity=%d\n", midiData1, midiData2);

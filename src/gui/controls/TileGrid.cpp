@@ -56,12 +56,12 @@ namespace Controls {
         this->setDirty(false);
     }
 
-    // STUB: DELAYLAMA 0x10009950
+    // FUNCTION: DELAYLAMA 0x10009950
     TileGrid::~TileGrid() {
         destroy();
     }
 
-    // STUB: DELAYLAMA 0x10009970
+    // FUNCTION: DELAYLAMA 0x10009970
     void TileGrid::destroy() {
         Control::destroy();
     }
