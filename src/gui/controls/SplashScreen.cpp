@@ -51,7 +51,7 @@ namespace Controls {
     }
 
     // FUNCTION DELAYLAMA: 0x1000a630
-    void SplashScreen::onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext) {
+    void SplashScreen::onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext, POINT* mousePos) {
         if (this->isEnabled && (View::GetPressedModifiersAndMouseButtons() & 0x1) != 0) {
             bool isDismissing = (this->value == 0.0f);
             Utils::logf("SplashScreen::onMouseDown %s\n", isDismissing ? "show" : "dismiss");

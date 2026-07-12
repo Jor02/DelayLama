@@ -162,12 +162,12 @@ namespace Core {
             virtual void getParameterValueString(int32_t parameterId, char* outText) override;
             virtual void getParameterName(int parameterId, char* outBuffer) override;
             virtual float getParameterValue(int32_t parameterId) override;
-            virtual bool getOutputBusProperties(uint32_t index, char* properties);
+            virtual bool getOutputBusProperties(int32_t index, char* properties) override;
             virtual bool getPresetNameByIndex(int category, int index, char* outText) override;
             virtual bool copyPreset(int param_1) override;
             virtual bool getProductName(char* outText) override;
             virtual void setSampleRate(float sampleRate) override;
-            virtual void setMaxFramesPerProcess(uint32_t blocksize);
+            virtual void setMaxFramesPerProcess(int32_t blocksize) override;
             virtual void disableAudioProcessing() override;
             virtual void enableAudioProcessing() override;
             virtual void buildPiecewiseCubicTable(int32_t* controlPoints, float* outSamples);

@@ -1089,7 +1089,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x10003050
-    bool DelayLamaAudio::getOutputBusProperties(uint32_t index, char* properties) {
+    bool DelayLamaAudio::getOutputBusProperties(int32_t index, char* properties) {
         if ((int)index < 2) {
           int label = sprintf(properties, "Vstx %1d", index + 1);
           properties[0x40] = 3;
@@ -1142,7 +1142,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x10004890
-    void DelayLamaAudio::setMaxFramesPerProcess(uint32_t blocksize) {
+    void DelayLamaAudio::setMaxFramesPerProcess(int32_t blocksize) {
         this->blockSize = blocksize;
         this->pluginBlockSize = blocksize;
     }

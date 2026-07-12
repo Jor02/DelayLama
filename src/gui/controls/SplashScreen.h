@@ -19,7 +19,7 @@ namespace Controls {
             ~SplashScreen();
             void destroy();
             virtual void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContect) override;
-            virtual void onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext);
+            virtual void onMouseDown(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext, POINT* mousePos) override;
     };
 }
 }
