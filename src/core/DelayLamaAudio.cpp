@@ -535,7 +535,7 @@ namespace Core {
 
                         // Convert the internal fixed‑point pitch back to a float (1.0 / 16384.0)
                         float currentPitchFloat = static_cast<float>(this->pitchCurrent) * kPitchToFloatScale;
-                        this->pitchCurrent = static_cast<int>(currentPitchFloat);
+                        this->curVowelValue = currentPitchFloat;
 
                         // Notify host of parameter change (likely via VST's setParameterAutomated)
                         this->setParameterValue(SingingVerticalSliderParameterId, currentPitchFloat);
@@ -658,7 +658,7 @@ namespace Core {
                     
                     // Fetch fundamental frequency for synthesis
                     int freqTableIndex =  static_cast<long>(this->currentFormantMorphValue * -32.0f);
-                    float fundamentalFreq = this->frequencyTable[freqTableIndex];
+                    float fundamentalFreq = this->frequencyTable[-freqTableIndex];
                     this->frequencyValue = fundamentalFreq;
                     
                     int writeBoundary = static_cast<long>(this->pluginSampleRate / fundamentalFreq);
