@@ -350,7 +350,7 @@ namespace Gui{
     }
 
     // FUNCTION DELAYLAMA: 0x100040c0
-    void DelayLamaEditor::dispatcher(int32_t parameterIndex, float parameterValue)
+    void DelayLamaEditor::dispatcher(int parameterIndex, float parameterValue)
     {
         Utils::logf("DelayLamaEditor::dispatcher id=%d value=%f\n", parameterIndex, parameterValue);
         if (this->window == nullptr)

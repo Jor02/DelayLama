@@ -149,22 +149,22 @@ namespace Core {
 
             virtual bool getPluginName(char* outText) override;
             virtual bool getCompanyName(char* outText) override;
-            virtual void setParameterValue(int parameterId, float value) override;
+            virtual void setParameterValue(int32_t parameterId, float value) override;
             virtual void initialize();
             virtual void processAudio(float** inputs,float** outputs,int32_t sampleFrames) override;
             virtual void initPresets();
             virtual bool sendEventsToHost(DamSDK::Api::DamMidiEventList* eventsPtr);
             virtual void destroy();
-            virtual void loadPresetByIndex(int currentProgram) override;
+            virtual void loadPresetByIndex(int32_t currentProgram) override;
             virtual void setCurrentPresetName(char* newName) override;
             virtual void getCurrentPresetName(char* outText) override;
-            virtual void getParameterUnitLabel(int parameterId, char* label) override;
+            virtual void getParameterUnitLabel(int32_t parameterId, char* label) override;
             virtual void getParameterValueString(int32_t parameterId, char* outText) override;
-            virtual void getParameterName(int parameterId, char* outBuffer) override;
+            virtual void getParameterName(int32_t parameterId, char* outBuffer) override;
             virtual float getParameterValue(int32_t parameterId) override;
             virtual bool getOutputBusProperties(int32_t index, char* properties) override;
-            virtual bool getPresetNameByIndex(int category, int index, char* outText) override;
-            virtual bool copyPreset(int param_1) override;
+            virtual bool getPresetNameByIndex(int32_t category, int32_t index, char* outText) override;
+            virtual bool copyPreset(int32_t param_1) override;
             virtual bool getProductName(char* outText) override;
             virtual void setSampleRate(float sampleRate) override;
             virtual void setMaxFramesPerProcess(int32_t blocksize) override;

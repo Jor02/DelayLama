@@ -781,7 +781,7 @@ namespace Core {
     }
 
     // FUNCTION DELAYLAMA: 0x10002db0
-    void DelayLamaAudio::setParameterValue(int parameterId, float value)
+    void DelayLamaAudio::setParameterValue(int32_t parameterId, float value)
     {
         switch (parameterId)
         {
@@ -997,7 +997,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x10002b10
-    void DelayLamaAudio::loadPresetByIndex(int currentProgram) {
+    void DelayLamaAudio::loadPresetByIndex(int32_t currentProgram) {
         Utils::logf("DelayLamaAudio::loadPresetByIndex %d\n", currentProgram);
         Preset* presets = this->presets;
         this->currentPreset = currentProgram;
@@ -1023,7 +1023,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x10002c00
-    void DelayLamaAudio::getParameterUnitLabel(int parameterId, char* label) {
+    void DelayLamaAudio::getParameterUnitLabel(int32_t parameterId, char* label) {
         const char* unitLabel = nullptr;
 
         switch (parameterId) {
@@ -1056,7 +1056,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x10002d20
-    void DelayLamaAudio::getParameterName(int parameterId, char* outBuffer) {
+    void DelayLamaAudio::getParameterName(int32_t parameterId, char* outBuffer) {
         const char* sourceString = nullptr;
 
         switch (parameterId) {
@@ -1102,7 +1102,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x10003080
-    bool DelayLamaAudio::getPresetNameByIndex(int category, int index, char* outText) {
+    bool DelayLamaAudio::getPresetNameByIndex(int32_t category, int32_t index, char* outText) {
         // Only valid for the 5 preset slots
         if (index >= 5) {
             return false;
@@ -1116,7 +1116,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x100030d0
-    bool DelayLamaAudio::copyPreset(int destinationIndex) {
+    bool DelayLamaAudio::copyPreset(int32_t destinationIndex) {
         // Only valid for the 5 preset slots
         if (destinationIndex >= 5) {
             return false;

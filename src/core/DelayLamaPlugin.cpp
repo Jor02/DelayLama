@@ -23,7 +23,7 @@ namespace Core {
     }
 
     // FUNCTION DELAYLAMA: 0x10003530
-    void DelayLamaPlugin::setParameterValue(int parameterIndex,float parameterValue) {
+    void DelayLamaPlugin::setParameterValue(int32_t parameterIndex,float parameterValue) {
         Utils::logf("DelayLamaPlugin::setParameterValue id=%d value=%f\n", parameterIndex, parameterValue);
         DelayLamaAudio::setParameterValue(parameterIndex,parameterValue);
 
