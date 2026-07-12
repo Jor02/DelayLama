@@ -161,7 +161,7 @@ namespace Core {
             virtual void getParameterUnitLabel(int parameterId, char* label);
             virtual void getParameterValueString(int32_t parameterId, char* outText);
             virtual void getParameterName(int parameterId, char* outBuffer);
-            virtual float getParameterValue(int parameter);
+            virtual float getParameterValue(int32_t parameterId) override;
             virtual bool getOutputBusProperties(uint32_t index, char* properties);
             virtual bool getPresetNameByIndex(int category, int index, char* outText);
             virtual bool copyPreset(int param_1);

@@ -1069,7 +1069,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x10002fd0
-    float DelayLamaAudio::getParameterValue(int parameter) {
+    float DelayLamaAudio::getParameterValue(int32_t parameter) {
         switch(parameter) {
             case LeftVoiceKnobParameterId:
                 return this->portamentoTime;
