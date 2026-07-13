@@ -9,7 +9,7 @@ progress.html
 /build/*
 
 # Ignore assets
-/assets/
+/assets/interface/
 
 # Ignore the clangd file (for now)
 .clangd
