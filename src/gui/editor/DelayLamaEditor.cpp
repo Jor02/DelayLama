@@ -82,69 +82,36 @@ namespace Gui{
                 return;
             }
 
-             case TwoAxisSliderParameterId:
-             {
-                 // Update horizontal and vertical sliders when clicking on TwoAxisSlider
-                 float xValue = value;
-                 float yValue = 0.0f;
+            case TwoAxisSliderParameterId:
+            {
+                // Update horizontal and vertical sliders when clicking on TwoAxisSlider
+                if (value > -2.0f && value < 3.0f)
+                {
+                    // X-axis update (vibrato amount, 0-1 normalized)
+                    this->mainPlugin->setParameterValue(VibratoAmountParameterId, value);
+                }
+ 
+                if (value > 98.0f && value < 103.0f)
+                {
+                    // Y-axis update (pitch, 100-101 range -> normalized, inverted)
+                    const float pitchValue = 1.0f - (value - 100.0f);
+                    this->mainPlugin->setParameterValue(PitchValueParameterId, pitchValue);
+                }
+ 
+                if (value == 200.0f)
+                {
+                    this->mainPlugin->setParameterValue(SingingEnabledParameterId, 0.0f);
+                }
+ 
+                if (value == 201.0f)
+                {
+                    this->mainPlugin->setParameterValue(SingingEnabledParameterId, 1.0f);
+                }
+ 
+                control->update(drawingContext);
                  
-                 if (control->prevValue > 98.0f && control->prevValue < 103.0f) {
-                     // Previous Y value was in 100-101 range, extract it
-                     yValue = 1.0f - (control->prevValue - 100.0f);
-                 }
-                 
-                 if (value > -2.0f && value < 3.0f)
-                 {
-                     // This is an X-axis update (vibrato amount, 0-1 normalized)
-                     xValue = value;
-                     this->mainPlugin->setParameterValue(VibratoAmountParameterId, xValue);
-                     
-                     // Update the horizontal slider position
-                     if (this->singingHorizontalSlider != nullptr) {
-                         this->singingHorizontalSlider->setValue(xValue);
-                         this->singingHorizontalSlider->setDirty(true);
-                     }
-                 }
-
-                  if (value > 98.0f && value < 103.0f)
-                  {
-                      // This is a Y-axis update (pitch, 100-101 range)
-                      const float pitchValue = 1.0f - (value - 100.0f);
-                      this->mainPlugin->setParameterValue(PitchValueParameterId, pitchValue);
-                      
-                      // Update the vertical slider position
-                      // The vertical slider has flags=64, and its onDraw inverts when flags & 0x20 == 0
-                      // Since 64 & 32 == 0, onDraw will invert, so we set the pitchValue directly
-                      // and let onDraw handle the inversion
-                      if (this->singingVerticalSlider != nullptr) {
-                          this->singingVerticalSlider->setValue(pitchValue);
-                          this->singingVerticalSlider->setDirty(true);
-                      }
-                  }
-
-                 if (value == 200.0f)
-                 {
-                     this->mainPlugin->setParameterValue(SingingEnabledParameterId, 0.0f);
-                 }
-
-                 if (value == 201.0f)
-                 {
-                     this->mainPlugin->setParameterValue(SingingEnabledParameterId, 1.0f);
-                 }
-
-                 control->update(drawingContext);
-                 
-                 // Update both sliders visually
-                 if (this->singingHorizontalSlider != nullptr && this->singingHorizontalSlider->isDirty()) {
-                     this->singingHorizontalSlider->onDraw(drawingContext);
-                 }
-                 if (this->singingVerticalSlider != nullptr && this->singingVerticalSlider->isDirty()) {
-                     this->singingVerticalSlider->onDraw(drawingContext);
-                 }
-                 
-                 return;
-             }
-
+                return;
+            }
             default:
                 return;
         }
