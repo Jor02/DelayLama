@@ -142,10 +142,10 @@ namespace Core {
             DelayLamaAudio(DamSDK::Api::dispatchFunc hostCallback);
             ~DelayLamaAudio();
 
-            static void iteratePresetBlocks(Preset* context, int stride, int iterationCount, void* callback, void* extra);
-            static void _conditionalRunCallback(void* context, int stride, int processedCount, void* extra, bool successFlag);
-            static void _forEachPresetBlockReverse(void* startPtr, int step, int count, void* callback);
-            static void generic18();
+            static void constructPresetArray(Preset* context, int stride, int iterationCount, void* callback, void* extra);
+            static void handlePresetArrayConstructionException(void* context, int stride, int processedCount, void* extra, bool successFlag);
+            static void destructPresetArrayElements(void* startPtr, int step, int count, void* callback);
+            static void presetElementConstructor();
 
             virtual bool getPluginName(char* outText) override;
             virtual bool getCompanyName(char* outText) override;
@@ -170,11 +170,11 @@ namespace Core {
             virtual void setMaxFramesPerProcess(int32_t blocksize) override;
             virtual void disableAudioProcessing() override;
             virtual void enableAudioProcessing() override;
-            virtual void buildPiecewiseCubicTable(int32_t* controlPoints, float* outSamples);
+            virtual void buildFormantCurveTable(int32_t* controlPoints, float* outSamples);
             virtual void invokeAudioProcess(float* * inputs, float* * outputs, int32_t sampleFrames) override;
             virtual void dispatchMidiEvents(int sampleIdx, int sampleFrame);
             virtual void addSynthesisToExcitation(int offsetIncrement);
-            virtual void updateFormantTable(float vowelX);
+            virtual void synthesizeVowelBuffer(float vowelX);
             virtual void processEvents(DamSDK::Api::DamEventList* eventList);
             virtual void handleNoteEvent(int midiData1, int midiData2);
             virtual void handleControlChange(int midiData1, int midiData2);

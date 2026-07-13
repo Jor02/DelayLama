@@ -32,7 +32,7 @@ namespace Core {
         this->presets = new Preset[5];
 
         if (this->presets != nullptr) {
-            iteratePresetBlocks(this->presets, 36, 5, (void*)DelayLamaAudio::generic18, nullptr);
+            constructPresetArray(this->presets, 36, 5, (void*)DelayLamaAudio::presetElementConstructor, nullptr);
             initPresets();
             loadPresetByIndex(0);
         }
@@ -256,10 +256,10 @@ namespace Core {
         }
 
         // Apply Release Phase (Cosine shaping)
-        for (int j = 0; (this->sustainStart + j) < this->numSamples; ++j) {
-            double phase = (static_cast<double>(j) * kPi) / static_cast<double>(this->releaseSamples);
+        for (int idx = this->sustainStart; idx < this->numSamples; ++idx) {
+            double phase = (static_cast<double>(idx) * kPi) / static_cast<double>(this->releaseSamples);
             float value = static_cast<float>(0.5 * (1.0 + cos(phase)));
-            this->vocalEnvelope[this->sustainStart + j] = value;
+            this->vocalEnvelope[idx] = value;
         }
         
         // Pitch/Frequency Lookup Table
@@ -294,7 +294,7 @@ namespace Core {
         // Third curve (indices 10-14)
         formantControlPoints[10] = 2240;
         formantControlPoints[11] = 2830;
-        formantControlPoints[12] = 2916;
+        formantControlPoints[12] = 2900;
         formantControlPoints[13] = 2800;
         formantControlPoints[14] = 2950;
 
@@ -302,17 +302,17 @@ namespace Core {
         if (this->formantTable1 == nullptr) {
             this->formantTable1 = new float[1280];
         }
-        buildPiecewiseCubicTable(formantControlPoints, this->formantTable1);
+        buildFormantCurveTable(formantControlPoints, this->formantTable1);
 
         if (this->formantTable2 == nullptr) {
             this->formantTable2 = new float[1280];
         }
-        buildPiecewiseCubicTable(formantControlPoints + 5, this->formantTable2);
+        buildFormantCurveTable(formantControlPoints + 5, this->formantTable2);
 
         if (this->formantTable3 == nullptr) {
             this->formantTable3 = new float[1280];
         }
-        buildPiecewiseCubicTable(formantControlPoints + 10, this->formantTable3);
+        buildFormantCurveTable(formantControlPoints + 10, this->formantTable3);
 
         this->formant1Bandwidth = 32.5f;
         this->formant2Bandwidth = 47.5f;
@@ -392,7 +392,7 @@ namespace Core {
         this->pitchValueDirty = false;
         this->vibratoDirty = false;
 
-        updateFormantTable(0.5f);
+        synthesizeVowelBuffer(0.5f);
 
         this->prevVowelValue = 0.5;
         this->isGateActive = false;
@@ -669,7 +669,7 @@ namespace Core {
                     {
                         if (this->formantTableNeedsUpdate != false)
                         {
-                            updateFormantTable(this->curVowelValue);
+                            synthesizeVowelBuffer(this->curVowelValue);
                         }
                         addSynthesisToExcitation(this->excitationWriteIndex);
                         this->excitationWriteIndex = 0;
@@ -694,6 +694,7 @@ namespace Core {
         if (0 < sampleFrames)
         {
             int frame = sampleFrames;
+            int i = 0; // ascending output sample index (was incorrectly using the descending 'frame' countdown)
             float* outPtr = outRight;
             do
             {
@@ -766,15 +767,16 @@ namespace Core {
                 float morphScale = (this->formantMorphValue * -0.013888889f + 2.0f) * this->outputGain;
                 
                 // Left Channel: Dry Excitation + Delay Line L
-                outLeft[frame] = morphScale * (excitation + this->stereoDelayLBuffer[this->delayReadIndexL]);
+                outLeft[i] = morphScale * (excitation + this->stereoDelayLBuffer[this->delayReadIndexL]);
                 
                 // Right Channel: Dry Excitation + Delay Line R
-                outRight[frame] = morphScale * (excitation + this->stereoDelayRBuffer[this->delayReadIndexR]);
+                outRight[i] = morphScale * (excitation + this->stereoDelayRBuffer[this->delayReadIndexR]);
                 
                 this->excitationBuffer[this->excitationReadIndex] = 0.0f;
                 this->excitationReadIndex++;
                 
                 outPtr++;
+                i++;
                 frame--;
             } while (frame != 0);
         }
@@ -803,7 +805,7 @@ namespace Core {
 
                     if (this->curVowelValue != this->prevVowelValue)
                     {
-                        updateFormantTable(value);
+                        synthesizeVowelBuffer(value);
                     }
                 }
 
@@ -821,7 +823,7 @@ namespace Core {
 
                 if (this->isSinging)
                 {
-                    updateFormantTable(this->curVowelValue);
+                    synthesizeVowelBuffer(this->curVowelValue);
                 }
                 break;
             }
@@ -1160,7 +1162,7 @@ namespace Core {
     }
 
     // FUNCTION: DELAYLAMA 0x10005350
-    void DelayLamaAudio::buildPiecewiseCubicTable(int32_t *controlPoints,float *outSamples)
+    void DelayLamaAudio::buildFormantCurveTable(int32_t *controlPoints,float *outSamples)
     {
         float *outPtr;
         int x;
@@ -1354,76 +1356,72 @@ namespace Core {
 
     const float kTableIndexMax = 1279.0f;
     
-    // FUNCTION: DELAYLAMA 0x10005fb0 (updateVowelFilter in original)
-    void DelayLamaAudio::updateFormantTable(float vowelX) {
-        Utils::logf("DelayLamaAudio::updateFormantTable vowelX=%f\n", vowelX);
+    // FUNCTION: DELAYLAMA 0x10005fb0
+    void DelayLamaAudio::synthesizeVowelBuffer(float vowelX) {
+        Utils::logf("DelayLamaAudio::synthesizeVowelBuffer vowelX=%f\n", vowelX);
+
         // Scale vowel position to table index range (0.0 .. 1279.0)
         float vowelIndex = vowelX * kTableIndexMax;
         this->vowelLookupIndex = vowelIndex;
 
-        // Compute resonanceGain from headSize and store at offset 0x63b0
+        // resonanceGain widens/narrows all 3 formant rates together based on head size
         float resonanceGain = this->headSize * 0.5f + 0.75f;
         this->vowelBlendFactor = resonanceGain;
 
-        // Convert vowel index to integer for table lookup
-        long tableIndex = static_cast<long>(vowelIndex);
+        // Convert vowel index to integer for the formant frequency table lookup
+        int tableIndex = static_cast<int>(vowelIndex);
 
-        // Processing Loop - matches original updateVowelFilter algorithm
-        if (this->numSamples > 0) {
-            // Three independent phase accumulators (fVar2, fVar3, fVar4 in original)
-            float formantPhase1 = 0.0f;
-            float formantPhase2 = 0.0f;
-            float formantPhase3 = 0.0f;
-            
-            // Glottal source phase accumulators
-            float glotPhase1 = 0.0f;
-            float glotPhase2 = 0.0f;
-            float glotPhase3 = 0.0f;
-            
-            float formantLimit = static_cast<float>(this->formantTableSize);
-            float glottalLimit = static_cast<float>(this->glottalTableSize);
+        // Per-formant frequency (Hz-ish) at this vowel position, converted to
+        // glottalSource-table steps per sample via glottalPhaseInc (steps per Hz).
+        float glotStep1 = resonanceGain * this->formantTable1[tableIndex] * this->glottalPhaseInc;
+        float glotStep2 = resonanceGain * this->formantTable2[tableIndex] * this->glottalPhaseInc;
+        float glotStep3 = resonanceGain * this->formantTable3[tableIndex] * this->glottalPhaseInc;
 
-            for (int i = 0; i < this->numSamples; ++i) {
-                // Formant 1: uses formantPhase1 with increment from fVar4 pattern
-                this->synthesisBuffer[i] = this->formantTable[static_cast<int>(formantPhase1)] * 
-                                          this->glottalSource[static_cast<int>(glotPhase1)];
-                formantPhase1 += this->glottalPhaseInc;
-                glotPhase1 += this->formant1Bandwidth;
-                if (formantPhase1 >= formantLimit) {
-                    formantPhase1 -= formantLimit;
-                }
-                if (glotPhase1 >= glottalLimit) {
-                    glotPhase1 -= glottalLimit;
-                }
+        if (this->numSamples <= 0) {
+            return;
+        }
 
-                // Formant 2: uses formantPhase2 with increment from extraout_ST1_00 pattern
-                this->synthesisBuffer[i] += this->formantTable[static_cast<int>(formantPhase2)] * 
-                                           this->glottalSource[static_cast<int>(glotPhase2)];
-                formantPhase2 += this->glottalPhaseInc;
-                glotPhase2 += this->formant2Bandwidth;
-                if (formantPhase2 >= formantLimit) {
-                    formantPhase2 -= formantLimit;
-                }
-                if (glotPhase2 >= glottalLimit) {
-                    glotPhase2 -= glottalLimit;
-                }
+        // Glottal source (carrier) phases: one per formant, wrap at glottalTableSize
+        float glotPhase1 = 0.0f;
+        float glotPhase2 = 0.0f;
+        float glotPhase3 = 0.0f;
 
-                // Formant 3: uses formantPhase3 with increment from extraout_ST1_01 pattern
-                this->synthesisBuffer[i] += this->formantTable[static_cast<int>(formantPhase3)] * 
-                                           this->glottalSource[static_cast<int>(glotPhase3)];
-                formantPhase3 += this->glottalPhaseInc;
-                glotPhase3 += this->formant3Bandwidth;
-                if (formantPhase3 >= formantLimit) {
-                    formantPhase3 -= formantLimit;
-                }
-                if (glotPhase3 >= glottalLimit) {
-                    glotPhase3 -= glottalLimit;
-                }
+        // Formant envelope phases (index into the shared exponential decay/bandwidth table):
+        float envPhase1 = 0.0f;
+        float envPhase2 = 0.0f;
+        float envPhase3 = 0.0f;
 
-                // Apply harmonic buffer (0.5 coefficient) and vocal envelope
-                this->synthesisBuffer[i] += this->harmonicBuffer[i] * 0.5f;
-                this->synthesisBuffer[i] *= this->vocalEnvelope[i];
+        for (int i = 0; i < this->numSamples; ++i) {
+            // Formant 1 (F1)
+            this->synthesisBuffer[i] = this->glottalSource[static_cast<int>(glotPhase1)] *
+                                        this->formantTable[static_cast<int>(envPhase1)];
+            envPhase1 += this->formant1Bandwidth;
+            glotPhase1 += glotStep1;
+            if (glotPhase1 >= this->glottalTableSize) {
+                glotPhase1 -= this->glottalTableSize;
             }
+
+            // Formant 2 (F2)
+            this->synthesisBuffer[i] += this->glottalSource[static_cast<int>(glotPhase2)] *
+                                         this->formantTable[static_cast<int>(envPhase2)];
+            envPhase2 += this->formant2Bandwidth;
+            glotPhase2 += glotStep2;
+            if (glotPhase2 >= this->glottalTableSize) {
+                glotPhase2 -= this->glottalTableSize;
+            }
+
+            // Formant 3 (F3)
+            this->synthesisBuffer[i] += this->glottalSource[static_cast<int>(glotPhase3)] *
+                                         this->formantTable[static_cast<int>(envPhase3)];
+            envPhase3 += this->formant3Bandwidth;
+            glotPhase3 += glotStep3;
+            if (glotPhase3 >= this->glottalTableSize) {
+                glotPhase3 -= this->glottalTableSize;
+            }
+
+            // Apply harmonic buffer (0.5 coefficient) and vocal envelope
+            this->synthesisBuffer[i] += this->harmonicBuffer[i] * 0.5f;
+            this->synthesisBuffer[i] *= this->vocalEnvelope[i];
         }
     }
 
@@ -1578,8 +1576,8 @@ namespace Core {
         return (float)this->rngState * this->delayTimeScaler;
     }
 
-    // FUNCTION: DELAYLAMA 0x10002440 (iteratePresetBlocks in original)
-    void DelayLamaAudio::iteratePresetBlocks(Preset* context, int stride, int iterationCount,
+    // FUNCTION: DELAYLAMA 0x10002440
+    void DelayLamaAudio::constructPresetArray(Preset* context, int stride, int iterationCount,
                                              void* callback, void* extra) {
         bool successFlag = false;
         int i = 0;
@@ -1599,19 +1597,19 @@ namespace Core {
         }
         __finally {
             // The compiler handles structured exception winding here
-            _conditionalRunCallback(context, stride, i, extra, successFlag);
+            handlePresetArrayConstructionException(context, stride, i, extra, successFlag);
         }
     }
 
-    void DelayLamaAudio::_conditionalRunCallback(void* context, int stride,
+    void DelayLamaAudio::handlePresetArrayConstructionException(void* context, int stride,
                                                  int processedCount,
                                                  void* extra, bool successFlag) {
         if (!successFlag) {
-            _forEachPresetBlockReverse(context, stride, processedCount, extra);
+            destructPresetArrayElements(context, stride, processedCount, extra);
         }
     }
 
-    void DelayLamaAudio::_forEachPresetBlockReverse(void* startPtr, int step,
+    void DelayLamaAudio::destructPresetArrayElements(void* startPtr, int step,
                                                     int count, void* callback) {
         // 'DEC count' followed by 'JS' (Jump if Sign) means it checks if count < 0 AFTER decrementing
         while (--count >= 0) {
@@ -1624,7 +1622,7 @@ namespace Core {
         }
     }
 
-    void DelayLamaAudio::generic18() {
+    void DelayLamaAudio::presetElementConstructor() {
         // Empty stub matching original EditorBase::generic18
         return;
     }
