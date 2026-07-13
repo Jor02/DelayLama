@@ -3,6 +3,8 @@
 #include <cstdarg>
 #include "Logger.h"
 
+#ifdef DELAYLAMA_ENABLE_LOGGING
+
 #ifdef DELAYLAMA_DEBUG_CONSOLE
 // This stays static so it's only visible inside Logger.cpp
 static bool g_consoleAttached = false;
@@ -83,3 +85,5 @@ namespace Utils {
     }
 
 }
+
+#endif

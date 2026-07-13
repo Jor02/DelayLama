@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.15)
 project(DelayLama CXX)
 
 # Options
+option(DELAYLAMA_ENABLE_LOGGING
+    "Enable the runtime logging system (log/logf)"
+    ON
+)
+
 option(DELAYLAMA_DEBUG_CONSOLE
     "Attach a console for debug logging"
     OFF
@@ -53,12 +58,21 @@ endif()
 # Collect sources
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
+# Logging: when disabled, console cannot be enabled either
+if(NOT DELAYLAMA_ENABLE_LOGGING)
+    set(DELAYLAMA_DEBUG_CONSOLE OFF)
+endif()
+
 # Shared library (DLL) matching original name and exports
 add_library(DelayLama SHARED
     ${SOURCES}
     exports.def
     resources.rc
 )
+
+if(DELAYLAMA_ENABLE_LOGGING)
+    target_compile_definitions(DelayLama PRIVATE DELAYLAMA_ENABLE_LOGGING)
+endif()
 
 if(DELAYLAMA_DEBUG_CONSOLE)
     target_compile_definitions(DelayLama PRIVATE DELAYLAMA_DEBUG_CONSOLE)
@@ -97,6 +111,18 @@ target_link_libraries(DelayLamaCore kernel32 user32 gdi32)
 # GTest does not support VC6
 if(CMAKE_TOOLCHAIN_OUTPUT_NAME STREQUAL "vc6")
     set(DELAYLAMA_BUILD_TESTS OFF)
+endif()
+
+if(DELAYLAMA_ENABLE_LOGGING)
+    message(STATUS "Building logging: ENABLED")
+    if(DELAYLAMA_DEBUG_CONSOLE)
+        message(STATUS "Building console: ENABLED")
+    else()
+        message(STATUS "Building console: DISABLED")
+    endif()
+else()
+    message(STATUS "Building logging: DISABLED")
+    message(STATUS "Building console: DISABLED")
 endif()
 
 if(DELAYLAMA_BUILD_TESTS)
