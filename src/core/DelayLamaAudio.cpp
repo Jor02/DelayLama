@@ -514,10 +514,10 @@ namespace Core {
                 {
                     this->vibratoDirty = false;
                     float tempVowelVal = this->vibratoAmount * 12.0f + 36.0f;
-                    this->vibratoTarget = (int)tempVowelVal;
+                    this->vibratoTarget = tempVowelVal;
                     tempVowelVal = tempVowelVal - this->vibratoCurrent;
-                    this->vibratoDelta = (int)tempVowelVal;
-                    this->vibratoStep = (int)(tempVowelVal / (float)this->smoothingFrames);
+                    this->vibratoDelta = tempVowelVal;
+                    this->vibratoStep = tempVowelVal / (float)this->smoothingFrames;
                     this->vibratoSmoothingFramesRemaining = this->smoothingFrames;
                 }
 

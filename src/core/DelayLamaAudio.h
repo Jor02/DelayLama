@@ -91,9 +91,9 @@ namespace Core {
             int pitchSmoothingFramesRemaining; // 0x63d0
             int pitchStep; // 0x63d4
             float vibratoCurrent; // 0x63d8
-            int vibratoTarget; // 0x63dc
-            int vibratoDelta; // 0x63e0
-            int vibratoStep; // 0x63e4
+            float vibratoTarget; // 0x63dc
+            float vibratoDelta; // 0x63e0
+            float vibratoStep; // 0x63e4
             int vibratoSmoothingFramesRemaining; // 0x63e8
             float pluginSampleRate; // 0x63ec
             float prevSampleRate; // 0x63f0
