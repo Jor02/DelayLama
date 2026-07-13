@@ -39,17 +39,36 @@ jobs:
         with:
           cmakeVersion: '4.3.2'
 
+      - name: Cache MSVC600
+        id: cache-msvc
+        uses: actions/cache@v4
+        with:
+          path: C:\MSVC600
+          key: msvc600-toolchain-v1
+
       - name: Clone VC6 toolchain
+        if: steps.cache-msvc.outputs.cache-hit != 'true'
         shell: cmd
         run: git clone --depth 1 https://github.com/itsmattkc/MSVC600 C:\MSVC600
+
+      - name: Cache Python venv
+        id: cache-python-env
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: ${{ runner.os }}-venv-reccmp-pefile-v1
 
       - name: Install python prerequisites
         shell: cmd
         run: |
-          python -m venv .venv
-          call .venv\Scripts\activate.bat
-          pip install --upgrade pip
-          pip install reccmp pefile
+          if not exist .venv (
+            python -m venv .venv
+            call .venv\Scripts\activate.bat
+            python -m pip install --upgrade pip
+            pip install reccmp pefile
+          ) else (
+            echo Using cached virtual environment.
+          )
 
       - name: Extract bitmap assets from DLL
         shell: cmd
@@ -66,7 +85,7 @@ jobs:
               path: $env:GITHUB_WORKSPACE\delaylama-assets\DelayLama.dll
           "@ | Set-Content "$env:GITHUB_WORKSPACE\reccmp-user.yml"
 
-      - name: Configure CMake
+          - name: Configure CMake
         shell: cmd
         env:
           MSVC600_PATH: C:\MSVC600
