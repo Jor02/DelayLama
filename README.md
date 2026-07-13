@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/reconstructed/Delay%20Lama%20Logo%20Outline.svg" alt="Delay Lama Logo" height="200">
+  <img src="assets/reconstructed/Delay%20Lama%20Logo%20Outline.svg" alt="Delay Lama Logo" width="700">
 </p>
 
 # Delay Lama Recreation
