@@ -99,7 +99,7 @@ namespace Core {
             float prevSampleRate; // 0x63f0
             int pluginBlockSize; // 0x63f4
             int rngState; // 0x63f8
-            float delayTimeScaler; // 0x63fc
+            float rngScale; // 0x63fc
             bool needsMonkAnimationRefresh; // 0x6400
             char unusedBytes07[3]; // 0x6401
             float monkIdleFrameTable[24]; // 0x6404

@@ -426,7 +426,7 @@ namespace Core {
 
         // Delay Line setup
         this->delayWriteIndex = 0;
-        this->delayTimeScaler = (float)(1.0 / pow(2.0, 32.0)); 
+        this->rngScale = (float)(1.0 / pow(2.0, 32.0)); 
         this->delayReadIndexL = (int)(this->sampleRate * -0.309592);
         this->delayReadIndexR = (int)(this->sampleRate * -0.398435);
         this->delayFeedback = 0.5;
@@ -1573,7 +1573,7 @@ namespace Core {
     // FUNCTION: DELAYLAMA 0x10006400
     float DelayLamaAudio::getRandomFloat() {
         this->rngState = this->rngState * 1664525 + 1013904223;
-        return (float)this->rngState * this->delayTimeScaler;
+        return (float)this->rngState * this->rngScale;
     }
 
     // FUNCTION: DELAYLAMA 0x10002440
