@@ -55,7 +55,7 @@ jobs:
         shell: cmd
         run: |
           call .venv\Scripts\activate.bat
-          python %GITHUB_WORKSPACE%\extract_assets.py delaylama-assets\DelayLama.dll %GITHUB_WORKSPACE%\assets
+          python %GITHUB_WORKSPACE%\extract_assets.py delaylama-assets\DelayLama.dll --output %GITHUB_WORKSPACE%\assets
 
       - name: Write reccmp-user.yml
         shell: powershell
