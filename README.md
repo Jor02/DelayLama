@@ -1,9 +1,13 @@
+<p align="center">
+  <img src="assets/reconstructed/Delay%20Lama%20Logo%20Outline.svg" alt="Delay Lama Logo" height="200">
+</p>
+
 # Delay Lama Recreation
 [![Unit Tests](https://github.com/Jor02/DelayLama/actions/workflows/tests.yml/badge.svg)](https://github.com/Jor02/DelayLama/actions/workflows/tests.yml) ![GitHub contributors](https://img.shields.io/github/contributors/Jor02/DelayLama) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Jor02/DelayLama) ![GitHub last commit](https://img.shields.io/github/last-commit/Jor02/DelayLama)
 
 <p align="center">
   <a href="https://jor02.github.io/DelayLama/progress.html">
-    <img height="380" src="https://jor02.github.io/DelayLama/progress.svg" alt="reccmp progress">
+    <img height="380" src="docs/progress-readme.svg" alt="reccmp progress">
   </a>
 </p>
 
@@ -11,7 +15,7 @@
 
 This is an open source recreation of Delay Lama. A plugin that was originally released in 2002 by AudioNerdz. 
 
-I recently learned that DAWs (like Cubase and Ableton) are phasing out support for 32-bit plugins (when my friend tried using this plugin in Cubase), and since the original Delay Lama only has a 32-bit build available this would mean that this plugin also no longer would be supported. So I decided to try to reverse engineer it to hopefully be able to make a 64-bit version of the original plugin. With this project I am aiming to update one of my favorite audio synthesizers to support modern DAW's by using "clean-room" reverse engineering (basically meaning, I am not using any public or leaked code for my code) to be able to create modern 64-bit version of it.
+I recently learned that DAWs (like Cubase and Ableton) are phasing https://jor02.github.io/DelayLama/progress.htmlout support for 32-bit plugins (when my friend tried using this plugin in Cubase), and since the original Delay Lama only has a 32-bit build available this would mean that this plugin also no longer would be supported. So I decided to try to reverse engineer it to hopefully be able to make a 64-bit version of the original plugin. With this project I am aiming to update one of my favorite audio synthesizers to support modern DAW's by using "clean-room" reverse engineering (basically meaning, I am not using any public or leaked code for my code) to be able to create modern 64-bit version of it.
 
 ## Alternative Project: MonkSynth
 
@@ -74,6 +78,11 @@ cmake --build build --config Release
 - [Project Analysis](docs/analysis.md)
 - [Class Structure Analysis](docs/class-analysis.md)
 - [Original User Manual](original/docs/manual.md)
+
+## Licensing
+Unless otherwise noted, the source code in this repository is licensed under the MIT License.
+
+The recreated assets contained in assets/reconstructed/ are licensed separately under the Creative Commons Attribution 4.0 International (CC BY 4.0) license. See assets/reconstructed/README.md and the accompanying LICENSE file in that directory for details.
 
 ## Legal Notes
 
