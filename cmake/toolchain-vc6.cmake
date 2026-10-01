@@ -23,7 +23,7 @@ set(CMAKE_CXX_FLAGS "/W3 /GX /D \"WIN32\" /D \"_WINDOWS\"" CACHE STRING "" FORCE
 set(CMAKE_CXX_FLAGS_DEBUG "/Gm /Zi /Od /D \"_DEBUG\"" CACHE STRING "" FORCE)
 set(CMAKE_CXX_FLAGS_RELEASE "/O2 /D \"NDEBUG\"" CACHE STRING "" FORCE)
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO
-    "/Zi /O2 /Ob2 /Oy- /GX /D \"NDEBUG\" /D \"WIN32\" /D \"_WINDOWS\" /MT"
+    "/Zi /O2 /GX /D \"NDEBUG\" /D \"WIN32\" /D \"_WINDOWS\" /MD"
     CACHE STRING "" FORCE)
 set(CMAKE_CXX_FLAGS_MINSIZEREL "/Os /D \"NDEBUG\"" CACHE STRING "" FORCE)
 
@@ -39,8 +39,8 @@ set(CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL "/incremental:no" CACHE STRING "" FORCE
 # Static linker flags (used for static libs like .lib)
 set(CMAKE_STATIC_LINKER_FLAGS "/machine:I386" CACHE STRING "" FORCE)
 
-# Use static CRT
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STRING "" FORCE)
+# Use the DLL CRT (MSVCRT.dll), like the original
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL" CACHE STRING "" FORCE)
 
 # Serial build pool for VC6
 set(CMAKE_JOB_POOL_COMPILE "msvc_vc6_pool" CACHE STRING "" FORCE)

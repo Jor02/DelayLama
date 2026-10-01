@@ -1,6 +1,6 @@
 #pragma once
 #include "damsdk/api/EditorBase.h"
-#include "damsdk/gui/controls/Control.h"
+#include "damsdk/gui/controls/control.h"
 #include "damsdk/gui/platform/windows/Bitmap.h"
 
 // Forward declarations
@@ -16,7 +16,9 @@ namespace DamSDK {
 }
 
 namespace DelayLama {
-    namespace Core { class DelayLamaPlugin; }
+    namespace Core {
+        class DelayLamaPlugin;
+    }
     namespace Gui {
         namespace Controls {
             class Monk;
@@ -33,12 +35,8 @@ namespace DelayLama {
 namespace Gui{
 
     // VTABLE: DELAYLAMA 0x1000b8b8
-    class DelayLamaEditor : public DamSDK::Api::EditorBase {
-        private:
-            static DelayLamaEditor* currentEditor;
+    class DelayLamaEditor : public DamSDK::Api::EditorBase, public DamSDK::Gui::Controls::ControlListener {
         public:
-            char unused[3];
-            DamSDK::Gui::Controls::callbackCallback callback;
             Monk* monk;
             TwoAxisSlider* singingController;
             VerticalSlider* singingVerticalSlider;
@@ -58,11 +56,9 @@ namespace Gui{
         public:
             DelayLamaEditor(Core::DelayLamaPlugin* pluginInstance);
             ~DelayLamaEditor();
-            static void onControlChangedThunk(GDIDrawingContext* drawingContext, Control* control);
-            void onControlChanged(GDIDrawingContext* drawingContext, Control* control);
-            void open(HWND hParent) override;
+            virtual void valueChanged(GDIDrawingContext* drawingContext, Control* control) override;
+            int32_t open(HWND hParent) override;
             void dispatcher(int parameterIndex, float value) override;
-            void destroy();
             void close() override;
     };   
 }

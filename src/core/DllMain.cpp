@@ -12,7 +12,7 @@ namespace Core {
     extern void* g_pfnCustomInit;
     extern int crtInitHandler(HINSTANCE, DWORD);
 
-    // FUNCTION DELAYLAMA: 0x1000a9a7
+    // FUNCTION: DELAYLAMA 0x1000a9a7
     extern "C" BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
     {
         DWORD dwOriginalReason = fdwReason;

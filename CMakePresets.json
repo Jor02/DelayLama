@@ -16,6 +16,20 @@
       }
     },
     {
+      "name": "vs2026-x64",
+      "displayName": "Visual Studio 2026 (64-bit)",
+      "description": "Build with Visual Studio 2026 (modern MSVC, 64-bit)",
+      "generator": "Visual Studio 18 2026",
+      "binaryDir": "${sourceDir}/build/vs2026-x64",
+      "architecture": {
+        "value": "x64",
+        "strategy": "set"
+      },
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_OUTPUT_NAME": "vs2026"
+      }
+    },
+    {
       "name": "vs2022",
       "displayName": "Visual Studio 2022",
       "description": "Build with Visual Studio 2022 (modern MSVC)",
@@ -23,6 +37,20 @@
       "binaryDir": "${sourceDir}/build/vs2022",
       "architecture": {
         "value": "Win32",
+        "strategy": "set"
+      },
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_OUTPUT_NAME": "vs2022"
+      }
+    },
+    {
+      "name": "vs2022-x64",
+      "displayName": "Visual Studio 2022 (64-bit)",
+      "description": "Build with Visual Studio 2022 (modern MSVC, 64-bit)",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/vs2022-x64",
+      "architecture": {
+        "value": "x64",
         "strategy": "set"
       },
       "cacheVariables": {
@@ -38,7 +66,8 @@
       "binaryDir": "${sourceDir}/build/vc6",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "DELAYLAMA_ENABLE_LOGGING": "OFF"
       },
       "environment": {
         "PATH": "$env{MSVC600_PATH}/VC98/Bin;$penv{PATH}"
@@ -61,9 +90,29 @@
     }
   ],
   "buildPresets": [
-    { "name": "vs2026", "configurePreset": "vs2026" },
-    { "name": "vs2022", "configurePreset": "vs2022" },
-    { "name": "vc6",    "configurePreset": "vc6"    },
-    { "name": "vc6-debug", "configurePreset": "vc6-debug" }
+    {
+      "name": "vs2026",
+      "configurePreset": "vs2026"
+    },
+    {
+      "name": "vs2026-x64",
+      "configurePreset": "vs2026-x64"
+    },
+    {
+      "name": "vs2022",
+      "configurePreset": "vs2022"
+    },
+    {
+      "name": "vs2022-x64",
+      "configurePreset": "vs2022-x64"
+    },
+    {
+      "name": "vc6",
+      "configurePreset": "vc6"
+    },
+    {
+      "name": "vc6-debug",
+      "configurePreset": "vc6-debug"
+    }
   ]
 }

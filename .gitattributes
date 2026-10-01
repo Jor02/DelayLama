@@ -1,2 +1,4 @@
 # Normalize all text files to LF in repo
 * text=auto eol=lf
+# Raw audio fixtures
+*.f32 binary

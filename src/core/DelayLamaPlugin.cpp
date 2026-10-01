@@ -5,7 +5,7 @@
 namespace DelayLama {
 namespace Core {
 
-    // FUNCTION DELAYLAMA: 0x10003470
+    // FUNCTION: DELAYLAMA 0x10003470
     DelayLamaPlugin::DelayLamaPlugin(DamSDK::Api::dispatchFunc hostCallback) : DelayLamaAudio(hostCallback)  {
         Utils::log("DelayLamaPlugin::ctor\n");
 
@@ -18,11 +18,10 @@ namespace Core {
         }
     }
 
-    // FUNCTION DELAYLAMA: 0x10003500
-    DelayLamaPlugin::~DelayLamaPlugin() {
-    }
+    // FUNCTION: DELAYLAMA 0x10003520
+    DelayLamaPlugin::~DelayLamaPlugin() {}
 
-    // FUNCTION DELAYLAMA: 0x10003530
+    // FUNCTION: DELAYLAMA 0x10003530
     void DelayLamaPlugin::setParameterValue(int32_t parameterIndex,float parameterValue) {
         Utils::logf("DelayLamaPlugin::setParameterValue id=%d value=%f\n", parameterIndex, parameterValue);
         DelayLamaAudio::setParameterValue(parameterIndex,parameterValue);
@@ -33,12 +32,5 @@ namespace Core {
         }
     }
 
-    // STUB: DELAYLAMA 0x10003520
-    void DelayLamaPlugin::destroy() {
-        Utils::log("DelayLamaPlugin::destroy\n");
-        // this->vtable = &DelayLama_vtable;
-        // DelayLamaAudio::destroy((DelayLamaAudio *)this);
-        // return;
-    }
 }
 }

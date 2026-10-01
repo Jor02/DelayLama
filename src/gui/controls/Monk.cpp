@@ -8,18 +8,13 @@ namespace DelayLama {
 namespace Gui {
 namespace Controls {
 
-    // FUNCTION DELAYLAMA: 0x10004600
-    Monk::Monk(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, callback, parameterId, frameCount, tileHeight, bmp, srcOffset)
+    // FUNCTION: DELAYLAMA 0x10004600
+    Monk::Monk(RECT *pRect, DamSDK::Gui::Controls::ControlListener* listener, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : TileGrid(pRect, listener, parameterId, frameCount, tileHeight, bmp, srcOffset)
     {
         Utils::log("Monk::ctor\n");
     }
 
-    // FUNCTION: DELAYLAMA 0x10004650
-    Monk::~Monk() {
-        TileGrid::destroy();
-    }
-
-    // FUNCTION DELAYLAMA: 0x100046a0
+    // FUNCTION: DELAYLAMA 0x100046a0
     void Monk::onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext)
     {
         this->tileHeight = TILE_HEIGHT;

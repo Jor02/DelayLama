@@ -1,5 +1,5 @@
 #pragma once
-#include "damsdk/gui/controls/Control.h"
+#include "damsdk/gui/controls/control.h"
 #include "TileGrid.h"
 
 namespace DelayLama {
@@ -20,8 +20,7 @@ namespace Controls {
     class Monk : public TileGrid {
         public:
         public:
-            Monk(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
-            ~Monk();
+            Monk(RECT *pRect, DamSDK::Gui::Controls::ControlListener* listener, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset);
             virtual void onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext) override;
     };
     }

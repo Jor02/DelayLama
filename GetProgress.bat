@@ -51,6 +51,10 @@ set "RECCMP_EXIT_CODE=%errorlevel%"
 
 popd
 
+if %RECCMP_EXIT_CODE% equ 0 (
+    python enhance_progress.py progress.html
+)
+
 REM --------------------------------------------------
 REM Deactivate virtual environment
 REM --------------------------------------------------

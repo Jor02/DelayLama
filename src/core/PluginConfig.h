@@ -2,14 +2,14 @@
 #define PARAMETER_COUNT 4
 
 // Parameters
-#define LeftVoiceKnobParameterId 0
+#define GlideKnobParameterId 0
 #define SingingVerticalSliderParameterId 1
-#define ReverbSliderParameterId 2
-#define RightGlideKnobParameterId 3
+#define DelaySliderParameterId 2
+#define VoiceKnobParameterId 3
 #define SingingHorizontalSliderParameterId 5
 #define MonkSpriteParameterId 6
 #define SingingEnabledParameterId 9
 #define TwoAxisSliderParameterId 7
-#define PitchValueParameterId 10
-#define VibratoAmountParameterId 11
+#define PadVowelParameterId 10
+#define PadPitchParameterId 11
 #define SplashScreenParameterId 12

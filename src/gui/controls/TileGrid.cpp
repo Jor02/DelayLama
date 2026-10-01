@@ -8,8 +8,8 @@ namespace DelayLama {
 namespace Gui {
 namespace Controls {
     
-    // FUNCTION DELAYLAMA: 0x10009900
-    TileGrid::TileGrid(RECT *pRect, DamSDK::Gui::Controls::callbackCallback callback, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : DamSDK::Gui::Controls::Control(pRect, callback, parameterId, bmp)
+    // FUNCTION: DELAYLAMA 0x10009900
+    TileGrid::TileGrid(RECT *pRect, DamSDK::Gui::Controls::ControlListener* listener, int parameterId, int frameCount, int tileHeight, DamSDK::Gui::Platform::Windows::Bitmap *bmp, POINT *srcOffset) : DamSDK::Gui::Controls::Control(pRect, listener, parameterId, bmp)
     {
         Utils::log("TileGrid::ctor\n");
         this->srcOffset = *srcOffset;
@@ -17,7 +17,7 @@ namespace Controls {
         this->tileHeight = tileHeight;
     }
 
-    // FUNCTION DELAYLAMA: 0x10009980
+    // FUNCTION: DELAYLAMA 0x10009980
     void TileGrid::onDraw(DamSDK::Gui::Platform::Windows::GDIDrawingContext* drawingContext) {
         POINT srcPoint;
         srcPoint.x = this->srcOffset.x;
@@ -56,15 +56,10 @@ namespace Controls {
         this->setDirty(false);
     }
 
-    // FUNCTION: DELAYLAMA 0x10009950
+    // FUNCTION: DELAYLAMA 0x10009970
     TileGrid::~TileGrid() {
-        destroy();
     }
 
-    // FUNCTION: DELAYLAMA 0x10009970
-    void TileGrid::destroy() {
-        Control::destroy();
-    }
 }
 }
 }

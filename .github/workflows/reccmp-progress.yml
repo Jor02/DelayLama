@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'src/**'
+      - 'enhance_progress.py'
   workflow_dispatch:
 
 permissions:
@@ -13,6 +14,8 @@ permissions:
 
 jobs:
   reccmp-progress:
+    # Needs the DLL_PAT secret for the private assets repository, which forks don't have
+    if: github.repository == 'Jor02/DelayLama'
     runs-on: windows-2022
 
     steps:
@@ -118,6 +121,14 @@ jobs:
             --html %GITHUB_WORKSPACE%\progress.html ^
             --svg  %GITHUB_WORKSPACE%\progress.svg  ^
             --silent
+
+      - name: Add summary to progress page
+        shell: cmd
+        run: |
+          call %GITHUB_WORKSPACE%\.venv\Scripts\activate.bat
+          python %GITHUB_WORKSPACE%\enhance_progress.py %GITHUB_WORKSPACE%\progress.html ^
+            --repo-url %GITHUB_SERVER_URL%/%GITHUB_REPOSITORY% ^
+            --commit %GITHUB_SHA%
 
       - name: Prepare deploy directory
         shell: cmd

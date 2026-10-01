@@ -11,13 +11,13 @@ using namespace Utils;
 namespace DelayLama {
 namespace Core {
 
-    // GLOBAL: DELAYLAMA: 0x1000d404
+    // GLOBAL: DELAYLAMA 0x1000d404
     bool g_bInitFailed = false;
 
-    // GLOBAL: DELAYLAMA: 0x1000c248
+    // GLOBAL: DELAYLAMA 0x1000c248
     LONG g_cRefCount = 0;
 
-    // GLOBAL: DELAYLAMA: 0x1000b080
+    // GLOBAL: DELAYLAMA 0x1000b080
     void* g_pfnCustomInit = nullptr;
 
     // STUB: CRT initialization handler
@@ -26,7 +26,7 @@ namespace Core {
         return 1;
     }
 
-    // FUNCTION DELAYLAMA: 0x10003560
+    // FUNCTION: DELAYLAMA 0x10003560
     extern "C" __declspec(dllexport) DamSDK::Api::DamPlugin* __cdecl VSTPluginMain(DamSDK::Api::dispatchFunc hostCallback)
     {
 #ifdef DELAYLAMA_DEBUG_CONSOLE
@@ -44,9 +44,11 @@ namespace Core {
         log("Host version checked\n");
 
         DelayLamaPlugin* delayLama = new DelayLamaPlugin(hostCallback);
-    
+        if (!delayLama)
+            return NULL;
+
         if (g_bInitFailed) {
-            delayLama->~DelayLamaPlugin();
+            delete delayLama;
             return NULL;
         }
 

@@ -97,16 +97,26 @@ target_link_libraries(DelayLama
     kernel32
     user32
     gdi32
+    ole32
+    shell32
+    uuid
 )
 
 # Linker warning suppression
-target_link_options(DelayLama PRIVATE "/IGNORE:4070")
+if(MSVC)
+    target_link_options(DelayLama PRIVATE "/IGNORE:4070")
+endif()
+
+# MinGW: link the C++ runtime into the plugin, so hosts don't need its DLLs
+if(MINGW)
+    target_link_options(DelayLama PRIVATE -static -static-libgcc -static-libstdc++)
+endif()
 
 ### Tests ### 
 add_library(DelayLamaCore STATIC ${SOURCES})
 target_compile_definitions(DelayLamaCore PRIVATE NOT_ORIGINAL_BUILD)
 target_include_directories(DelayLamaCore PUBLIC src/)
-target_link_libraries(DelayLamaCore kernel32 user32 gdi32)
+target_link_libraries(DelayLamaCore kernel32 user32 gdi32 ole32 shell32 uuid)
 
 # GTest does not support VC6
 if(CMAKE_TOOLCHAIN_OUTPUT_NAME STREQUAL "vc6")
